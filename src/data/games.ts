@@ -1,0 +1,1 @@
+export default ['valorant', 'csgo', 'dead_by_daylight'];
