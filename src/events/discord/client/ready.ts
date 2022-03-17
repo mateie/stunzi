@@ -18,26 +18,13 @@ export default class ReadyEvent implements CommandEvent {
         console.log(`Ready! Logged in as ${this.client.user?.tag}`);
         const guild = this.client.guilds.cache.first();
 
-        const activities: PresenceData[] = [
-            {
-                status: 'dnd',
-                activities: [
-                    { name: 'TypeScript', type: 'LISTENING' }
-                ]
-            },
-            {
-                status: 'online',
-                activities: [
-                    { name: 'S&B', type: 'LISTENING' }
-                ]
-            }
-        ];
 
-        setInterval(() => {
-            const randomIndex: number = Math.floor(Math.random() * activities.length);
-            const activity: PresenceData = activities[randomIndex];
-            this.client.user?.setPresence(activity);
-        }, 10000);
+        this.client.user?.setPresence({
+            status: 'online',
+            activities: [
+                { name: 'S&B', type: 'LISTENING' }
+            ]
+        })
 
         this.client.commandHandler.deploy();
     }
