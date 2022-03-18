@@ -5,18 +5,21 @@ import moment from 'moment';
 import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
 
+import Cards from './Cards';
 import Util from './Util';
+import ICommand from './interfaces/ICommand';
 
 export default class Client extends DiscordClient {
     owners: (string)[];
 
-    commands: Collection<String, Object>;
+    commands: Collection<String, ICommand>;
     menus: Collection<String, Object>;
     moment: typeof moment;
 
     commandHandler: CommandHandler;
     eventHandler: EventHandler;
 
+    cards: Cards;
     util: Util;
 
     constructor() {
@@ -31,6 +34,7 @@ export default class Client extends DiscordClient {
         this.commandHandler = new CommandHandler(this);
         this.eventHandler = new EventHandler(this);
 
+        this.cards = new Cards(this);
         this.util = new Util(this);
 
         this.login(TOKEN);
