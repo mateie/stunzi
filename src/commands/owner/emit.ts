@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandsOnlyBuilder } from "@discordjs/builders";
-import { CommandInteraction, GuildMember } from "discord.js";
+import { SlashCommandStringOption } from "@discordjs/builders";
+import { CommandInteraction, GuildMember, PermissionResolvable } from "discord.js";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
