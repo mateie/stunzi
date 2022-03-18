@@ -4,8 +4,10 @@ import { Routes } from "discord-api-types/v10";
 import { promisify } from "util";
 import { glob } from "glob";
 import Ascii from 'ascii-table';
-import perms from '../../validation/eventNames';
+import perms from '../../validation/permissions';
 import { Guild } from "discord.js";
+import Command from "../Command";
+import ICommand from "../interfaces/ICommand";
 
 const PG = promisify(glob);
 
@@ -71,8 +73,8 @@ export default class CommandHandler {
                 .then(async (commands: any) => {
                     commands = commands.filter((c: any) => c.type == 1);
                     const Roles = (commandName: string) => {
-                        const cmdPerms: any = this.client.commands.find((c: any) => c.data.name === commandName);
-                        if (!cmdPerms.permission) return null;
+                        const cmdPerms = this.client.commands.get(commandName)?.permission;
+                        if (!cmdPerms) return null;
 
                         return guild.roles.cache.filter(r => r.permissions.has(cmdPerms));
                     }
