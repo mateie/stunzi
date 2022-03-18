@@ -6,7 +6,7 @@ export default interface Command {
     client: Client,
     permission: PermissionResolvable | undefined;
     data:
-    | Omit<SlashCommandBuilder, "addSubcommandGroup" | "addSubcommand">
-    | SlashCommandSubcommandsOnlyBuilder,
+    | SlashCommandBuilder,
     run: (interaction: CommandInteraction) => void | Promise<void>
+    mentionRole: (roleId: string) => string;
 }
