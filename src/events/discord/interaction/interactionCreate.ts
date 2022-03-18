@@ -3,6 +3,7 @@ import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
 import Command from "../../../classes/interfaces/ICommand";
 import IEvent from "../../../classes/interfaces/IEvent";
+import EventNames from "../../../validation/eventNames";
 
 export default class InteractionCreate extends Event implements IEvent {
     name: string;
@@ -15,9 +16,7 @@ export default class InteractionCreate extends Event implements IEvent {
     }
 
     async run(interaction: CommandInteraction): Promise<void> {
-        const commandName: string = interaction.commandName;
-        const member: GuildMember = <GuildMember>interaction.member;
-        const Guild: Guild = <Guild>interaction.guild;
+        const { commandName, member, guild } = interaction;
 
         if (interaction.isCommand()) {
             const command: Command = <Command>this.client.commands.get(commandName);

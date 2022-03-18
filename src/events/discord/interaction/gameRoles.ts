@@ -1,4 +1,4 @@
-import { ButtonInteraction, Guild, GuildMember, Role } from "discord.js";
+import { ButtonInteraction, Guild, GuildMember, GuildMemberRoleManager, Role } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
 import IEvent from "../../../classes/interfaces/IEvent";
@@ -18,20 +18,19 @@ export default class GameRolesEvent extends Event implements IEvent {
     run(interaction: ButtonInteraction): void {
         if (!interaction.isButton()) return;
 
-        const customId: string = interaction.customId;
-        const member: GuildMember = <GuildMember>interaction.member;
-        const guild: Guild = <Guild>interaction.guild;
+        const { member, guild, customId } = interaction;
 
         if (!games.map(game => `${game}_role`).includes(customId)) return;
 
-        const role: Role = <Role>guild.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
+        const role: Role = <Role>guild?.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
 
-        if (member.roles.cache.has(role.id)) {
-            member.roles.remove(role);
+        const memberRoles = <GuildMemberRoleManager>member?.roles;
+        if (memberRoles.cache.has(role.id)) {
+            memberRoles.remove(role);
 
             interaction.reply({ content: `${role} was removed from you :<`, ephemeral: true });
         } else {
-            member.roles.add(role);
+            memberRoles.add(role);
 
             interaction.reply({ content: `${role} was added to you :<`, ephemeral: true });
         }
