@@ -1,5 +1,5 @@
 import { SlashCommandStringOption } from "@discordjs/builders";
-import { CommandInteraction, GuildMember, PermissionResolvable } from "discord.js";
+import { CommandInteraction, GuildMember } from "discord.js";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
@@ -8,6 +8,7 @@ export default class EmitCommand extends Command implements ICommand {
     constructor(client: Client) {
         super(client);
 
+        this.permission = 'ADMINISTRATOR';
         this.data
             .setName('emit')
             .setDescription('Event Emitter')
