@@ -1,14 +1,15 @@
 import { CommandInteraction, GuildMember, Guild } from "discord.js";
 import Client from "../../../classes/Client";
-import Command from "../../../classes/interfaces/Command";
-import CommandEvent from "../../../classes/interfaces/CommandEvent";
+import Event from "../../../classes/Event";
+import Command from "../../../classes/interfaces/ICommand";
+import IEvent from "../../../classes/interfaces/IEvent";
 
-export default class InteractionCreate implements CommandEvent {
+export default class InteractionCreate extends Event implements IEvent {
     name: string;
-    client: Client;
+    once: undefined;
 
     constructor(client: Client) {
-        this.client = client;
+        super(client);
 
         this.name = 'interactionCreate';
     }

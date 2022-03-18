@@ -8,7 +8,7 @@ import EventHandler from './handlers/EventHandler';
 import Util from './Util';
 
 export default class Client extends DiscordClient {
-    owners: (string | undefined)[];
+    owners: (string)[];
 
     commands: Collection<String, Object>;
     menus: Collection<String, Object>;
@@ -22,7 +22,7 @@ export default class Client extends DiscordClient {
     constructor() {
         super({ intents: 32767 });
 
-        this.owners = [STEALTH, BUNZI];
+        this.owners = ['401269337924829186', '190120411864891392'];
 
         this.commands = new Collection();
         this.menus = new Collection();

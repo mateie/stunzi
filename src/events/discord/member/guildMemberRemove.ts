@@ -1,14 +1,15 @@
 import { Guild, GuildMember, User, WebhookClient } from "discord.js";
 import Client from "../../../classes/Client";
-import Event from "../../../classes/interfaces/Event";
+import Event from "../../../classes/Event";
+import IEvent from "../../../classes/interfaces/IEvent";
 import webhooks from "../../../data/webhooks";
 
-export default class GuildMemberRemoveEvent implements Event {
-    client: Client;
+export default class GuildMemberRemoveEvent extends Event implements IEvent {
     name: string;
+    once: undefined;
 
     constructor(client: Client) {
-        this.client = client;
+        super(client);
 
         this.name = 'guildMemberRemove';
     }

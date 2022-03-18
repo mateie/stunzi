@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "tsc",
-    "start": "rimraf ./build && yarn build && node ./build/index.js"
+    "start": "rimraf ./build && yarn build && node ./build/index.js",
+    "watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",

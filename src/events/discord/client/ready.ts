@@ -1,14 +1,14 @@
 import { PresenceData } from "discord.js";
 import Client from "../../../classes/Client";
-import CommandEvent from "../../../classes/interfaces/CommandEvent";
+import Event from "../../../classes/Event";
+import IEvent from "../../../classes/interfaces/IEvent";
 
-export default class ReadyEvent implements CommandEvent {
-    client: Client;
+export default class ReadyEvent extends Event implements IEvent {
     name: string;
     once: boolean;
 
     constructor(client: Client) {
-        this.client = client;
+        super(client);
 
         this.name = 'ready';
         this.once = true;

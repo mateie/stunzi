@@ -7,8 +7,6 @@ import Ascii from 'ascii-table';
 import perms from '../../validation/eventNames';
 import { Guild } from "discord.js";
 
-import Command from "../interfaces/Command";
-
 const PG = promisify(glob);
 
 export default class CommandHandler {

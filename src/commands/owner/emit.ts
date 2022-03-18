@@ -1,16 +1,14 @@
 import { SlashCommandBuilder, SlashCommandStringOption, SlashCommandSubcommandsOnlyBuilder } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
 import Client from "../../classes/Client";
-import Command from "../../classes/interfaces/Command";
+import Command from "../../classes/Command";
+import ICommand from "../../classes/interfaces/ICommand";
 
-export default class EmitCommand implements Command {
-    client: Client;
-    data: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
-
+export default class EmitCommand extends Command implements ICommand {
     constructor(client: Client) {
-        this.client = client;
+        super(client);
 
-        this.data = new SlashCommandBuilder()
+        this.data
             .setName('emit')
             .setDescription('Event Emitter')
             .addStringOption((option: SlashCommandStringOption) =>
