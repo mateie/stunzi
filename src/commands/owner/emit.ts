@@ -27,7 +27,7 @@ export default class EmitCommand extends Command implements ICommand {
 
     run(interaction: CommandInteraction): void {
         const choices: string = <string>interaction.options.getString('member');
-        const member: GuildMember = <GuildMember>interaction.member;
+        const member = <GuildMember>interaction.member;
         switch (choices) {
             case 'guildMemberAdd':
                 this.client.emit('guildMemberAdd', member);
