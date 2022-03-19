@@ -18,19 +18,20 @@ export default class GameRolesEvent extends Event implements IEvent {
     run(interaction: ButtonInteraction): void {
         if (!interaction.isButton()) return;
 
-        const { member, guild, customId } = interaction;
+        const { customId } = interaction;
+        const guild = <Guild>interaction.guild;
+        const member = <GuildMember>interaction.member;
 
         if (!games.map(game => `${game}_role`).includes(customId)) return;
 
-        const role: Role = <Role>guild?.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
+        const role = <Role>guild.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
 
-        const memberRoles = <GuildMemberRoleManager>member?.roles;
-        if (memberRoles.cache.has(role.id)) {
-            memberRoles.remove(role);
+        if (!member.roles.cache.has(role.id)) {
+            member.roles.remove(role);
 
             interaction.reply({ content: `${role} was removed from you :<`, ephemeral: true });
         } else {
-            memberRoles.add(role);
+            member.roles.add(role);
 
             interaction.reply({ content: `${role} was added to you :<`, ephemeral: true });
         }
