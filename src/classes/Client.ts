@@ -6,7 +6,9 @@ import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
 
 import Cards from './Cards';
+import Database from './Database';
 import Util from './Util';
+
 import ICommand from './interfaces/ICommand';
 
 export default class Client extends DiscordClient {
@@ -20,6 +22,7 @@ export default class Client extends DiscordClient {
     eventHandler: EventHandler;
 
     cards: Cards;
+    database: Database;
     util: Util;
 
     constructor() {
@@ -35,6 +38,7 @@ export default class Client extends DiscordClient {
         this.eventHandler = new EventHandler(this);
 
         this.cards = new Cards(this);
+        this.database = new Database(this);
         this.util = new Util(this);
 
         this.login(TOKEN);
