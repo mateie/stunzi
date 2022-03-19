@@ -1,4 +1,4 @@
-import { ButtonInteraction, Guild, GuildMember, GuildMemberRoleManager, Role } from "discord.js";
+import { ButtonInteraction, Guild, GuildMember, Role } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
 import IEvent from "../../../classes/interfaces/IEvent";
