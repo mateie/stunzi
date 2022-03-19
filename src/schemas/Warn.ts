@@ -7,13 +7,11 @@ interface IWarn extends Document {
     reason: string;
 };
 
-const warnSchema: Schema = new Schema({
+const Warn: Schema = new Schema({
     memberId: String,
     time: String,
     by: String,
     reason: String,
 });
 
-const Warn: Model<IWarn> = model('Warn', warnSchema);
-
-export default Warn;
+export default model<IWarn>("Warn", Warn);

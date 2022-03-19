@@ -1,6 +1,6 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
-interface IBlock extends Document {
+export interface IBlock extends Document {
     memberId: string;
     time: string;
     by: string;
@@ -8,7 +8,7 @@ interface IBlock extends Document {
     expired: boolean;
 };
 
-const blockSchema: Schema = new Schema({
+export const Block: Schema = new Schema({
     memberId: String,
     time: String,
     by: String,
@@ -19,6 +19,4 @@ const blockSchema: Schema = new Schema({
     }
 });
 
-const Block: Model<IBlock> = model('Block', blockSchema);
-
-export default Block;
+export default model<IBlock>("Block", Block);

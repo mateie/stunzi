@@ -1,11 +1,11 @@
 import { model, Model, Schema, Document } from 'mongoose';
 
-interface IGuild extends Document {
+export interface IGuild extends Document {
     id: string;
     name: string;
 };
 
-const guildSchema: Schema = new Schema({
+export const Guild: Schema = new Schema({
     id: {
         type: String,
         required: true,
@@ -17,6 +17,4 @@ const guildSchema: Schema = new Schema({
     },
 });
 
-const Guild: Model<IGuild> = model('Guild', guildSchema);
-
-export default Guild;
+export default model<IGuild>("Guild", Guild);

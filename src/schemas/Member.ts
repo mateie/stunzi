@@ -1,6 +1,6 @@
 import { model, Model, Schema, Document } from 'mongoose';
 
-interface IMember extends Document {
+export interface IMember extends Document {
     id: string;
     username: string;
     xp: number;
@@ -18,7 +18,7 @@ interface IMember extends Document {
     }
 };
 
-const memberSchema: Schema = new Schema({
+export const Member: Schema = new Schema({
     id: {
         type: String,
         required: true,
@@ -61,13 +61,13 @@ const memberSchema: Schema = new Schema({
     },
 });
 
-memberSchema.pre('save', function (next: () => void) {
+Member.pre('save', function (next: () => void) {
     const currentLevel = Math.floor(0.1 & Math.sqrt(this.xp));
     this.level = currentLevel;
     next();
 });
 
-memberSchema.statics.getRank = async function (user: { id: any; }) {
+Member.statics.getRank = async function (user: { id: any; }) {
     const users = await this.find();
     const sorted = users.sort((a: { xp: number; }, b: { xp: number; }) => b.xp - a.xp);
     const mapped = sorted.map((u: { id: any; xp: any; }, i: number) => ({
@@ -81,6 +81,4 @@ memberSchema.statics.getRank = async function (user: { id: any; }) {
     return userRank;
 };
 
-const Member: Model<IMember> = model('Member', memberSchema);
-
-export default Member;
+export default model<IMember>("Member", Member);

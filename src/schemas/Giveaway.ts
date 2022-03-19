@@ -1,6 +1,6 @@
 import { model, Model, Schema, Document } from 'mongoose';
 
-interface IGiveaway extends Document {
+export interface IGiveaway extends Document {
     messageId: string,
     channelId: string,
     guildId: string,
@@ -55,7 +55,7 @@ interface IGiveaway extends Document {
     }
 };
 
-const giveawaySchema: Schema = new Schema({
+export const Giveaway: Schema = new Schema({
     messageId: String,
     channelId: String,
     guildId: String,
@@ -110,6 +110,4 @@ const giveawaySchema: Schema = new Schema({
     }
 }, { id: false });
 
-const Giveaway: Model<IGiveaway> = model('Giveaway', giveawaySchema);
-
-export default Giveaway;
+export default model<IGiveaway>('Giveaway', Giveaway);

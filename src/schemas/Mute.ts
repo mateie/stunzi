@@ -1,6 +1,6 @@
 import { model, Model, Schema, Document } from 'mongoose';
 
-interface IMute extends Document {
+export interface IMute extends Document {
     memberId: string;
     time: string;
     by: string;
@@ -8,7 +8,7 @@ interface IMute extends Document {
     expired: boolean;
 };
 
-const muteSchema: Schema = new Schema({
+export const Mute: Schema = new Schema({
     memberId: String,
     time: String,
     by: String,
@@ -19,6 +19,4 @@ const muteSchema: Schema = new Schema({
     }
 });
 
-const Mute: Model<IMute> = model('Mute', muteSchema);
-
-export default Mute;
+export default model<IMute>("Mute", Mute);
