@@ -1,4 +1,4 @@
-import { PresenceData } from "discord.js";
+import { Guild } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
 import IEvent from "../../../classes/interfaces/IEvent";
@@ -16,8 +16,11 @@ export default class ReadyEvent extends Event implements IEvent {
 
     async run(): Promise<void> {
         console.log(`Ready! Logged in as ${this.client.user?.tag}`);
-        const guild = this.client.guilds.cache.first();
+        const guild = <Guild>this.client.guilds.cache.first();
 
+        this.client.database.connect();
+        this.client.database.verify.members(guild);
+        this.client.database.verify.guilds();
 
         this.client.user?.setPresence({
             status: 'online',
