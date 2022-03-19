@@ -6,6 +6,7 @@ import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
 
 import Cards from './Cards';
+import Cypher from './Cypher';
 import Database from './Database';
 import Util from './Util';
 
@@ -22,6 +23,7 @@ export default class Client extends DiscordClient {
     eventHandler: EventHandler;
 
     cards: Cards;
+    cypher: Cypher
     database: Database;
     util: Util;
 
@@ -38,6 +40,7 @@ export default class Client extends DiscordClient {
         this.eventHandler = new EventHandler(this);
 
         this.cards = new Cards(this);
+        this.cypher = new Cypher(this);
         this.database = new Database(this);
         this.util = new Util(this);
 
