@@ -27,13 +27,13 @@ export default class GameRolesEvent extends Event implements IEvent {
         const role = <Role>guild.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
 
         if (!member.roles.cache.has(role.id)) {
+            member.roles.add(role);
+
+            interaction.reply({ content: `${role} was added to you :>`, ephemeral: true });
+        } else {
             member.roles.remove(role);
 
             interaction.reply({ content: `${role} was removed from you :<`, ephemeral: true });
-        } else {
-            member.roles.add(role);
-
-            interaction.reply({ content: `${role} was added to you :<`, ephemeral: true });
         }
 
     }
