@@ -3,7 +3,6 @@ import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
 import Command from "../../../classes/interfaces/ICommand";
 import IEvent from "../../../classes/interfaces/IEvent";
-import EventNames from "../../../validation/eventNames";
 
 export default class InteractionCreate extends Event implements IEvent {
     name: string;
