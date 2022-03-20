@@ -1,5 +1,5 @@
 import Client from "./Client";
-import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed } from "discord.js";
+import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, MessageSelectMenu } from "discord.js";
 import { Modal, TextInputComponent, showModal as modalShow } from '@mateie/discord-modals';
 import { Stream } from "stream";
 import { RawMessageAttachmentData } from "discord.js/typings/rawDataTypes";
@@ -17,6 +17,10 @@ export default class Util {
 
     button(): MessageButton {
         return new MessageButton();
+    }
+
+    selectMenu(): MessageSelectMenu {
+        return new MessageSelectMenu();
     }
 
     modal(): Modal {
@@ -59,6 +63,17 @@ export default class Util {
         }
 
         return temp;
+    }
+
+    list(arr: Array<string>, conj: string = 'and'): string {
+        const len = arr.length;
+        if (len == 0) return '';
+        if (len == 1) return arr[0];
+        return `${arr.slice(0, -1).join(', ')}${len > 1 ? `${len > 2 ? ',' : ''} ${conj} ` : ''}${arr.slice(-1)}`;
+    }
+
+    capFirstLetter(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     async memberActionRow(executer: GuildMember, member: GuildMember): Promise<any> {
