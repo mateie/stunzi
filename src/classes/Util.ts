@@ -1,7 +1,6 @@
-import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed } from "discord.js";
 import Client from "./Client";
-
-import { Modal, TextInputComponent, showModal } from 'discord-modals';
+import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed } from "discord.js";
+import { Modal, TextInputComponent } from '@mateie/discord-modals';
 import { Stream } from "stream";
 import { RawMessageAttachmentData } from "discord.js/typings/rawDataTypes";
 
@@ -20,15 +19,16 @@ export default class Util {
         return new MessageButton();
     }
 
-    modal(): Object {
-        return {
-            component: new Modal(),
-            show: showModal
-        };
+    modal(): Modal {
+        return new Modal();
     }
 
     textInput(): TextInputComponent {
         return new TextInputComponent();
+    }
+
+    durationMs(dur: string): number {
+        return dur.split(':').map(Number).reduce((acc, curr) => curr + acc * 60) * 1000;
     }
 
     embed(): MessageEmbed {
@@ -40,6 +40,15 @@ export default class Util {
 
     attachment(attachment: BufferResolvable | Stream, name?: string, data?: RawMessageAttachmentData): MessageAttachment {
         return new MessageAttachment(attachment, name, data);
+    }
+
+    chunk(arr: Array<string>, size: number): Array<string[]> {
+        const temp = [];
+        for (let i = 0; i < arr.length; i += size) {
+            temp.push(arr.slice(i, i + size));
+        }
+
+        return temp;
     }
 
     async memberActionRow(executer: GuildMember, member: GuildMember): Promise<any> {
@@ -89,7 +98,7 @@ export default class Util {
         return executer.permissions.has('VIEW_AUDIT_LOG') ? [topRow, midRow, bottomRow] : [topRow];
     }
 
-    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: Array<string>, title?: string, ephemeral: boolean = false, timeout: number = 12000) {
+    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: Array<string> | Array<Array<string>>, title?: string, ephemeral: boolean = false, timeout: number = 12000) {
         let page = 0;
 
         const buttons = [
@@ -107,8 +116,15 @@ export default class Util {
 
         const embeds = contents.map((content, index) => {
             const embed = this.embed()
-                .setDescription(content)
-                .setFooter({ text: `Page ${index + 1} of ${contents.length}` });
+            if (typeof content == 'object') {
+                embed
+                    .setDescription(content.join('\n'));
+            } else {
+                embed
+                    .setDescription(content);
+            }
+
+            embed.setFooter({ text: `Page ${index + 1} of ${contents.length}` });
             if (title) embed.setTitle(title);
 
             return embed;
