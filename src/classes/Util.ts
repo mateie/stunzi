@@ -1,6 +1,6 @@
 import Client from "./Client";
-import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed } from "discord.js";
-import { Modal, TextInputComponent } from '@mateie/discord-modals';
+import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed } from "discord.js";
+import { Modal, TextInputComponent, showModal as modalShow } from '@mateie/discord-modals';
 import { Stream } from "stream";
 import { RawMessageAttachmentData } from "discord.js/typings/rawDataTypes";
 
@@ -25,6 +25,16 @@ export default class Util {
 
     textInput(): TextInputComponent {
         return new TextInputComponent();
+    }
+
+    showModal(
+        modal: Modal,
+        options: {
+            client: Client,
+            interaction: Interaction
+        }
+    ): Promise<Modal> {
+        return modalShow(modal, options);
     }
 
     durationMs(dur: string): number {
