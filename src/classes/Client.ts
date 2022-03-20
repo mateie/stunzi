@@ -1,6 +1,7 @@
 const { TOKEN, STEALTH, BUNZI } = process.env;
 import { Client as DiscordClient, Collection } from 'discord.js';
 import moment from 'moment';
+import modals from '@mateie/discord-modals';
 
 import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
@@ -8,6 +9,7 @@ import EventHandler from './handlers/EventHandler';
 import Cards from './Cards';
 import Cypher from './Cypher';
 import Database from './Database';
+import Music from './systems/Music';
 import Util from './Util';
 
 import ICommand from './interfaces/ICommand';
@@ -25,6 +27,8 @@ export default class Client extends DiscordClient {
     cards: Cards;
     cypher: Cypher
     database: Database;
+    modals: void;
+    music: Music;
     util: Util;
 
     constructor() {
@@ -42,6 +46,8 @@ export default class Client extends DiscordClient {
         this.cards = new Cards(this);
         this.cypher = new Cypher(this);
         this.database = new Database(this);
+        this.music = new Music(this);
+        this.modals = modals(this);
         this.util = new Util(this);
 
         this.login(TOKEN);
@@ -50,5 +56,6 @@ export default class Client extends DiscordClient {
     async init(): Promise<void> {
         await this.eventHandler.load();
         await this.commandHandler.load();
+        await this.music.loadEvents();
     }
 }
