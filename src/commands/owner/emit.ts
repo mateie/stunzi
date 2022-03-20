@@ -1,4 +1,3 @@
-import { SlashCommandStringOption } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
@@ -12,7 +11,7 @@ export default class EmitCommand extends Command implements ICommand {
         this.data
             .setName('emit')
             .setDescription('Event Emitter')
-            .addStringOption((option: SlashCommandStringOption) =>
+            .addStringOption(option =>
                 option
                     .setName('member')
                     .setDescription('Guild Member')
