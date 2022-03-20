@@ -107,6 +107,11 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
+"@mateie/discord-modals@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@mateie/discord-modals/-/discord-modals-1.3.5.tgz#4e013f691b30141193e655d59bf14b96b9d9be81"
+  integrity sha512-3JwJDF6412bbaKRtUqsnq7e39SAxqeRn9QvppbbqXQaTL483rJJiILGhqjn/Lxe3YaSkXlSi87KbWfomZ61zPA==
+
 "@sapphire/async-queue@^1.1.9":
   version "1.3.0"
   resolved "https://registry.npmjs.org/@sapphire/async-queue/-/async-queue-1.3.0.tgz"
@@ -419,11 +424,6 @@ discord-api-types@^0.29.0:
   version "0.29.0"
   resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.29.0.tgz"
   integrity sha512-Ekq1ICNpOTVajXKZguNFrsDeTmam+ZeA38txsNLZnANdXUjU6QBPIZLUQTC6MzigFGb0Tt8vk4xLnXmzv0shNg==
-
-discord-modals@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.npmjs.org/discord-modals/-/discord-modals-1.2.9.tgz"
-  integrity sha512-M2FkSWpOElog6X25sMHHXaOMq9HMrgiOFmjIR8QwsDezLwLI1mnmnY2i5odGNmUAarbgvJu/nazDkjng88GBpg==
 
 discord-player@^5.2.2:
   version "5.2.2"
