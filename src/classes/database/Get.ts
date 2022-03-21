@@ -14,14 +14,24 @@ export default class Get {
     }
 
     async member(member: GuildMember): Promise<IMember> {
-        const dbMember = Member.findOne({ id: member.id });
+        const dbMember = await Member.findOne({ id: member.id });
         if (!dbMember) return await this.database.create.member(member);
         return <IMember><unknown>dbMember;
     }
 
+    async allMembers(): Promise<Array<IMember>> {
+        const members = await Member.find();
+        return members;
+    }
+
     async guild(guild: DiscordGuild): Promise<IGuild> {
-        const dbGuild = Guild.findOne({ id: guild.id });
+        const dbGuild = await Guild.findOne({ id: guild.id });
         if (!dbGuild) return await this.database.create.guild(guild);
         return <IGuild><unknown>dbGuild;
+    }
+
+    async allGuilds(): Promise<Array<IGuild>> {
+        const guilds = await Guild.find();
+        return guilds;
     }
 }
