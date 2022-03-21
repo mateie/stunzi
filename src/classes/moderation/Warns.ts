@@ -1,0 +1,41 @@
+import { CommandInteraction, Guild, GuildMember } from "discord.js";
+import Client from "../Client";
+import Warn, { IWarn } from "../../schemas/Warn";
+
+export default class Warns {
+    client: Client;
+
+    constructor(client: Client) {
+        this.client = client;
+    }
+
+    async create(
+        interaction: CommandInteraction,
+        member: GuildMember,
+        reason: string
+    ) {
+        const by = <GuildMember>interaction.member;
+        await Warn.create({ memberId: member.id, reason, by: by.id });
+
+        interaction.reply({ content: `${member} was warned by ${by}, Reason: ${reason}` });
+    }
+
+    async get(member: GuildMember): Promise<IWarn> {
+        const warn = await Warn.findOne({ memberId: member.id }).sort({ _id: -1 });
+        return <IWarn>warn;
+    }
+
+    async getAll(member: GuildMember) {
+        const warns = await Warn.find({ memberId: member.id }).sort({ _id: -1 });
+        return warns;
+    }
+
+    async totalWarns(member: GuildMember) {
+        const warns = await this.getAll(member);
+        return warns.length;
+    }
+
+    async delete(member: GuildMember) {
+        await Warn.deleteOne({ memberId: member.id });
+    }
+}
