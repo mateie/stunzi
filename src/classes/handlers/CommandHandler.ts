@@ -1,13 +1,11 @@
 import Client from "../Client";
+import { Guild } from "discord.js";
 import { REST } from '@discordjs/rest';
 import { Routes } from "discord-api-types/v10";
 import { promisify } from "util";
 import { glob } from "glob";
 import Ascii from 'ascii-table';
 import perms from '../../validation/permissions';
-import { Guild } from "discord.js";
-import Command from "../Command";
-import ICommand from "../interfaces/ICommand";
 
 const PG = promisify(glob);
 
