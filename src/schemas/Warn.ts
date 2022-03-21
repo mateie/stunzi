@@ -1,13 +1,13 @@
 import { model, Model, Schema, Document } from 'mongoose';
 
-interface IWarn extends Document {
+export interface IWarn extends Document {
     memberId: string;
     time: number;
     by: string;
     reason: string;
 };
 
-const Warn: Schema = new Schema({
+export const Warn: Schema = new Schema({
     memberId: String,
     time: Number,
     by: String,
