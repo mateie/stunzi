@@ -11,6 +11,7 @@ import Cypher from './Cypher';
 import Database from './Database';
 import Music from './systems/Music';
 import Util from './Util';
+import XP from './systems/XP';
 
 import ICommand from './interfaces/ICommand';
 
@@ -30,6 +31,7 @@ export default class Client extends DiscordClient {
     modals: void;
     music: Music;
     util: Util;
+    xp: XP;
 
     constructor() {
         super({ intents: 32767 });
@@ -49,6 +51,7 @@ export default class Client extends DiscordClient {
         this.music = new Music(this);
         this.modals = modals(this);
         this.util = new Util(this);
+        this.xp = new XP(this);
 
         this.login(TOKEN);
     }
