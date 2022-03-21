@@ -21,7 +21,7 @@ export default class Blocks {
         const by = <GuildMember>interaction.member;
         const block = await Block.create({ memberId: member.id, reason, by: by.id });
 
-        interaction.reply({ content: `${member} was blocked${time ? ` for ${time}` : ''} from using commands by ${interaction.member}, Reason: **${reason}**` });
+        interaction.reply({ content: `${member} was blocked${time ? ` for ${time}` : ''} from using commands by ${by}, Reason: **${reason}**` });
 
         if (time) {
             const expireDate = Date.now() + ms(time);
