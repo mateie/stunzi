@@ -68,7 +68,7 @@ export default class Blocks {
     }
 
     async get(member: GuildMember): Promise<IBlock> {
-        const block = await Block.findOne({ memberId: member.id }).sort({ _Id: -1 });
+        const block = await Block.findOne({ memberId: member.id }).sort({ _id: -1 });
         return <IBlock>block;
     }
 
@@ -80,7 +80,7 @@ export default class Blocks {
     async isBlocked(member: GuildMember): Promise<boolean> {
         const block = await this.get(member);
         if (block) {
-            if (block.expired) return false;
+            if (block.expired == true) return false;
             return true;
         }
         return false;

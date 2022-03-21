@@ -78,7 +78,7 @@ export default class Mutes {
     async isMuted(member: GuildMember): Promise<boolean> {
         const mute = await this.get(member);
         if (mute) {
-            if (mute.expired) return false;
+            if (mute.expired == true) return false;
             return true;
         }
         return false;
