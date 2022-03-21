@@ -13,21 +13,29 @@ export default class Create {
         this.database = database;
     }
 
-    async member(member: GuildMember): Promise<IMember | void> {
-        return await Member.create({
+    async member(member: GuildMember): Promise<IMember> {
+        const newMember: IMember = new Member({
             id: member.id,
-            username: member.user.username,
-        })
-            .then(() => console.log(`Member added to the database (ID: ${member.id} - Name: ${member.user.tag})`))
-            .catch(console.error);
+            username: member.user.username
+        });
+
+        await newMember.save().catch(console.error);
+
+        console.log(`Member added to the database (ID: ${member.id} - Name: ${member.user.tag})`);
+
+        return newMember;
     }
 
-    async guild(guild: DiscordGuild): Promise<IGuild | void> {
-        return await Guild.create({
+    async guild(guild: DiscordGuild): Promise<IGuild> {
+        const newGuild: IGuild = new Guild({
             id: guild.id,
             name: guild.name
-        })
-            .then(() => console.log(`Member added to the database (ID: ${guild.id} - Name: ${guild.name})`))
-            .catch(console.error)
+        });
+
+        await newGuild.save().catch(console.error);
+
+        console.log(`Guild added to the database (ID: ${guild.id} - Name: ${guild.name})`);
+
+        return newGuild;
     }
 }
