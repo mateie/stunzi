@@ -18,12 +18,13 @@ export default class InteractionCreate extends Event implements IEvent {
         const { commandName } = interaction;
         const guild = <Guild>interaction.guild;
         const member = <GuildMember>interaction.member;
-        const isBlocked = await this.client.blocks.isBlocked(member);
-        console.log(isBlocked);
-        if (isBlocked) {
-            const block = await this.client.blocks.get(member);
-            const by = <GuildMember>guild.members.cache.get(block.by);
-            return interaction.reply({ content: `You have been blocked by ${by} from using commands`, ephemeral: true });
+        if (interaction.type == 'APPLICATION_COMMAND') {
+            const isBlocked = await this.client.blocks.isBlocked(member);
+            if (isBlocked) {
+                const block = await this.client.blocks.get(member);
+                const by = <GuildMember>guild.members.cache.get(block.by);
+                return interaction.reply({ content: `You have been blocked by ${by} from using commands`, ephemeral: true });
+            }
         }
 
         if (interaction.isCommand()) {
