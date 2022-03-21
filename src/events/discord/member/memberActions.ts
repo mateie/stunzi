@@ -35,7 +35,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
 
         const target: GuildMember = <GuildMember>guild.members.cache.get(message.embeds[0].fields[0].value);
 
-        /*switch (customId) {
+        switch (customId) {
             case `show_card`: {
                 const image = await this.client.cards.getRankCard(member);
                 const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
@@ -59,7 +59,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 if (blocks.length < 1) return interaction.reply({ content: `${target} has no blocks`, ephemeral: true });
                 const mapped = blocks.map(block => {
                     const blocker = guild.members.cache.get(block.by);
-                    const time = block.time ? this.client.moment(parseInt(block.time)).fromNow() : 'Indefinite';
+                    const time = block.time ? this.client.moment(block.time).fromNow() : 'Indefinite';
                     return `
                         **Blocked by**: ${blocker}
                         **Reason**: ${block.reason}
@@ -76,7 +76,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 if (mutes.length < 1) return interaction.reply({ content: `${target} has no mutes`, ephemeral: true });
                 const mapped = mutes.map(mute => {
                     const blocker = guild.members.cache.get(mute.by);
-                    const time = mute.time ? this.client.moment(parseInt(mute.time)).fromNow() : 'Indefinite';
+                    const time = mute.time ? this.client.moment(mute.time).fromNow() : 'Indefinite';
                     return `
                         **Blocked by**: ${blocker}
                         **Reason**: ${mute.reason}
@@ -90,7 +90,6 @@ export default class MemberActionsEvent extends Event implements IEvent {
             case `warn_member`: {
                 if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
                 const modal = this.client.util.modal()
-                    .component
                     .setCustomId('warn-member-modal')
                     .setTitle(`Warning ${target.user.tag}`)
                     .addComponents([
@@ -98,19 +97,18 @@ export default class MemberActionsEvent extends Event implements IEvent {
                             .setCustomId('warn-member-reason')
                             .setLabel('Reason for the warn')
                             .setStyle('SHORT')
-                            .setMinLength(8)
+                            .setMinLength(4)
                             .setMaxLength(100)
                             .setPlaceholder('Type your reason here')
                             .setRequired(true)
                     ]);
 
-                this.client.util.modal().show(modal, { client: this.client, interaction });
+                this.client.util.showModal(modal, { client: this.client, interaction });
                 break;
             }
             case `block_member`: {
                 if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
                 const modal = this.client.util.modal()
-                    .component
                     .setCustomId('block-member-modal')
                     .setTitle(`Blocking ${target.user.tag}`)
                     .addComponents([
@@ -118,27 +116,26 @@ export default class MemberActionsEvent extends Event implements IEvent {
                             .setCustomId('block-member-time')
                             .setLabel('Time for the block')
                             .setStyle('SHORT')
-                            .setMaxLength(8)
-                            .setMaxLength(100)
+                            .setMaxLength(2)
+                            .setMaxLength(2)
                             .setPlaceholder('Type your time here (1m, 1h, 1d)')
                             .setRequired(false),
                         this.client.util.textInput()
                             .setCustomId('block-member-reason')
                             .setLabel('Reason for the block')
                             .setStyle('SHORT')
-                            .setMaxLength(8)
+                            .setMaxLength(4)
                             .setMaxLength(100)
                             .setPlaceholder('Type your reason here')
                             .setRequired(true)
                     ]);
 
-                this.client.util.modal().show(modal, { client: this.client, interaction });
+                this.client.util.showModal(modal, { client: this.client, interaction });
                 break;
             }
             case `mute_member`:
                 if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
                 const modal = this.client.util.modal()
-                    .component
                     .setCustomId('mute-member-modal')
                     .setTitle(`Muting ${target.user.tag}`)
                     .addComponents([
@@ -146,21 +143,21 @@ export default class MemberActionsEvent extends Event implements IEvent {
                             .setCustomId('mute-member-time')
                             .setLabel('Time for the mute')
                             .setStyle('SHORT')
-                            .setMaxLength(8)
-                            .setMaxLength(100)
+                            .setMaxLength(2)
+                            .setMaxLength(2)
                             .setPlaceholder('Type your time here (1m, 1h, 1d)')
                             .setRequired(false),
                         this.client.util.textInput()
                             .setCustomId('mute-member-reason')
                             .setLabel('Reason for the mute')
                             .setStyle('SHORT')
-                            .setMaxLength(8)
+                            .setMaxLength(4)
                             .setMaxLength(100)
                             .setPlaceholder('Type your reason here')
                             .setRequired(true)
                     ]);
 
-                this.client.util.modal().show(modal, { client: this.client, interaction });
+                this.client.util.showModal(modal, { client: this.client, interaction });
                 break;
             case 'unblock_member': {
                 const isBlocked = await this.client.blocks.isBlocked(target);
@@ -176,6 +173,6 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 interaction.reply({ content: `${target} was unmuted` });
                 break;
             }
-        }*/
+        }
     }
 }
