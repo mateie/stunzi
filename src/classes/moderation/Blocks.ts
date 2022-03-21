@@ -76,7 +76,7 @@ export default class Blocks {
 
     async getAll(member: GuildMember): Promise<Array<IBlock>> {
         const blocks = await Block.find({ memberId: member.id }).sort({ _id: -1 });
-        return <Array<IBlock>>blocks;
+        return blocks;
     }
 
     async isBlocked(member: GuildMember): Promise<boolean> {
