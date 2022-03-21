@@ -2,13 +2,13 @@ import { model, Model, Schema, Document } from 'mongoose';
 
 export interface ILockdown extends Document {
     channelId: string;
-    time: string;
+    time: number;
     reason: string;
 };
 
 export const Lockdown: Schema = new Schema({
     channelId: String,
-    time: String,
+    time: Number,
     reason: String,
 });
 

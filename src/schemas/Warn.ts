@@ -2,14 +2,14 @@ import { model, Model, Schema, Document } from 'mongoose';
 
 interface IWarn extends Document {
     memberId: string;
-    time: string;
+    time: number;
     by: string;
     reason: string;
 };
 
 const Warn: Schema = new Schema({
     memberId: String,
-    time: String,
+    time: Number,
     by: String,
     reason: String,
 });

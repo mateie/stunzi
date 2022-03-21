@@ -2,7 +2,7 @@ import { model, Schema, Document } from 'mongoose';
 
 export interface IBlock extends Document {
     memberId: string;
-    time: string;
+    time: number;
     by: string;
     reason: string;
     expired: boolean;
@@ -10,7 +10,7 @@ export interface IBlock extends Document {
 
 export const Block: Schema = new Schema({
     memberId: String,
-    time: String,
+    time: Number,
     by: String,
     reason: String,
     expired: {
