@@ -56,7 +56,7 @@ export const Member: Schema = new Schema({
         },
         progressbar: {
             type: String,
-            default: '#222216',
+            default: '#FF5349',
         },
     },
 });
