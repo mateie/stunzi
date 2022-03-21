@@ -15,7 +15,16 @@ export default class InteractionCreate extends Event implements IEvent {
     }
 
     async run(interaction: CommandInteraction): Promise<void> {
-        const { commandName, member, guild } = interaction;
+        const { commandName } = interaction;
+        const guild = <Guild>interaction.guild;
+        const member = <GuildMember>interaction.member;
+        const isBlocked = await this.client.blocks.isBlocked(member);
+        console.log(isBlocked);
+        if (isBlocked) {
+            const block = await this.client.blocks.get(member);
+            const by = <GuildMember>guild.members.cache.get(block.by);
+            return interaction.reply({ content: `You have been blocked by ${by} from using commands`, ephemeral: true });
+        }
 
         if (interaction.isCommand()) {
             const command: Command = <Command>this.client.commands.get(commandName);
