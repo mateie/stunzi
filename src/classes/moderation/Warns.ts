@@ -1,4 +1,5 @@
-import { CommandInteraction, Guild, GuildMember } from "discord.js";
+import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from "discord.js";
+import { ModalSubmitInteraction } from "@mateie/discord-modals";
 import Client from "../Client";
 import Warn, { IWarn } from "../../schemas/Warn";
 
@@ -10,7 +11,7 @@ export default class Warns {
     }
 
     async create(
-        interaction: CommandInteraction,
+        interaction: CommandInteraction | ButtonInteraction | ModalSubmitInteraction,
         member: GuildMember,
         reason: string
     ) {

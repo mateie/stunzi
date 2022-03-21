@@ -1,4 +1,5 @@
-import { CommandInteraction, Guild, GuildMember, Role, TextChannel } from "discord.js";
+import { ButtonInteraction, CommandInteraction, Guild, GuildMember, Role, TextChannel } from "discord.js";
+import { ModalSubmitInteraction } from "@mateie/discord-modals";
 import Client from "../Client";
 import Mute, { IMute } from "../../schemas/Mute";
 import roles from "../../data/roles";
@@ -12,7 +13,7 @@ export default class Mutes {
     }
 
     async create(
-        interaction: CommandInteraction,
+        interaction: CommandInteraction | ButtonInteraction | ModalSubmitInteraction,
         member: GuildMember,
         time: string,
         reason: string
@@ -37,11 +38,8 @@ export default class Mutes {
             await mute.save();
 
             setTimeout(async () => {
-                interaction.editReply({ content: `${member} was unmuted` })
-                    .catch(() => {
-                        const channel = <TextChannel>interaction.channel;
-                        channel.send({ content: `${member} was unmuted` });
-                    });
+                const channel = <TextChannel>interaction.channel;
+                channel.send({ content: `${member} was unmuted` });
 
                 mute.expired = true;
                 await mute.save();

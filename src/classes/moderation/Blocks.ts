@@ -1,4 +1,5 @@
-import { CommandInteraction, Guild, GuildMember, Interaction, TextChannel } from "discord.js";
+import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from "discord.js";
+import { ModalSubmitInteraction } from "@mateie/discord-modals";
 import Client from "../Client";
 import Block, { IBlock } from "../../schemas/Block";
 import ms from 'ms';
@@ -11,7 +12,7 @@ export default class Blocks {
     }
 
     async create(
-        interaction: CommandInteraction,
+        interaction: CommandInteraction | ButtonInteraction | ModalSubmitInteraction,
         member: GuildMember,
         time: string,
         reason: string
@@ -31,11 +32,8 @@ export default class Blocks {
             await block.save();
 
             setTimeout(async () => {
-                interaction.editReply({ content: `${member} was unblocked` })
-                    .catch(() => {
-                        const channel = <TextChannel>interaction.channel;
-                        channel.send({ content: `${member} was unblocked` });
-                    });
+                const channel = <TextChannel>interaction.channel;
+                channel.send({ content: `${member} was unblocked` });
 
                 block.expired = true;
                 await block.save();
