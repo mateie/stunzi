@@ -56,6 +56,19 @@ export default class Util {
         return new MessageAttachment(attachment, name, data);
     }
 
+    statusEmoji(type: string): string {
+        switch (type) {
+            case 'dnd':
+                return ':red_circle:';
+            case 'idle':
+                return ':yellow_circle:';
+            case 'online':
+                return ':green_circle:';
+            default:
+                return ':white_circle:';
+        }
+    }
+
     chunk(arr: Array<string>, size: number): Array<string[]> {
         const temp = [];
         for (let i = 0; i < arr.length; i += size) {
