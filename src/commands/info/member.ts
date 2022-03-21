@@ -24,7 +24,7 @@ export default class MemberCommand extends Command implements ICommand {
 
         const member = options.getMember('member') ? <GuildMember>options.getMember('member') : <GuildMember>interaction.member;
 
-        if (member?.user.bot) return interaction.reply({ content: `${member} is a bot`, ephemeral: true });
+        if (member.user.bot) return interaction.reply({ content: `${member} is a bot`, ephemeral: true });
 
         const avatar = <string>member.avatarURL({ dynamic: true });
         const activities: Array<string> = [];
