@@ -12,10 +12,10 @@ export interface IMember extends Document {
         region: string;
     };
     card: {
-        background: Schema.Types.Mixed;
+        background: Buffer | string;
         text: string;
         progressbar: string;
-    }
+    },
 };
 
 export const Member: Schema = new Schema({
@@ -56,7 +56,7 @@ export const Member: Schema = new Schema({
         },
         progressbar: {
             type: String,
-            default: '#e70000',
+            default: '#222216',
         },
     },
 });
@@ -66,19 +66,5 @@ Member.pre('save', function (next: () => void) {
     this.level = currentLevel;
     next();
 });
-
-Member.statics.getRank = async function (user: { id: any; }) {
-    const users = await this.find();
-    const sorted = users.sort((a: { xp: number; }, b: { xp: number; }) => b.xp - a.xp);
-    const mapped = sorted.map((u: { id: any; xp: any; }, i: number) => ({
-        id: u.id,
-        xp: u.xp,
-        rank: i + 1,
-    }));
-
-    const userRank = mapped.find((u: { id: any; }) => u.id == user.id).rank;
-
-    return userRank;
-};
 
 export default model<IMember>("Member", Member);
