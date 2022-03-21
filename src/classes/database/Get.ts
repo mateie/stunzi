@@ -13,15 +13,15 @@ export default class Get {
         this.database = database;
     }
 
-    async member(member: GuildMember): Promise<IMember | void | null> {
+    async member(member: GuildMember): Promise<IMember> {
         const dbMember = Member.findOne({ id: member.id });
         if (!dbMember) return await this.database.create.member(member);
-        return dbMember;
+        return <IMember><unknown>dbMember;
     }
 
-    async guild(guild: DiscordGuild): Promise<IGuild | void | null> {
+    async guild(guild: DiscordGuild): Promise<IGuild> {
         const dbGuild = Guild.findOne({ id: guild.id });
         if (!dbGuild) return await this.database.create.guild(guild);
-        return dbGuild;
+        return <IGuild><unknown>dbGuild;
     }
 }
