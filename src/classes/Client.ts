@@ -13,6 +13,10 @@ import Music from './systems/Music';
 import Util from './Util';
 import XP from './systems/XP';
 
+import Blocks from './moderation/Blocks';
+import Mutes from './moderation/Mutes';
+import Warns from './moderation/Warns';
+
 import ICommand from './interfaces/ICommand';
 
 export default class Client extends DiscordClient {
@@ -33,6 +37,10 @@ export default class Client extends DiscordClient {
     util: Util;
     xp: XP;
 
+    blocks: Blocks;
+    mutes: Mutes;
+    warns: Warns;
+
     constructor() {
         super({ intents: 32767 });
 
@@ -52,6 +60,10 @@ export default class Client extends DiscordClient {
         this.modals = modals(this);
         this.util = new Util(this);
         this.xp = new XP(this);
+
+        this.blocks = new Blocks(this);
+        this.mutes = new Mutes(this);
+        this.warns = new Warns(this);
 
         this.login(TOKEN);
     }
