@@ -17,7 +17,14 @@ export default class Update {
         const messages = <Collection<string, Message>>await channel.messages.fetch();
         const message = <Message>messages.first();
         const embed = <MessageEmbed>message.embeds[0];
-        await message.edit({ content: null, embeds: [embed.setDescription(strings.rules)], components: message.components });
+        const row = this.client.util.actionRow()
+            .addComponents(
+                this.client.util.button()
+                    .setCustomId('accept_rules')
+                    .setLabel('Accept Rules')
+                    .setStyle('SUCCESS')
+            )
+        await message.edit({ content: null, embeds: [embed.setDescription(strings.rules)], components: [row] });
         await interaction.reply({ content: 'Updated Rules', ephemeral: true });
     }
 
