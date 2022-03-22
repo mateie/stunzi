@@ -22,9 +22,9 @@ export default class GameRolesEvent extends Event implements IEvent {
         const guild = <Guild>interaction.guild;
         const member = <GuildMember>interaction.member;
 
-        if (!games.map(game => `${game}_role`).includes(customId)) return;
+        if (!games.map(game => `${game}-role`).includes(customId)) return;
 
-        const role = <Role>guild.roles.cache.get(roles.games[customId as keyof typeof roles.games]);
+        const role = <Role>guild.roles.cache.get(roles.games[customId.replace('-', '_') as keyof typeof roles.games]);
 
         if (!member.roles.cache.has(role.id)) {
             member.roles.add(role);
