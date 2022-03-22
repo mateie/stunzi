@@ -89,6 +89,15 @@ export default class Util {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
+    capEachFirstLetter(arr: Array<string>): string {
+        const temp: Array<string> = [];
+        arr.forEach(str => {
+            temp.push(this.capFirstLetter(str));
+        });
+
+        return temp.join(' ');
+    }
+
     async memberActionRow(executer: GuildMember, member: GuildMember): Promise<any> {
         const blocked: boolean = false;
         const muted: boolean = false;
