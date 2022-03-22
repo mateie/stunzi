@@ -15,7 +15,7 @@ export default class Mutes {
     async create(
         interaction: CommandInteraction | ButtonInteraction | ModalSubmitInteraction,
         member: GuildMember,
-        time: string,
+        time: string | null,
         reason: string
     ) {
         const isMuted = await this.isMuted(member);

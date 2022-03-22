@@ -14,7 +14,7 @@ export default class Blocks {
     async create(
         interaction: CommandInteraction | ButtonInteraction | ModalSubmitInteraction,
         member: GuildMember,
-        time: string,
+        time: string | null,
         reason: string
     ) {
         const isBlocked = await this.isBlocked(member);
