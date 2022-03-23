@@ -34,6 +34,6 @@ export default class VoiceMoveCommand extends Command implements ICommand {
 
         currentVC.members.forEach((m: GuildMember) => m.voice.setChannel(newVC, `Moved by ${member}`));
 
-        return interaction.reply({ content: `Moved all the members to ${newVC}` });
+        return interaction.reply({ content: `Moved all the members to ${newVC}`, ephemeral: true });
     }
 }
