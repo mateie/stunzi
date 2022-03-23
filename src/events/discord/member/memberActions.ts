@@ -160,6 +160,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 this.client.util.showModal(modal, { client: this.client, interaction });
                 break;
             case 'unblock_member': {
+                if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
                 const isBlocked = await this.client.blocks.isBlocked(target);
                 if (!isBlocked) return interaction.reply({ content: `${target} is already unblocked`, ephemeral: true });
                 this.client.blocks.unblock(target);
@@ -167,6 +168,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 break;
             }
             case 'unmute_member': {
+                if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
                 const isMuted = await this.client.mutes.isMuted(target);
                 if (!isMuted) return interaction.reply({ content: `${target} is already unmuted`, ephemeral: true });
                 this.client.mutes.unmute(target);
