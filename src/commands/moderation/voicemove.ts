@@ -27,7 +27,9 @@ export default class VoiceMoveCommand extends Command implements ICommand {
         const currentVC = <VoiceChannel>member.voice.channel;
         const newVC = <VoiceChannel>options.getChannel('channel');
 
-        if (!currentVC) return interaction.reply({ content: 'You have to be in a vc to move members', ephemeral: true });
+        if (newVC.type !== 'GUILD_VOICE') return interaction.reply({ content: 'Channel you provided is not a voice channel', ephemeral: true });
+
+        if (!currentVC) return interaction.reply({ content: 'You have to be in a voice channel to move members', ephemeral: true });
         if (newVC.id === currentVC.id) return interaction.reply({ content: 'You cannot move members to the same channel', ephemeral: true });
 
         currentVC.members.forEach((m: GuildMember) => m.voice.setChannel(newVC, `Moved by ${member}`));
