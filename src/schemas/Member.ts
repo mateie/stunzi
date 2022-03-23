@@ -5,12 +5,6 @@ export interface IMember extends Document {
     username: string;
     xp: number;
     level: number;
-    valorant: {
-        authenticated: boolean;
-        username: string;
-        password: string;
-        region: string;
-    };
     card: {
         background: Buffer | string;
         text: string;
@@ -35,15 +29,6 @@ export const Member: Schema = new Schema({
     level: {
         type: Number,
         default: 0,
-    },
-    valorant: {
-        authenticated: {
-            type: Boolean,
-            default: false,
-        },
-        username: String,
-        password: String,
-        region: String
     },
     card: {
         background: {
