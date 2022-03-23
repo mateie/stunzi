@@ -10,6 +10,7 @@ import Cards from './Cards';
 import Cypher from './Cypher';
 import Database from './Database';
 import Music from './systems/Music';
+import Stations from './systems/Stations';
 import Util from './Util';
 import XP from './systems/XP';
 
@@ -35,6 +36,7 @@ export default class Client extends DiscordClient {
     database: Database;
     modals: void;
     music: Music;
+    stations: Stations;
     util: Util;
     xp: XP;
 
@@ -60,6 +62,7 @@ export default class Client extends DiscordClient {
         this.database = new Database(this);
         this.music = new Music(this);
         this.modals = modals(this);
+        this.stations = new Stations(this);
         this.util = new Util(this);
         this.xp = new XP(this);
 
