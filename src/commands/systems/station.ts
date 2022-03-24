@@ -38,31 +38,26 @@ export default class StationCommand extends Command implements ICommand {
                             .setRequired(true)
                     )
             )
-            .addSubcommandGroup(group =>
-                group
-                    .setName('perms')
-                    .setDescription('Allow and deny people typing in stations')
-                    .addSubcommand(subcommand =>
-                        subcommand
-                            .setName('allow')
-                            .setDescription('Allow typing in your station for the members')
-                            .addUserOption(option =>
-                                option
-                                    .setName('member')
-                                    .setDescription('Allow a certain member to type')
-                                    .setRequired(false)
-                            )
+            .addSubcommand(subcommand =>
+                subcommand
+                    .setName('allow')
+                    .setDescription('Allow typing in your station for the members')
+                    .addUserOption(option =>
+                        option
+                            .setName('member')
+                            .setDescription('Allow a certain member to type')
+                            .setRequired(false)
                     )
-                    .addSubcommand(subcommand =>
-                        subcommand
-                            .setName('deny')
-                            .setDescription('Deny typing in your station for the members')
-                            .addUserOption(option =>
-                                option
-                                    .setName('member')
-                                    .setDescription('Deny a certain member to type')
-                                    .setRequired(false)
-                            )
+            )
+            .addSubcommand(subcommand =>
+                subcommand
+                    .setName('deny')
+                    .setDescription('Deny typing in your station for the members')
+                    .addUserOption(option =>
+                        option
+                            .setName('member')
+                            .setDescription('Deny a certain member to type')
+                            .setRequired(false)
                     )
             )
             .addSubcommand(subcommand =>
