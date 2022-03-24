@@ -44,7 +44,7 @@ export default class CardCommand extends Command implements ICommand {
 
         if (!isHexColor(color)) hex = colornames(color);
 
-        if (!hex) return interaction.reply({ content: `${color} doesn't exist`, ephemeral: true });
+        if (!hex) return interaction.reply({ content: `${color} is not a color`, ephemeral: true });
 
         const dbMember = await this.client.database.get.member(member);
 
