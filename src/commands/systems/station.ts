@@ -87,6 +87,14 @@ export default class StationCommand extends Command implements ICommand {
                 if (!station) return interaction.reply({ content: `You don't have a station`, ephemeral: true });
                 const channel = <TextChannel>guild.channels.cache.get(station.channelId);
 
+                await interaction.deferReply({ ephemeral: true }).catch(() => { });
+
+                const messages = await channel.messages.fetch();
+                if (messages.size < 1) {
+                    interaction.followUp({ content: 'You have no tracks in your station', ephemeral: true });
+                    return;
+                }
+
                 const ifQueue = this.client.music.getQueue(guild);
 
                 if (ifQueue) return interaction.reply({ content: `I'm already playing a station`, ephemeral: true });
@@ -100,14 +108,6 @@ export default class StationCommand extends Command implements ICommand {
                 } catch {
                     queue.destroy();
                     return await interaction.reply({ content: "Could not join your voice channel!", ephemeral: true }).catch(() => { });
-                }
-
-                await interaction.deferReply({ ephemeral: true }).catch(() => { });
-
-                const messages = await channel.messages.fetch();
-                if (messages.size < 1) {
-                    interaction.followUp({ content: 'You have no tracks in your station', ephemeral: true });
-                    return;
                 }
                 const promises = messages.filter(m => !m.author.bot).map(async message => {
                     const result = await this.client.music.search(message.content, {
