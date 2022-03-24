@@ -89,7 +89,7 @@ export default class StationCommand extends Command implements ICommand {
 
                 const ifQueue = this.client.music.getQueue(guild);
 
-                if (ifQueue) return interaction.reply({ content: `I am already playing a station`, ephemeral: true });
+                if (ifQueue) return interaction.reply({ content: `I'm already playing a station`, ephemeral: true });
 
                 const queue = this.client.music.createQueue(guild, {
                     metadata: channel
@@ -105,7 +105,10 @@ export default class StationCommand extends Command implements ICommand {
                 await interaction.deferReply({ ephemeral: true }).catch(() => { });
 
                 const messages = await channel.messages.fetch();
-                if (messages.size < 1) return interaction.reply({ content: 'You have no tracks in your station', ephemeral: true });
+                if (messages.size < 1) {
+                    interaction.followUp({ content: 'You have no tracks in your station', ephemeral: true });
+                    return;
+                }
                 const promises = messages.filter(m => !m.author.bot).map(async message => {
                     const result = await this.client.music.search(message.content, {
                         requestedBy: message.author
