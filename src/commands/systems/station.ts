@@ -16,26 +16,58 @@ export default class StationCommand extends Command implements ICommand {
                     .setName('create')
                     .setDescription('Create your station')
             )
-            .addSubcommand(subcommand =>
-                subcommand
-                    .setName('share')
-                    .setDescription('Share your station with someone')
-                    .addUserOption(option =>
-                        option
-                            .setName('member')
-                            .setDescription('Member to share it with')
-                            .setRequired(true)
+            .addSubcommandGroup(group =>
+                group
+                    .setName('sharing')
+                    .setDescription('You can share your station with others (without typing permissions)')
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('share')
+                            .setDescription('Share your station with someone')
+                            .addUserOption(option =>
+                                option
+                                    .setName('member')
+                                    .setDescription('Member to share it with')
+                                    .setRequired(true)
+                            )
+                    )
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('unshare')
+                            .setDescription('Stop sharing your station with someone')
+                            .addUserOption(option =>
+                                option
+                                    .setName('member')
+                                    .setDescription('Member to unshare it with')
+                                    .setRequired(true)
+                            )
                     )
             )
-            .addSubcommand(subcommand =>
-                subcommand
-                    .setName('unshare')
-                    .setDescription('Stop sharing your station with someone')
-                    .addUserOption(option =>
-                        option
-                            .setName('member')
-                            .setDescription('Member to unshare it with')
-                            .setRequired(true)
+            .addSubcommandGroup(group =>
+                group
+                    .setName('perms')
+                    .setDescription('Allow and deny people typing in stations')
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('allow')
+                            .setDescription('Allow typing in your station for the members')
+                            .addUserOption(option =>
+                                option
+                                    .setName('member')
+                                    .setDescription('Allow a certain member to type')
+                                    .setRequired(false)
+                            )
+                    )
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('deny')
+                            .setDescription('Deny typing in your station for the members')
+                            .addUserOption(option =>
+                                option
+                                    .setName('member')
+                                    .setDescription('Deny a certain member to type')
+                                    .setRequired(false)
+                            )
                     )
             )
             .addSubcommand(subcommand =>
