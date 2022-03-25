@@ -23,7 +23,7 @@ export default class StationChannelDeleteEvent extends Event implements IEvent {
         const guild = <Guild>channel.guild;
         const member = <GuildMember>guild.members.cache.get(station.memberId);
 
-        member.send({ content: `Your station was deleted by an admin` })
+        member.send({ content: `Your station was deleted` })
             .then(message => {
                 setTimeout(() => {
                     message.delete();
