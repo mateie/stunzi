@@ -190,7 +190,7 @@ export default class Util {
             i.customId === buttons[0].customId ||
             i.customId === buttons[1].customId;
 
-        const collector = await currPage.createMessageComponentCollector({
+        const collector = currPage.createMessageComponentCollector({
             filter,
             time: timeout
         });
