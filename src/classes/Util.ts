@@ -69,7 +69,7 @@ export default class Util {
         }
     }
 
-    chunk(arr: Array<string>, size: number): Array<string[]> {
+    chunk(arr: any, size: number): Array<string[]> {
         const temp = [];
         for (let i = 0; i < arr.length; i += size) {
             temp.push(arr.slice(i, i + size));
