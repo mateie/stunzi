@@ -10,7 +10,7 @@ export default class StationCommand extends Command implements ICommand {
 
         this.data
             .setName('station')
-            .setDescription('Create your own station or playlists :>')
+            .setDescription('Create your own station to play songs on the go :>')
             .addSubcommand(subcommand =>
                 subcommand
                     .setName('create')
