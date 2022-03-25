@@ -4,6 +4,8 @@ import { promisify } from 'util';
 import { glob } from 'glob';
 import Ascii from 'ascii-table';
 import { Message } from "discord.js";
+import songLyrics from 'songlyrics';
+
 
 const PG = promisify(glob);
 
@@ -16,6 +18,15 @@ export default class Music extends Player {
 
         this.client = client;
         this.files = PG(`${process.cwd()}/build/events/music/*.js`);
+    }
+
+    async searchLyrics(title: string) {
+        try {
+            const search = await songLyrics(title);
+            return search;
+        } catch {
+            return false;
+        }
     }
 
     async loadEvents(): Promise<void> {
@@ -58,9 +69,9 @@ export default class Music extends Player {
                     .setLabel('Show Track Progress')
                     .setStyle('PRIMARY'),
                 this.client.util.button()
-                    .setLabel('Open Track Link')
-                    .setURL(track.url)
-                    .setStyle('LINK')
+                    .setCustomId('show_track_lyrics')
+                    .setLabel('Show Lyrics')
+                    .setStyle('PRIMARY')
             );
 
         const midRow = this.client.util.actionRow()

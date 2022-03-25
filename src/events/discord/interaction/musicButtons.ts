@@ -23,7 +23,7 @@ export default class MusicButtonsEvent extends Event implements IEvent {
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
         if (![
-            'show_queue', 'show_track_progress',
+            'show_queue', 'show_track_progress', 'show_track_lyrics',
             'pause_track', 'resume_track',
             'skip_current_track', 'skip_to_track', 'cancel_track_select',
             'add_tracks',
@@ -67,6 +67,26 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                     message.edit({ components: rows });
                 }, 3000);
                 return interaction.reply({ content: 'Progress bar displayed', ephemeral: true });
+            }
+            case 'show_track_lyrics': {
+                const rows = message.components;
+                const button = <MessageButton>message.components[0].components[2];
+                const showButton = button.setDisabled(true);
+
+                const currentTrack = queue.nowPlaying();
+
+                const title = currentTrack.title.split('(')[0];
+
+                const search = await this.client.music.searchLyrics(title);
+
+                if (!search) return interaction.reply({ content: 'Lyrics not found', ephemeral: true });
+
+                const chunkedLyrics = this.client.util.chunk(search.lyrics, 1024);
+
+                console.log(chunkedLyrics);
+
+                await this.client.util.pagination(interaction, chunkedLyrics, `${title} Lyrics`, false, 60000);
+                break;
             }
             case 'pause_track': {
                 const currentTrack = queue.nowPlaying();
