@@ -1,4 +1,4 @@
-import { roleMention, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "@discordjs/builders";
+import { roleMention, SlashCommandBuilder } from "@discordjs/builders";
 import { PermissionResolvable } from "discord.js";
 import Client from "./Client";
 
