@@ -145,7 +145,7 @@ export default class Util {
         return executer.permissions.has('VIEW_AUDIT_LOG') ? [topRow, midRow, bottomRow] : [topRow];
     }
 
-    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: Array<string> | Array<Array<string>>, title?: string, ephemeral: boolean = false, timeout: number = 12000) {
+    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: Array<string> | Array<Array<string>>, title?: string, timeout: number = 12000) {
         let page = 0;
 
         const buttons = [
