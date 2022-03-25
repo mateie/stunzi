@@ -84,6 +84,13 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                 const chunkedLyrics = this.client.util.chunk(search.lyrics, 1024);
 
                 await this.client.util.pagination(interaction, chunkedLyrics, `${title} Lyrics`, false, 60000);
+
+                message.edit({ components: rows });
+
+                setTimeout(() => {
+                    showButton.setDisabled(true);
+                    message.edit({ components: rows });
+                }, 3000);
                 break;
             }
             case 'pause_track': {
