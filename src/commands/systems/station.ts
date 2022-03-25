@@ -41,7 +41,7 @@ export default class StationCommand extends Command implements ICommand {
             .addSubcommand(subcommand =>
                 subcommand
                     .setName('allow')
-                    .setDescription('Allow typing in your station for the members')
+                    .setDescription('Allow typing/adding tracks in your station for the members')
                     .addUserOption(option =>
                         option
                             .setName('member')
@@ -52,7 +52,7 @@ export default class StationCommand extends Command implements ICommand {
             .addSubcommand(subcommand =>
                 subcommand
                     .setName('deny')
-                    .setDescription('Deny typing in your station for the members')
+                    .setDescription('Deny typing/adding tracks in your station for the members')
                     .addUserOption(option =>
                         option
                             .setName('member')
@@ -80,6 +80,8 @@ export default class StationCommand extends Command implements ICommand {
 
         switch (options.getSubcommand()) {
             case 'create': {
+                const station = await this.client.stations.get(member);
+                if (station) return interaction.reply({ content: 'You already have a station', ephemeral: true });
                 const channel = await this.client.stations.create(member);
                 return interaction.reply({ content: `Your station was created ${channel}`, ephemeral: true });
             }
@@ -98,6 +100,56 @@ export default class StationCommand extends Command implements ICommand {
                 if (!station.sharedWith.includes(unshareWith.id)) return interaction.reply({ content: `Your station is not shared with ${unshareWith}`, ephemeral: true });
                 await this.client.stations.unshare(member, unshareWith);
                 return interaction.reply({ content: `You stopped sharing your station with ${unshareWith}`, ephemeral: true });
+            }
+            case 'allow': {
+                const station = <IStation><unknown>await this.client.stations.get(member);
+                if (!station) return interaction.reply({ content: `You don't have a station`, ephemeral: true });
+                if (options.getMember('member')) {
+                    const allowMember = <GuildMember>options.getMember('member');
+                    if (!station.sharedWith.includes(allowMember.id)) return interaction.reply({ content: `You are not sharing your station with ${allowMember}`, ephemeral: true });
+                    const channel = <TextChannel>await this.client.stations.getChannel(member);
+                    channel.permissionOverwrites.edit(allowMember, {
+                        SEND_MESSAGES: true
+                    });
+                    return await interaction.reply({ content: `You allowed ${allowMember} to type/add tracks in your station`, ephemeral: true });
+                } else {
+                    const members = <Array<string>>station.sharedWith;
+                    const channel = <TextChannel>await this.client.stations.getChannel(member);
+                    if (members.length < 1) return interaction.reply({ content: 'You are not sharing your station with anyone', ephemeral: true });
+                    members.forEach(async id => {
+                        const share = <GuildMember>guild.members.cache.get(id);
+                        await channel.permissionOverwrites.edit(share, {
+                            SEND_MESSAGES: true,
+                        });
+                    });
+
+                    return await interaction.reply({ content: `You allowed all the members in the your station to type/add tracks`, ephemeral: true });
+                }
+            }
+            case 'deny': {
+                const station = <IStation><unknown>await this.client.stations.get(member);
+                if (!station) return interaction.reply({ content: `You don't have a station`, ephemeral: true });
+                if (options.getMember('member')) {
+                    const denyMember = <GuildMember>options.getMember('member');
+                    if (!station.sharedWith.includes(denyMember.id)) return interaction.reply({ content: `You are not sharing your station with ${denyMember}`, ephemeral: true });
+                    const channel = <TextChannel>await this.client.stations.getChannel(member);
+                    channel.permissionOverwrites.edit(denyMember, {
+                        SEND_MESSAGES: false
+                    });
+                    return await interaction.reply({ content: `You denied ${denyMember} to type/add tracks in your station`, ephemeral: true });
+                } else {
+                    const members = <Array<string>>station.sharedWith;
+                    const channel = <TextChannel>await this.client.stations.getChannel(member);
+                    if (members.length < 1) return interaction.reply({ content: 'You are not sharing your station with anyone', ephemeral: true });
+                    members.forEach(async id => {
+                        const member = <GuildMember>guild.members.cache.get(id);
+                        await channel.permissionOverwrites.edit(member, {
+                            SEND_MESSAGES: false,
+                        });
+                    });
+
+                    return await interaction.reply({ content: `You denied all the members in the your station to type/add tracks`, ephemeral: true });
+                }
             }
             case 'play': {
                 const voiceChannel = <VoiceChannel>member.voice.channel;
