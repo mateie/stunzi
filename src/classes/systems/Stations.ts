@@ -1,9 +1,8 @@
-import { CategoryChannel, CommandInteraction, Guild, GuildChannel, GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { CategoryChannel, Guild, GuildChannel, GuildMember } from 'discord.js';
 import Client from '../Client';
 import roles from '../../data/roles';
 import categories from '../../data/categories';
 import Station, { IStation } from '../../schemas/Station';
-import moment from 'moment';
 
 export default class Stations {
     client: Client;
