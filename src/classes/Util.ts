@@ -178,7 +178,7 @@ export default class Util {
         });
 
         if (interaction.deferred === false) {
-            await interaction.deferReply({ ephemeral: true });
+            await interaction.deferReply({ ephemeral });
         }
 
         const currPage = <Message>await interaction.editReply({
