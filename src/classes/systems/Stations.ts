@@ -26,7 +26,8 @@ export default class Stations {
                     allow: [
                         'SEND_MESSAGES',
                         'VIEW_CHANNEL',
-                        'READ_MESSAGE_HISTORY'
+                        'READ_MESSAGE_HISTORY',
+                        'MANAGE_CHANNELS'
                     ],
                     deny: [
                         'USE_APPLICATION_COMMANDS',
@@ -53,8 +54,9 @@ export default class Stations {
         const channel = <GuildChannel>await this.getChannel(member);
 
         channel.permissionOverwrites.edit(shareWith, {
-            'VIEW_CHANNEL': true,
-            'READ_MESSAGE_HISTORY': true
+            VIEW_CHANNEL: true,
+            READ_MESSAGE_HISTORY: true,
+            SEND_MESSAGES: false,
         });
 
         station.sharedWith.push(shareWith.id);
