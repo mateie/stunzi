@@ -84,6 +84,8 @@ export default class MusicCommand extends Command implements ICommand {
         if (guild.me?.voice.channelId && voiceChannel.id !== guild.me.voice.channelId)
             return interaction.reply({ content: `I'm already playing music in ${guild.me.voice.channel}`, ephemeral: true });
 
+        if (member.voice.deaf) return interaction.reply({ content: 'You cannot play music when deafened', ephemeral: true });
+
         let queue = this.client.music.getQueue(guild);
 
         switch (options.getSubcommand()) {
