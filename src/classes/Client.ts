@@ -1,4 +1,4 @@
-const { TOKEN, STEALTH, BUNZI } = process.env;
+const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection } from 'discord.js';
 import moment from 'moment';
 import modals from '@mateie/discord-modals';
