@@ -7,6 +7,7 @@ import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
 import CommandHandler from './handlers/CommandHandler';
+import MenuHandler from './handlers/MenuHandler';
 import EventHandler from './handlers/EventHandler';
 
 import Cards from './Cards';
@@ -32,6 +33,7 @@ export default class Client extends DiscordClient {
     moment: typeof moment;
 
     commandHandler: CommandHandler;
+    menuHandler: MenuHandler;
     eventHandler: EventHandler;
 
     cards: Cards;
@@ -58,6 +60,7 @@ export default class Client extends DiscordClient {
         this.moment = moment;
 
         this.commandHandler = new CommandHandler(this);
+        this.menuHandler = new MenuHandler(this);
         this.eventHandler = new EventHandler(this);
 
         this.cards = new Cards(this);
@@ -80,6 +83,7 @@ export default class Client extends DiscordClient {
     async init(): Promise<void> {
         await this.eventHandler.load();
         await this.commandHandler.load();
+        await this.menuHandler.load();
         await this.music.loadEvents();
     }
 
