@@ -2,6 +2,7 @@ const { TOKEN, STEALTH, BUNZI } = process.env;
 import { Client as DiscordClient, Collection } from 'discord.js';
 import moment from 'moment';
 import modals from '@mateie/discord-modals';
+import NekoClient from 'nekos.life';
 
 import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
@@ -35,6 +36,7 @@ export default class Client extends DiscordClient {
     database: Database;
     modals: void;
     music: Music;
+    nekos: NekoClient;
     util: Util;
     xp: XP;
 
@@ -60,6 +62,7 @@ export default class Client extends DiscordClient {
         this.database = new Database(this);
         this.music = new Music(this);
         this.modals = modals(this);
+        this.nekos = new NekoClient();
         this.util = new Util(this);
         this.xp = new XP(this);
 
