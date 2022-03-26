@@ -19,7 +19,7 @@ export default class Get {
         return <IMember><unknown>dbMember;
     }
 
-    async allMembers(): Promise<Array<IMember>> {
+    async allMembers(): Promise<IMember[]> {
         const members = await Member.find();
         return members;
     }
@@ -30,7 +30,7 @@ export default class Get {
         return <IGuild><unknown>dbGuild;
     }
 
-    async allGuilds(): Promise<Array<IGuild>> {
+    async allGuilds(): Promise<IGuild[]> {
         const guilds = await Guild.find();
         return guilds;
     }

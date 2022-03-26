@@ -69,7 +69,7 @@ export default class Util {
         }
     }
 
-    chunk(arr: any, size: number): Array<string[]> {
+    chunk(arr: any, size: number): string[][] {
         const temp = [];
         for (let i = 0; i < arr.length; i += size) {
             temp.push(arr.slice(i, i + size));
@@ -78,7 +78,7 @@ export default class Util {
         return temp;
     }
 
-    list(arr: Array<string>, conj: string = 'and'): string {
+    list(arr: string[], conj: string = 'and'): string {
         const len = arr.length;
         if (len == 0) return '';
         if (len == 1) return arr[0];
@@ -89,8 +89,8 @@ export default class Util {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    capEachFirstLetter(arr: Array<string>): string {
-        const temp: Array<string> = [];
+    capEachFirstLetter(arr: string[]): string {
+        const temp: string[] = [];
         arr.forEach(str => {
             temp.push(this.capFirstLetter(str));
         });
@@ -98,7 +98,7 @@ export default class Util {
         return temp.join(' ');
     }
 
-    async memberActionRow(executer: GuildMember, member: GuildMember): Promise<any> {
+    async memberActionRow(executer: GuildMember, member: GuildMember): Promise<MessageActionRow[]> {
         const blocked: boolean = false;
         const muted: boolean = false;
 
@@ -145,7 +145,7 @@ export default class Util {
         return executer.permissions.has('VIEW_AUDIT_LOG') ? [topRow, midRow, bottomRow] : [topRow];
     }
 
-    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: Array<string> | Array<Array<string>>, title?: string, ephemeral: boolean = false, timeout: number = 12000) {
+    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: string[] | string[][], title?: string, ephemeral: boolean = false, timeout: number = 12000) {
         let page = 0;
 
         const buttons = [

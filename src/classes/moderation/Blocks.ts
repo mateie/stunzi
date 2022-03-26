@@ -72,7 +72,7 @@ export default class Blocks {
         return <IBlock>block;
     }
 
-    async getAll(member: GuildMember): Promise<Array<IBlock>> {
+    async getAll(member: GuildMember): Promise<IBlock[]> {
         const blocks = await Block.find({ memberId: member.id }).sort({ _id: -1 });
         return blocks;
     }

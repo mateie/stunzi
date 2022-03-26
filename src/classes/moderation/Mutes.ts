@@ -89,7 +89,7 @@ export default class Mutes {
         return <IMute>mute;
     }
 
-    async getAll(member: GuildMember): Promise<Array<IMute>> {
+    async getAll(member: GuildMember): Promise<IMute[]> {
         const mutes = Mute.find({ memberId: member.id }).sort({ _id: -1 });
         return mutes;
     }
