@@ -96,6 +96,10 @@ export default class Client extends DiscordClient {
             body.push(command.data.toJSON());
         });
 
+        allMenus.forEach((menu: IMenu) => {
+            body.push(menu.data.toJSON());
+        });
+
         const rest = new REST({ version: '10' }).setToken(token);
 
         try {
