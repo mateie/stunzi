@@ -54,7 +54,7 @@ export default class MemberCommand extends Command implements ICommand {
             .setColor(member.displayHexColor)
             .setURL(avatar)
             .setThumbnail(avatar)
-            .setDescription(`** Status **: ${status.emoji} ${status.text} ${activities.length > 0 ? `\n**Activities**: ${activities.join('')}` : ''}`)
+            .setDescription(`**Status**: ${status.emoji} ${status.text} ${activities.length > 0 ? `\n**Activities**: ${activities.join('')}` : ''}`)
             .addFields([
                 { name: 'ID', value: member.id },
                 { name: 'Joined Server', value: `${moment(member.joinedAt).toString().substring(0, 15)} (${moment(member.joinedAt).fromNow()})`, inline: true },
