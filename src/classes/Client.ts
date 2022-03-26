@@ -92,7 +92,7 @@ export default class Client extends DiscordClient {
 
         const body: any[] = [];
 
-        allCommands.forEach((command: any) => {
+        allCommands.forEach((command: ICommand) => {
             body.push(command.data.toJSON());
         });
 
