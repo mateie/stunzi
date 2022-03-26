@@ -27,8 +27,7 @@ export default class MenuHandler {
 
             if (!menu.data) return table.addRow(file.split('/')[7], '❌ Failed', 'Missing data');
             if (!menu.data.name) return table.addRow(file.split('/')[7], '❌ Failed', 'Missing name');
-            if (!menu.data.description) return table.addRow(menu.data.name, '❌ Failed', 'Missing description');
-
+            if (!menu.data.type) return table.addRow(menu.data.name, '❌ Failed', 'Missing Type');
             if (menu.permission) {
                 if (perms.includes(menu.permission)) menu.data.defaultPermission = false;
                 else return table.addRow(menu.data.name, '❌ Failed', 'Permission is invalid');
