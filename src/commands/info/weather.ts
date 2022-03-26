@@ -38,7 +38,7 @@ export default class WeatherCommand extends Command implements ICommand {
                     .addField("Temperature: ", place.current.temperature + "°F", true)
                     .addField("Wind Speed: ", place.current.winddisplay, true)
                     .addField("Humidity: ", `${place.current.humidity}%`, true)
-                    .addField("Timezone: ", `UTC${place.location.timezone}`, true)
+                    .addField("Timezone: ", `UTC${place.location.timezone}`, true);
 
                 interaction.reply({ embeds: [embed] });
             });
