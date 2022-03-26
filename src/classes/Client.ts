@@ -22,7 +22,7 @@ import Warns from './moderation/Warns';
 import ICommand from './interfaces/ICommand';
 
 export default class Client extends DiscordClient {
-    owners: (string)[];
+    owners: Array<string>;
 
     commands: Collection<String, ICommand>;
     menus: Collection<String, Object>;
