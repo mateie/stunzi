@@ -29,6 +29,6 @@ export default class ReadyEvent extends Event implements IEvent {
             ]
         })
 
-        this.client.commandHandler.deploy();
+        this.client.deploy();
     }
 }
