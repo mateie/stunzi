@@ -16,7 +16,7 @@ export default class EventHandler {
         this.files = PG(`${process.cwd()}/build/events/discord/**/*.js`);
     }
 
-    async load(): Promise<void> {
+    async load() {
         const table = new Ascii('Events Loaded');
         const files = await this.files;
 
