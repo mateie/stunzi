@@ -26,7 +26,7 @@ export default class MemberCommand extends Command implements ICommand {
 
         if (member.user.bot) return interaction.reply({ content: `${member} is a bot`, ephemeral: true });
 
-        const avatar = <string>member.avatarURL({ dynamic: true });
+        const avatar = member.user.displayAvatarURL({ dynamic: true });
         const activities: string[] = [];
         const status = {
             emoji: ':white_circle:',
