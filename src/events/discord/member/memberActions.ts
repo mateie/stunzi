@@ -36,7 +36,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
         const target: GuildMember = <GuildMember>guild.members.cache.get(message.embeds[0].fields[0].value);
 
         switch (customId) {
-            case `show_card`: {
+            case `show_rank`: {
                 const image = await this.client.cards.getRankCard(member);
                 const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
                 return interaction.reply({ files: [attachment], ephemeral: true });

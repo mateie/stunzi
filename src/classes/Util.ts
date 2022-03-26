@@ -105,8 +105,8 @@ export default class Util {
         const topRow = this.actionRow()
             .addComponents(
                 this.button()
-                    .setCustomId(`show_card`)
-                    .setLabel('Show Card')
+                    .setCustomId(`show_rank`)
+                    .setLabel('Show Rank')
                     .setStyle('SECONDARY'),
             );
 
