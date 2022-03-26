@@ -1,6 +1,6 @@
 import Client from "../Client";
 
-export default interface Event {
+export default interface IEvent {
     client: Client,
     name: string,
     once: boolean | undefined
