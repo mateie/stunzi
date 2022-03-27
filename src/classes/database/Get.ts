@@ -15,7 +15,7 @@ export default class Get {
 
     async member(member: GuildMember): Promise<IMember> {
         const dbMember = await Member.findOne({ id: member.id });
-        if (!dbMember) return await this.database.create.member(member);
+        if (!dbMember) return <IMember>await this.database.create.member(member);
         return <IMember><unknown>dbMember;
     }
 

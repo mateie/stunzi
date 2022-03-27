@@ -13,7 +13,9 @@ export default class Create {
         this.database = database;
     }
 
-    async member(member: GuildMember): Promise<IMember> {
+    async member(member: GuildMember): Promise<IMember | void> {
+        if (member.user.bot) return;
+
         const newMember: IMember = new Member({
             id: member.id,
             username: member.user.username
