@@ -17,11 +17,12 @@ export default class SuggestionEvent extends Event implements IEvent {
     async run(interaction: ButtonInteraction): Promise<void> {
         if (!interaction.isButton()) return;
 
-        const member: GuildMember = <GuildMember>interaction.member;
-        const message: Message = <Message>interaction.message;
-        const customId: string = interaction.customId;
+        const { customId } = interaction;
 
         if (!['suggest-accept', 'suggest-decline'].includes(customId)) return;
+
+        const member: GuildMember = <GuildMember>interaction.member;
+        const message: Message = <Message>interaction.message;
 
         if (!member.permissions.has('ADMINISTRATOR')) return interaction.reply({ content: 'You cannot use this button', ephemeral: true });
 

@@ -17,10 +17,11 @@ export default class AcceptRulesEvent extends Event implements IEvent {
     async run(interaction: ButtonInteraction): Promise<void> {
         if (!interaction.isButton()) return;
 
-        const customId: string = interaction.customId;
-        const member: GuildMember = <GuildMember>interaction.member;
+        const { customId } = interaction;
 
         if (!['accept_rules'].includes(customId)) return;
+
+        const member: GuildMember = <GuildMember>interaction.member;
 
         try {
             switch (customId) {

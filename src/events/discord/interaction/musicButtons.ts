@@ -17,10 +17,6 @@ export default class MusicButtonsEvent extends Event implements IEvent {
         if (!interaction.isButton()) return;
 
         const { customId } = interaction;
-        const guild = <Guild>interaction.guild;
-        const member = <GuildMember>interaction.member;
-        const message = <Message>interaction.message;
-        const voiceChannel = <VoiceChannel>member.voice.channel;
 
         if (![
             'show_queue', 'show_track_progress', 'show_track_lyrics',
@@ -30,6 +26,11 @@ export default class MusicButtonsEvent extends Event implements IEvent {
             'enable_filters', 'disable_filters',
             'cancel_filter_enabling', 'cancel_filter_disabling'
         ].includes(customId)) return;
+
+        const guild = <Guild>interaction.guild;
+        const member = <GuildMember>interaction.member;
+        const message = <Message>interaction.message;
+        const voiceChannel = <VoiceChannel>member.voice.channel;
 
         const queue = this.client.music.getQueue(guild);
         if (!queue) return await interaction.reply({ content: 'Music is not playing', ephemeral: true });
