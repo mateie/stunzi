@@ -2,7 +2,6 @@ const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes, TeamMemberMembershipState } from 'discord-api-types/v10';
-import moment from 'moment';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
@@ -32,7 +31,6 @@ export default class Client extends DiscordClient {
 
     commands: Collection<String, ICommand>;
     menus: Collection<String, IMenu>;
-    moment: typeof moment;
 
     commandHandler: CommandHandler;
     menuHandler: MenuHandler;
@@ -63,7 +61,6 @@ export default class Client extends DiscordClient {
 
         this.commands = new Collection();
         this.menus = new Collection();
-        this.moment = moment;
 
         this.commandHandler = new CommandHandler(this);
         this.menuHandler = new MenuHandler(this);

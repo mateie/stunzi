@@ -59,7 +59,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 if (blocks.length < 1) return interaction.reply({ content: `${target} has no blocks`, ephemeral: true });
                 const mapped = blocks.map(block => {
                     const blocker = guild.members.cache.get(block.by);
-                    const time = block.time ? this.client.moment(block.time).fromNow() : 'Indefinite';
+                    const time = block.time ? `<t:${Math.floor(block.time / 1000)}` : 'Indefinite';
                     return `
                         **Blocked by**: ${blocker}
                         **Reason**: ${block.reason}
@@ -76,7 +76,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 if (mutes.length < 1) return interaction.reply({ content: `${target} has no mutes`, ephemeral: true });
                 const mapped = mutes.map(mute => {
                     const blocker = guild.members.cache.get(mute.by);
-                    const time = mute.time ? this.client.moment(mute.time).fromNow() : 'Indefinite';
+                    const time = mute.time ? `<t:${Math.floor(mute.time / 1000)}` : 'Indefinite';
                     return `
                         **Blocked by**: ${blocker}
                         **Reason**: ${mute.reason}

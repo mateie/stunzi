@@ -2,7 +2,6 @@ import { CommandInteraction, GuildMember } from "discord.js";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
-import moment from "moment";
 
 export default class MemberCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -57,9 +56,9 @@ export default class MemberCommand extends Command implements ICommand {
             .setDescription(`**Status**: ${status.emoji} ${status.text} ${activities.length > 0 ? `\n**Activities**: ${activities.join('')}` : ''}`)
             .addFields([
                 { name: 'ID', value: member.id },
-                { name: 'Joined Server', value: `${moment(member.joinedAt).toString().substring(0, 15)} (${moment(member.joinedAt).fromNow()})`, inline: true },
-                { name: 'Joined Discord', value: `${moment(member.user.createdAt).toString().substring(0, 15)} (${moment(member.user.createdAt).fromNow()})`, inline: true },
-                { name: `Roles (${roles.size})`, value: mappedRoles }
+                { name: 'Joined Server', value: `<t:${Math.floor(<number>member.joinedTimestamp / 1000)}:R>`, inline: true },
+                { name: 'Joined Discord', value: `<t:${Math.floor(<number>member.user.createdTimestamp / 1000)}`, inline: true },
+                { name: `Roles(${roles.size})`, value: mappedRoles }
             ]);
 
         const rows = await this.client.util.memberActionRow(<GuildMember>interaction.member, member);

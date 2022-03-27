@@ -1,5 +1,4 @@
 import { CommandInteraction, Guild, GuildMember } from 'discord.js';
-import moment from 'moment';
 import Client from '../../classes/Client';
 import Command from '../../classes/Command';
 import ICommand from '../../classes/interfaces/ICommand';
@@ -34,7 +33,7 @@ export default class MutesCommand extends Command implements ICommand {
         const mapped = mutes.map(mute => `
                 **Muted by**: ${guild.members.cache.get(mute.by)}
                 **Reason**: ${mute.reason}
-                **Expires**: ${mute.time ? moment(mute.time).fromNow() : 'Never'}
+                **Expires**: ${mute.time ? `<t:${Math.floor(mute.time / 1000)}:R>` : 'Never'}
             `);
 
         this.client.util.pagination(interaction, mapped, `${member.user.tag}'s Mutes`);

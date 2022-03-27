@@ -1,5 +1,4 @@
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
-import moment from "moment";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
@@ -34,7 +33,7 @@ export default class BlocksCommand extends Command implements ICommand {
         const mapped = blocks.map(block => `
                 **Blocked by**: ${guild.members.cache.get(block.by)}
                 **Reason**: ${block.reason}
-                **Expires**: ${block.time ? moment(block.time).fromNow() : 'Never'}
+                **Expires**: ${block.time ? `<t:${Math.floor(block.time / 1000)}:R>` : 'Never'}
             `);
 
         this.client.util.pagination(interaction, mapped, `${member.user.tag}'s Blocks`);

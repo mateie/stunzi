@@ -4,7 +4,6 @@ import Command from '../../classes/Command';
 import ICommand from '../../classes/interfaces/ICommand';
 
 import Weather from 'weather-js';
-import moment from 'moment';
 
 export default class WeatherCommand extends Command implements ICommand {
     constructor(client: Client) {

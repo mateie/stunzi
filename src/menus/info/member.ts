@@ -2,7 +2,6 @@ import { ContextMenuInteraction, Guild, GuildMember } from 'discord.js';
 import Client from '../../classes/Client';
 import Menu from '../../classes/Menu';
 import IMenu from '../../classes/interfaces/IMenu';
-import moment from 'moment';
 
 export default class MemberMenu extends Menu implements IMenu {
     constructor(client: Client) {
@@ -50,8 +49,8 @@ export default class MemberMenu extends Menu implements IMenu {
             .setDescription(`**Status**: ${status.emoji} ${status.text} ${activities.length > 0 ? `\n**Activities**: ${activities.join('')}` : ''}`)
             .addFields([
                 { name: 'ID', value: member.id },
-                { name: 'Joined Server', value: `${moment(member.joinedAt).toString().substring(0, 15)} (${moment(member.joinedAt).fromNow()})`, inline: true },
-                { name: 'Joined Discord', value: `${moment(member.user.createdAt).toString().substring(0, 15)} (${moment(member.user.createdAt).fromNow()})`, inline: true },
+                { name: 'Joined Server', value: `<t:${Math.floor(<number>member.joinedTimestamp / 1000)}:R>`, inline: true },
+                { name: 'Joined Discord', value: `<t:${Math.floor(<number>member.user.createdTimestamp / 1000)}`, inline: true },
                 { name: `Roles (${roles.size})`, value: mappedRoles }
             ]);
 
