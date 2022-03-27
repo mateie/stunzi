@@ -63,7 +63,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                     return `
                         **Blocked by**: ${blocker}
                         **Reason**: ${block.reason}
-                        **Expires on**: ${time}
+                        **${block.expired ? 'Expired on' : 'Expires on'}**: ${time}
                     `;
                 });
 
@@ -75,12 +75,12 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 const mutes = await this.client.mutes.getAll(target);
                 if (mutes.length < 1) return interaction.reply({ content: `${target} has no mutes`, ephemeral: true });
                 const mapped = mutes.map(mute => {
-                    const blocker = guild.members.cache.get(mute.by);
+                    const muter = guild.members.cache.get(mute.by);
                     const time = mute.time ? `<t:${Math.floor(mute.time / 1000)}:R>` : 'Indefinite';
                     return `
-                        **Blocked by**: ${blocker}
+                        **Blocked by**: ${muter}
                         **Reason**: ${mute.reason}
-                        **Expires on**: ${time}
+                        **${mute.expired ? 'Expired on' : 'Expires on'}**: ${time}
                     `;
                 });
 
