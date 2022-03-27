@@ -215,7 +215,7 @@ export default class Util {
             collector.resetTimer();
         })
             .on('end', (_, reason) => {
-                if (reason !== 'messageDelete') {
+                if (reason !== 'messageDelete' && !ephemeral) {
                     const disabledRow = this.actionRow().addComponents(
                         buttons[0].setDisabled(true),
                         buttons[1].setDisabled(true)
