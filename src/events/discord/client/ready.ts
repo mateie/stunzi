@@ -22,6 +22,8 @@ export default class ReadyEvent extends Event implements IEvent {
         this.client.database.verify.members(guild);
         this.client.database.verify.guilds();
 
+        this.client.mainGuild = guild;
+
         this.client.user?.setPresence({
             status: 'online',
             activities: [
