@@ -32,6 +32,7 @@ export default class UpdateCommand extends Command implements ICommand {
             }
             case 'games': {
                 this.client.update.gameRoles(interaction);
+                break;
             }
         }
     }
