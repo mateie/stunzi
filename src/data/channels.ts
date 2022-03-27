@@ -11,6 +11,9 @@ export default {
         tickets: {
             open: '946721833942667345',
             transcripts: '946721847305715743'
+        },
+        minecraft: {
+            serverChat: '957571549454532638',
         }
     },
     voice: {

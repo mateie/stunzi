@@ -1,7 +1,7 @@
 const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild } from 'discord.js';
 import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v10';
+import { Routes, TeamMemberMembershipState } from 'discord-api-types/v10';
 import moment from 'moment';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
@@ -21,6 +21,8 @@ import Blocks from './moderation/Blocks';
 import Mutes from './moderation/Mutes';
 import Update from './moderation/Update';
 import Warns from './moderation/Warns';
+
+import Minecraft from './games/Minecraft';
 
 import ICommand from './interfaces/ICommand';
 import IMenu from './interfaces/IMenu';
@@ -50,6 +52,10 @@ export default class Client extends DiscordClient {
     update: Update;
     warns: Warns;
 
+    minecraft: Minecraft;
+
+    mainGuild: Guild | undefined;
+
     constructor() {
         super({ intents: 32767 });
 
@@ -77,6 +83,8 @@ export default class Client extends DiscordClient {
         this.update = new Update(this);
         this.warns = new Warns(this);
 
+        this.minecraft = new Minecraft(this);
+
         this.login(TOKEN);
     }
 
@@ -85,6 +93,8 @@ export default class Client extends DiscordClient {
         await this.commandHandler.load();
         await this.menuHandler.load();
         await this.music.loadEvents();
+
+        await this.minecraft.loadServerEvents();
     }
 
     async deploy() {

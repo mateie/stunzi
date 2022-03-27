@@ -32,5 +32,6 @@ export default class ReadyEvent extends Event implements IEvent {
         });
 
         this.client.deploy();
+        this.client.minecraft.start();
     }
 }
