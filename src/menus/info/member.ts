@@ -50,7 +50,7 @@ export default class MemberMenu extends Menu implements IMenu {
             .addFields([
                 { name: 'ID', value: member.id },
                 { name: 'Joined Server', value: `<t:${Math.floor(<number>member.joinedTimestamp / 1000)}:R>`, inline: true },
-                { name: 'Joined Discord', value: `<t:${Math.floor(<number>member.user.createdTimestamp / 1000)}`, inline: true },
+                { name: 'Joined Discord', value: `<t:${Math.floor(<number>member.user.createdTimestamp / 1000)}:R>`, inline: true },
                 { name: `Roles (${roles.size})`, value: mappedRoles }
             ]);
 
