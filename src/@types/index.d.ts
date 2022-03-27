@@ -3,3 +3,4 @@ declare module 'ascii-table';
 declare module 'valorant-api-js';
 declare module 'weather-js';
 declare module 'disrequire';
+declare module 'crafatar';
