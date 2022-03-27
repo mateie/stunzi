@@ -3,8 +3,8 @@ import Client from "../Client";
 import Database from "../Database";
 
 export default class Verify {
-    client: Client;
-    database: Database;
+    readonly client: Client;
+    readonly database: Database;
 
     constructor(client: Client, database: Database) {
         this.client = client;

@@ -7,8 +7,8 @@ import perms from '../../data/permissions';
 const PG = promisify(glob);
 
 export default class MenuHandler {
-    client: Client;
-    files: Promise<string[]>
+    readonly client: Client;
+    private readonly files: Promise<string[]>
 
     constructor(client: Client) {
         this.client = client;

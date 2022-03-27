@@ -3,7 +3,7 @@ import { PermissionResolvable } from "discord.js";
 import Client from "./Client";
 
 export default class Menu {
-    client: Client;
+    readonly client: Client;
     data:
         | ContextMenuCommandBuilder;
     permission: PermissionResolvable | undefined;

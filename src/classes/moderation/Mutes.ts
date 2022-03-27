@@ -6,7 +6,7 @@ import roles from "../../data/roles";
 import ms from "ms";
 
 export default class Mutes {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

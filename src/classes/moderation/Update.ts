@@ -5,7 +5,7 @@ import games from "../../data/games";
 import strings from "../../data/strings";
 
 export default class Update {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

@@ -5,7 +5,7 @@ import { Stream } from "stream";
 import { RawMessageAttachmentData } from "discord.js/typings/rawDataTypes";
 
 export default class Util {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

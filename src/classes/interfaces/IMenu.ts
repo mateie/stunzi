@@ -3,7 +3,7 @@ import Client from "../Client";
 import { ContextMenuCommandBuilder } from "@discordjs/builders";
 
 export default interface IMenu {
-    client: Client,
+    readonly client: Client,
     permission: PermissionResolvable | undefined;
     data:
     | ContextMenuCommandBuilder

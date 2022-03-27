@@ -4,8 +4,8 @@ import Client from './Client';
 const { SECRET } = process.env;
 
 export default class Cypher {
-    client: Client;
-    crypt: Cryptr;
+    readonly client: Client;
+    readonly crypt: Cryptr;
 
     constructor(client: Client) {
         this.client = client;

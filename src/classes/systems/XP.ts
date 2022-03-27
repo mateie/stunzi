@@ -3,7 +3,7 @@ import { IMember } from "../../schemas/Member";
 import Client from "../Client";
 
 export default class XP {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

@@ -28,7 +28,7 @@ import ICommand from './interfaces/ICommand';
 import IMenu from './interfaces/IMenu';
 
 export default class Client extends DiscordClient {
-    owners: string[];
+    readonly owners: string[];
 
     commands: Collection<String, ICommand>;
     menus: Collection<String, IMenu>;
@@ -54,7 +54,7 @@ export default class Client extends DiscordClient {
 
     minecraft: Minecraft;
 
-    mainGuild: Guild | undefined;
+    mainGuild!: Guild;
 
     constructor() {
         super({ intents: 32767 });
@@ -99,7 +99,7 @@ export default class Client extends DiscordClient {
 
     async deploy() {
         const clientId = <string>this.user?.id;
-        const guild = <Guild>this.guilds.cache.first();
+        const guild = this.mainGuild;
         const allCommands = this.commands;
         const allMenus = this.menus;
         const token: string = <string>this.token;

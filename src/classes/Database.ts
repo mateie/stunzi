@@ -8,12 +8,12 @@ import Create from "./database/Create";
 import Get from "./database/Get";
 
 export default class Database {
-    client: Client;
+    readonly client: Client;
 
-    check: Check;
-    create: Create;
-    get: Get;
-    verify: Verify;
+    readonly check: Check;
+    readonly create: Create;
+    readonly get: Get;
+    readonly verify: Verify;
 
     constructor(client: Client) {
         this.client = client;

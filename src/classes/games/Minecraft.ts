@@ -13,8 +13,8 @@ const { RCON_PASSWORD } = process.env;
 const PG = promisify(glob);
 
 export default class Minecraft extends ScriptServer {
-    client: Client;
-    eventFiles: Promise<string[]>
+    readonly client: Client;
+    private readonly eventFiles: Promise<string[]>
 
     online: boolean;
 

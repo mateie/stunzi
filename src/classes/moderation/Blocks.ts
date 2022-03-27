@@ -5,7 +5,7 @@ import Block, { IBlock } from "../../schemas/Block";
 import ms from 'ms';
 
 export default class Blocks {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

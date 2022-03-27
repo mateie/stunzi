@@ -5,13 +5,13 @@ import { IMember } from "../schemas/Member";
 import { Rank } from 'canvacord';
 
 export default class Cards {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;
     }
 
-    async boosterThanks(member: GuildMember) {
+    public async boosterThanks(member: GuildMember) {
         const { guild }: { guild: Guild } = member;
         const canvas = Canvas.createCanvas(800, 250);
         const ctx = canvas.getContext('2d');
@@ -45,7 +45,7 @@ export default class Cards {
         member.send({ embeds: [embed] });
     }
 
-    async getCardData(member: IMember) {
+    public async getCardData(member: IMember) {
         const currentXP = member.xp - this.client.xp.calculateXPForLevel(member.level);
         const neededXP = this.client.xp.calculateReqXP(member.xp) + currentXP;
 
@@ -64,7 +64,7 @@ export default class Cards {
         return info;
     }
 
-    async getRank(member: IMember): Promise<number | undefined> {
+    public async getRank(member: IMember): Promise<number | undefined> {
         const members = await this.client.database.get.allMembers();
         const sorted = members.sort((a, b) => b.xp - a.xp);
 
@@ -79,7 +79,7 @@ export default class Cards {
         return rank;
     }
 
-    async getRankCard(member: GuildMember) {
+    public async getRankCard(member: GuildMember) {
         const memberD = await this.client.database.get.member(member);
         const cardData = await this.getCardData(memberD);
 

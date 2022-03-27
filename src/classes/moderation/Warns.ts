@@ -4,7 +4,7 @@ import Client from "../Client";
 import Warn, { IWarn } from "../../schemas/Warn";
 
 export default class Warns {
-    client: Client;
+    readonly client: Client;
 
     constructor(client: Client) {
         this.client = client;

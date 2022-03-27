@@ -7,8 +7,8 @@ import events from '../../validation/eventNames';
 const PG = promisify(glob);
 
 export default class EventHandler {
-    client: Client;
-    files: Promise<string[]>;
+    readonly client: Client;
+    private readonly files: Promise<string[]>;
 
     constructor(client: Client) {
         this.client = client;

@@ -5,8 +5,8 @@ import Member, { IMember } from "../../schemas/Member";
 import Guild, { IGuild } from "../../schemas/Guild";
 
 export default class Get {
-    client: Client;
-    database: Database;
+    readonly client: Client;
+    readonly database: Database;
 
     constructor(client: Client, database: Database) {
         this.client = client;

@@ -10,8 +10,8 @@ import songLyrics from 'songlyrics';
 const PG = promisify(glob);
 
 export default class Music extends Player {
-    client: Client;
-    files: Promise<string[]>;
+    readonly client: Client;
+    private readonly files: Promise<string[]>;
 
     constructor(client: Client) {
         super(client);
