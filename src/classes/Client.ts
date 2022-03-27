@@ -25,12 +25,14 @@ import Minecraft from './games/Minecraft';
 
 import ICommand from './interfaces/ICommand';
 import IMenu from './interfaces/IMenu';
+import IMineCommand from './interfaces/IMineCommand';
 
 export default class Client extends DiscordClient {
     readonly owners: string[];
 
     commands: Collection<String, ICommand>;
     menus: Collection<String, IMenu>;
+    minecraftCommands: Collection<String, IMineCommand>;
 
     commandHandler: CommandHandler;
     menuHandler: MenuHandler;
@@ -61,6 +63,7 @@ export default class Client extends DiscordClient {
 
         this.commands = new Collection();
         this.menus = new Collection();
+        this.minecraftCommands = new Collection();
 
         this.commandHandler = new CommandHandler(this);
         this.menuHandler = new MenuHandler(this);
@@ -91,7 +94,8 @@ export default class Client extends DiscordClient {
         await this.menuHandler.load();
         await this.music.loadEvents();
 
-        await this.minecraft.loadServerEvents();
+        await this.minecraft.loadEvents();
+        await this.minecraft.loadCommands();
     }
 
     async deploy() {

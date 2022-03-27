@@ -7,7 +7,7 @@ export default {
         dead_by_daylight_role: '939237428529602670',
         csgo_role: '942216967769686097',
         valorant_role: '942216726366531596',
-        fortnite_role: '940125999172059137',
+        minecraft_role: '957701128907272192'
     },
     activities: {
         discord_together: '942224728230342696'

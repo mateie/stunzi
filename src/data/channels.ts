@@ -14,6 +14,7 @@ export default {
         },
         minecraft: {
             serverChat: '957571549454532638',
+            music: '957712784601276476',
         }
     },
     voice: {
