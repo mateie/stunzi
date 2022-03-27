@@ -134,6 +134,62 @@
   resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.2.0.tgz#fa915798d0a0ce5fa93b16c793185ae5d0a3f117"
   integrity sha512-tfHzY+6/5bbHdB+uNqsEQ5rhjaZAoFUrqP/l1S5jwxMdKeSCIiGkJjcE99/WGGdzyWGjTNgNVX/dt4Me/FdMlg==
 
+"@scriptserver/command@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/command/-/command-2.0.4.tgz#2a42a47b27e6c33c078c1d77fd6c299030f99798"
+  integrity sha512-P47/jouNleClvyqkh2+lVGNuKq9vDwc/Ov8laMevTgGBP+PRASUnUXA6qM80JWGU6AYoCz8YKqE+tEZnoFxbnw==
+  dependencies:
+    "@scriptserver/core" "^2.0.4"
+    "@scriptserver/event" "^2.0.4"
+    lodash.defaultsdeep "^4.6.1"
+
+"@scriptserver/core@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/core/-/core-2.0.4.tgz#88a1f34c992c100d8f0d6457b3a4132e1284ce27"
+  integrity sha512-PcoJHDJNWsbRs21XWCDOgUo79cfLDAmzRoLyE17HYmNPsXslf5NeUenX4Fmv9965+xKCfE8fAcoY4n7yGH7q+A==
+  dependencies:
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+
+"@scriptserver/essentials@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/essentials/-/essentials-2.0.4.tgz#89ad984a184c323d9220f1c7027282e9143ad67a"
+  integrity sha512-wYarbGm3fNjkQIJy9R41YVuKW2roW3uIikaD8gWxAlP5HqO6VA8V1Oq7gYf0rQ0e+KONgwKl30bvpes3IliPLQ==
+  dependencies:
+    "@scriptserver/command" "^2.0.4"
+    "@scriptserver/core" "^2.0.4"
+    "@scriptserver/event" "^2.0.4"
+    "@scriptserver/json" "^2.0.4"
+    "@scriptserver/util" "^2.0.4"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.template "^4.5.0"
+
+"@scriptserver/event@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/event/-/event-2.0.4.tgz#a1c1d56c3516e1a3c32bd61d31cb6d4cde1097e9"
+  integrity sha512-nyFC6jWOe+v/1aheYqtec9BRxOmeEkYsAJti/6Q9510KRuzb2tr/ng3HdmM1ewXDgITBxCRWEvK07iLCb6rNyg==
+  dependencies:
+    "@scriptserver/core" "^2.0.4"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+
+"@scriptserver/json@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/json/-/json-2.0.4.tgz#a64578295b401f75933de08e07ed1a5a13a4dc22"
+  integrity sha512-3IlUkvUWCWrN3RCQLuePZuVv1esxA2/OyVMfv2J2HAtS2znT8A9XxdAF9EVL6VBijrZY42EsqGBwG04aAq1xww==
+  dependencies:
+    "@scriptserver/core" "^2.0.4"
+    lodash.defaultsdeep "^4.6.1"
+
+"@scriptserver/util@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@scriptserver/util/-/util-2.0.4.tgz#d4b9603cc97a5fa43feacd969bedec3e306b97d5"
+  integrity sha512-o8S/3h7deq0xNvIirMI2b8uJpyNIbTJWZXGuK8dko/wfQPuRWYsqNT0BQOo/K6Yk9KuK2bh7vEXsUC8x8Tz3jg==
+  dependencies:
+    "@scriptserver/core" "^2.0.4"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+
 "@sindresorhus/is@^4.0.0", "@sindresorhus/is@^4.2.0", "@sindresorhus/is@^4.3.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
@@ -1095,10 +1151,40 @@ libsodium@^0.7.0:
   resolved "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.10.tgz#c2429a7e4c0836f879d701fec2c8a208af024159"
   integrity sha512-eY+z7hDrDKxkAK+QKZVNv92A5KYkxfvIshtBJkmg5TSiCnYqZP3i9OO9whE79Pwgm4jGaoHgkM4ao/b9Cyu4zQ==
 
+lodash._reinterpolate@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
+  integrity sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=
+
 lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.defaultsdeep@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
+  integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
+
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.template@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.5.0.tgz#f976195cf3f347d0d5f52483569fe8031ccce8ab"
+  integrity sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==
+  dependencies:
+    lodash._reinterpolate "^3.0.0"
+    lodash.templatesettings "^4.0.0"
+
+lodash.templatesettings@^4.0.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.templatesettings/-/lodash.templatesettings-4.2.0.tgz#e481310f049d3cf6d47e912ad09313b154f0fb33"
+  integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
+  dependencies:
+    lodash._reinterpolate "^3.0.0"
 
 lowercase-keys@^2.0.0:
   version "2.0.0"

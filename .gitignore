@@ -4,3 +4,5 @@ node_modules
 .vscode
 build
 yarn-error.log
+minecraft/*
+json
