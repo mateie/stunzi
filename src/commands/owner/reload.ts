@@ -16,9 +16,8 @@ export default class ReloadCommand extends Command implements ICommand {
     async run(interaction: CommandInteraction) {
         await this.client.commandHandler.reload();
         await this.client.menuHandler.reload();
-        await this.client.eventHandler.reload();
         await this.client.deploy();
 
-        interaction.reply({ content: 'Realoded', ephemeral: true });
+        interaction.reply({ content: 'Reloaded', ephemeral: true });
     }
 }

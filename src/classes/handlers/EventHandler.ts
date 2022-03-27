@@ -42,31 +42,4 @@ export default class EventHandler {
 
         console.log(table.toString());
     }
-
-    async reload() {
-        const table = new Ascii('Events Reloaded');
-        const files = await this.files;
-
-        files.forEach(async file => {
-            const { default: Event } = require(file);
-            if (typeof Event !== 'function') return table.addRow('❌ Event is not a class');
-            const event = new Event(this.client);
-
-            if (!events.includes(event.name) || !event.name) {
-                const l = file.split('/');
-                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + `/` + l[5]}`);
-                return;
-            }
-
-            if (event.once) {
-                this.client.once(event.name, (...args) => event.run(...args));
-            } else {
-                this.client.on(event.name, (...args) => event.run(...args));
-            }
-
-            table.addRow(event.name, '✔ Reloaded');
-        });
-
-        console.log(table.toString());
-    }
 }
