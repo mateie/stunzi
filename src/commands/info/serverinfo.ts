@@ -8,7 +8,7 @@ export default class ServerCommand extends Command implements ICommand {
         super(client);
 
         this.data
-            .setName('server')
+            .setName('serverinfo')
             .setDescription('Display Server Information');
     }
 
