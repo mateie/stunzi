@@ -20,7 +20,7 @@ export default class PreventBlacklistedWordseEvent extends Event implements IEve
         if (!blacklistedWords.includes(message.content)) return;
 
         await message.delete();
-        const msg = await message.channel.send({ content: 'You cannot say that word' });
+        const msg = await message.channel.send({ content: 'You cannot say that' });
         setTimeout(async () => {
             await msg.delete();
         }, 3000);
