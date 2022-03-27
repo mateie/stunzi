@@ -27,7 +27,7 @@ export default class ReadyEvent extends Event implements IEvent {
             activities: [
                 { name: 'S&B', type: 'LISTENING' }
             ]
-        })
+        });
 
         this.client.deploy();
     }
