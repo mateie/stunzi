@@ -41,7 +41,7 @@ export default class SMPCommand extends Command implements ICommand {
 
                 if (!online) return interaction.reply({ content: `${username} is not online`, ephemeral: true });
 
-                await this.client.minecraft.rconConnection.send(`msg ${username} "${member.user.tag} - ${message}"`);
+                await this.client.minecraft.rconConnection.send(`tellraw ${username} ["",{"text":"${member.user.tag} ","bold":true},{"text":"whispered you: ","italic":true},{"text":"${message}"}]`);
                 return interaction.reply({ content: `Whispered to **${username}**`, ephemeral: true });
             }
         }
