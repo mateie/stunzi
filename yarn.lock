@@ -719,6 +719,11 @@ discord.js@^13.6.0:
     node-fetch "^2.6.1"
     ws "^8.4.0"
 
+disrequire@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/disrequire/-/disrequire-1.1.2.tgz#5258231563c6850a501237e37f41a6208105e65e"
+  integrity sha512-UaachK0eL7neLyL2emXptVGyggGJKowJd24rqCZi9N2CDxuCQTk7wdePTgS7py4HMh+qxUI6zzTVinVwCDTbIA==
+
 docopt@~0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/docopt/-/docopt-0.6.2.tgz#b28e9e2220da5ec49f7ea5bb24a47787405eeb11"
