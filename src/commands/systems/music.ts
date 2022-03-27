@@ -100,7 +100,7 @@ export default class MusicCommand extends Command implements ICommand {
                         if (!queue.connection) await queue.connect(voiceChannel);
                     } catch {
                         queue.destroy();
-                        return await interaction.reply({ content: "Could not join your voice channel!", ephemeral: true }).catch(() => { });
+                        return await interaction.reply({ content: "Could not join your voice channel", ephemeral: true }).catch(() => { });
                     }
 
                     firstTime = true;
