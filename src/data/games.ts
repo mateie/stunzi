@@ -1,1 +1,1 @@
-export default ['valorant', 'csgo', 'dead_by_daylight', 'minecraft'];
+export default ['valorant', 'dead_by_daylight', 'minecraft'];
