@@ -1,4 +1,4 @@
-import { Collection, CommandInteraction, EmojiResolvable, Guild, GuildEmoji, Message, MessageEmbed, TextChannel } from "discord.js";
+import { Collection, CommandInteraction, EmojiResolvable, Guild, GuildEmoji, Message, MessageEmbed, Role, TextChannel } from "discord.js";
 import Client from "../Client";
 import channels from "../../data/channels";
 import games from "../../data/games";
@@ -40,9 +40,10 @@ export default class Update {
             .filter(el => el !== undefined);
         const buttons = games.map(game => {
             const gameName = this.client.util.capEachFirstLetter(game.split('_'));
+            const role = <Role>guild.roles.cache.find(role => role.name.toLowerCase() === game.split('_').join(' ').toLowerCase());
             return this.client.util.button()
                 .setCustomId(`${game}-role`)
-                .setLabel(gameName === 'Csgo' ? 'CSGO' : gameName)
+                .setLabel(role.name)
                 .setEmoji(<EmojiResolvable>emojis.find((emoji) => emoji?.name == game))
                 .setStyle('SECONDARY');
         });
