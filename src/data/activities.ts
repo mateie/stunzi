@@ -1,1 +1,0 @@
-export default ['discord_together'];

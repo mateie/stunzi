@@ -9,7 +9,4 @@ export default {
         valorant_role: '942216726366531596',
         minecraft_role: '957701128907272192'
     },
-    activities: {
-        discord_together: '942224728230342696'
-    }
 }
