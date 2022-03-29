@@ -33,7 +33,7 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
 
         const guild = this.client.mainGuild;
         const member = <GuildMember>guild.members.cache.get(db.memberId);
-        const channel = <TextChannel>guild.channels.cache.get(channels.text.minecraft.music);
+        const channel = <TextChannel>guild.channels.cache.get(channels.text.music);
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
         if (!voiceChannel) return this.server.util.tellRaw('You must be in a voice channel to be able to use the music commands', player);

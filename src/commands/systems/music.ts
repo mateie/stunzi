@@ -2,6 +2,7 @@ import { CommandInteraction, Guild, GuildMember, TextChannel, VoiceChannel } fro
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
+import channels from "../../data/channels";
 
 export default class MusicCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -75,7 +76,7 @@ export default class MusicCommand extends Command implements ICommand {
 
         const guild = <Guild>interaction.guild;
         const member = <GuildMember>interaction.member;
-        const channel = <TextChannel>interaction.channel;
+        const channel = <TextChannel>guild.channels.cache.get(channels.text.music);
 
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
