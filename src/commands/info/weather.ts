@@ -29,8 +29,6 @@ export default class WeatherCommand extends Command implements ICommand {
 
                 const place = result[0];
 
-                console.log(place);
-
                 const embed = this.client.util.embed()
                     .setTitle(`${place.location.name}`)
                     .setThumbnail(place.current.imageUrl)
