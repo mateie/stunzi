@@ -23,7 +23,6 @@ export default class PreventSendingMessage extends Event implements IEvent {
             channels.text.welcome,
             channels.text.rules,
             channels.text.games,
-            channels.text.activities,
             channels.text.suggestions,
             channels.text.tickets.open,
             channels.text.tickets.transcripts
