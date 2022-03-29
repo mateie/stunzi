@@ -48,8 +48,6 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
             case 'play': {
                 if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
 
-                let firstTime = false;
-
                 if (!queue) {
                     queue = this.client.music.createQueue(guild, {
                         metadata: channel
@@ -61,8 +59,6 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
                         queue.destroy();
                         return this.server.util.tellRaw('Could not join your voice channel', player);
                     }
-
-                    firstTime = true;
                 }
 
                 const query = args.join('');
@@ -76,7 +72,7 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
                 if (result.playlist) queue.addTracks(result.playlist.tracks);
                 else queue.addTrack(result.tracks[0]);
 
-                if (firstTime) queue.play();
+                if (queue.playing) queue.play();
 
                 this.server.util.tellRaw('Track/Playlist Received', player);
                 break;

@@ -91,7 +91,6 @@ export default class MusicCommand extends Command implements ICommand {
 
         switch (options.getSubcommand()) {
             case 'play': {
-                let firstTime = false;
                 if (!queue) {
                     queue = this.client.music.createQueue(guild, {
                         metadata: channel
@@ -103,8 +102,6 @@ export default class MusicCommand extends Command implements ICommand {
                         queue.destroy();
                         return await interaction.reply({ content: "Could not join your voice channel", ephemeral: true }).catch(() => { });
                     }
-
-                    firstTime = true;
                 }
 
                 await interaction.deferReply({ ephemeral: true }).catch(() => { });
@@ -122,7 +119,7 @@ export default class MusicCommand extends Command implements ICommand {
                 if (result.playlist) queue.addTracks(result.playlist.tracks);
                 else queue.addTrack(result.tracks[0]);
 
-                if (firstTime) queue.play();
+                if (queue.playing) queue.play();
 
                 await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true }).catch(() => { });
 
