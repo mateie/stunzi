@@ -22,7 +22,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
         const customId: string = interaction.customId;
 
         if (![
-            'show_card',
+            'show_rank',
             'show_warns',
             'show_blocks',
             'show_mutes',
