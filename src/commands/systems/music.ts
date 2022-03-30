@@ -119,7 +119,7 @@ export default class MusicCommand extends Command implements ICommand {
                 if (result.playlist) queue.addTracks(result.playlist.tracks);
                 else queue.addTrack(result.tracks[0]);
 
-                if (queue.playing) queue.play();
+                if (!queue.playing) queue.play();
 
                 await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true }).catch(() => { });
 

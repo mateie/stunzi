@@ -72,7 +72,7 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
                 if (result.playlist) queue.addTracks(result.playlist.tracks);
                 else queue.addTrack(result.tracks[0]);
 
-                if (queue.playing) queue.play();
+                if (!queue.playing) queue.play();
 
                 this.server.util.tellRaw('Track/Playlist Received', player);
                 break;
