@@ -21,7 +21,6 @@ export default class MusicModal extends Event implements IEvent {
         const member = <GuildMember>interaction.member;
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
-
         const queue = this.client.music.getQueue(guild);
         if (!queue) return await interaction.reply({ content: 'Queue does not exist', ephemeral: true });
 
