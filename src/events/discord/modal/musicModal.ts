@@ -15,11 +15,12 @@ export default class MusicModal extends Event implements IEvent {
     }
 
     async run(interaction: ModalSubmitInteraction) {
+        if (!['add_tracks_modal'].includes(interaction.customId)) return;
+
         const guild = <Guild>interaction.guild;
         const member = <GuildMember>interaction.member;
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
-        if (!['add_tracks_modal'].includes(interaction.customId)) return;
 
         const queue = this.client.music.getQueue(guild);
         if (!queue) return await interaction.reply({ content: 'Queue does not exist', ephemeral: true });
