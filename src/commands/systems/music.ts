@@ -181,7 +181,7 @@ export default class MusicCommand extends Command implements ICommand {
             case 'shuffle': {
                 if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
 
-                queue.shuffle();
+                if (queue.tracks.length < 2) return await interaction.reply({ content: 'There are no upcoming tracks', ephemeral: true });
 
                 return interaction.reply({ content: 'Queue shuffled', ephemeral: true });
             }
