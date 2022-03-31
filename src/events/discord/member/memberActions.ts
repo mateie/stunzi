@@ -37,7 +37,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
 
         switch (customId) {
             case `show_rank`: {
-                const image = await this.client.cards.getRankCard(member);
+                const image = await this.client.cards.getRankCard(target);
                 const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
                 return interaction.reply({ files: [attachment], ephemeral: true });
             }
