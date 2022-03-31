@@ -1,6 +1,6 @@
 import { CommandEvent } from "@scriptserver/command";
 import { RconConnection } from "@scriptserver/core";
-import Client from "../Client";
+import Client from "../../Client";
 
 export default class MineCommand {
     readonly client: Client;

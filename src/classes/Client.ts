@@ -22,6 +22,7 @@ import Update from './moderation/Update';
 import Warns from './moderation/Warns';
 
 import Minecraft from './games/Minecraft';
+import Valorant from './games/Valorant';
 
 import ICommand from './interfaces/ICommand';
 import IMenu from './interfaces/IMenu';
@@ -53,6 +54,7 @@ export default class Client extends DiscordClient {
     warns: Warns;
 
     minecraft: Minecraft;
+    valorant: Valorant;
 
     mainGuild!: Guild;
 
@@ -84,6 +86,7 @@ export default class Client extends DiscordClient {
         this.warns = new Warns(this);
 
         this.minecraft = new Minecraft(this);
+        this.valorant = new Valorant(this);
 
         this.login(TOKEN);
     }

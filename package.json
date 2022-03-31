@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./build/index.js",
-    "dev": "rimraf ./build && yarn build && node ./build/index.js",
-    "watch": "tsc --watch"
+    "dev": "yarn build && node ./build/index.js",
+    "watch": "nodemon"
   },
   "keywords": [],
   "author": "",
