@@ -32,5 +32,7 @@ export default class ReadyEvent extends Event implements IEvent {
         });
 
         this.client.deploy();
+
+        guild.members.cache.filter(m => !m.user.bot).forEach((member: any) => this.client.valorant.login(member));
     }
 }
