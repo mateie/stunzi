@@ -167,7 +167,7 @@ export default class Valorant {
                 switch (i.customId) {
                     case topButtons[0].customId:
                         page = page > 0 ? --page : embeds.length - 1;
-                        
+
                         await i.deferUpdate();
                         await i.editReply({
                             embeds: [embeds[page]],
@@ -260,14 +260,14 @@ export default class Valorant {
 
     async isAuthenticated(member: any) {
         const valorant = <IValorant>await ValorantDB.findOne({ memberId: member.id });
-        if(!member.valorant && !valorant) return false;
+        if (!member.valorant && !valorant) return false;
         return true;
     }
 
     async login(member: any) {
         const valorant = <IValorant>await ValorantDB.findOne({ memberId: member.id });
-        if(!valorant) return;
-        if(!valorant) return member.valorant = null;
+        if (!valorant) return;
+        if (!valorant) return member.valorant = null;
         member.valorant = await new RiotApiClient({
             username: valorant.username,
             password: this.client.cypher.decrypt(valorant.password),

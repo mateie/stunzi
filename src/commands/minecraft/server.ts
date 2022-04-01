@@ -96,8 +96,13 @@ export default class MinecraftCommand extends Command implements ICommand {
             }
             case 'start': {
                 if (this.client.minecraft.online) return interaction.reply({ content: 'Server is already up', ephemeral: true });
-                this.client.minecraft.start();
-                return interaction.reply({ content: '**Started the minecraft server**', ephemeral: true });
+                try {
+                    await this.client.minecraft.start();
+                    return interaction.reply({ content: '**Started the minecraft server**', ephemeral: true });
+                } catch (err) {
+                    console.error(err);
+                    return interaction.reply({ content: '**Couldn\'t start the minecraft server**', ephemeral: true });
+                }
             }
             case 'stop': {
                 if (!this.client.minecraft.online) return interaction.reply({ content: 'Server is already offline', ephemeral: true });
