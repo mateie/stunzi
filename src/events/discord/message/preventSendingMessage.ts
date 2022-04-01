@@ -30,6 +30,8 @@ export default class PreventSendingMessage extends Event implements IEvent {
 
         const member = <GuildMember>message.member;
 
+        if (member.user.bot) return;
+
         if (this.client.owners.includes(member.id) || this.client.user?.id == member.id) return;
 
         await message.delete()
