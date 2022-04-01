@@ -9,7 +9,7 @@
     "watch": "nodemon"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stealth & Bunzi",
   "license": "ISC",
   "devDependencies": {
     "@types/cryptr": "^4.0.1",
