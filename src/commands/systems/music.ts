@@ -78,6 +78,8 @@ export default class MusicCommand extends Command implements ICommand {
         const member = <GuildMember>interaction.member;
         const channel = <TextChannel>guild.channels.cache.get(channels.text.music);
 
+        if (interaction.channel?.id !== channel.id) return interaction.reply({ content: `You can only use Music commands in ${channel}`, ephemeral: true });
+
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
         if (!voiceChannel) return interaction.reply({ content: 'You must be in a voice channel to be able to use the music commands', ephemeral: true });
