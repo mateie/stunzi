@@ -39,7 +39,6 @@ export default class Update {
             })
             .filter(el => el !== undefined);
         const buttons = games.map(game => {
-            const gameName = this.client.util.capEachFirstLetter(game.split('_'));
             const role = <Role>guild.roles.cache.find(role => role.name.toLowerCase() === game.split('_').join(' ').toLowerCase());
             return this.client.util.button()
                 .setCustomId(`${game}-role`)
