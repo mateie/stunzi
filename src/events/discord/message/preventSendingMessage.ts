@@ -22,11 +22,13 @@ export default class PreventSendingMessage extends Event implements IEvent {
         if (![
             channels.text.welcome,
             channels.text.rules,
-            channels.text.games,
+            channels.text.games.roles,
+            channels.text.games.createAVC,
         ].includes(channel.id)) return;
 
         const member = <GuildMember>message.member;
 
+        if (!member) return;
         if (member.user.bot) return;
 
         if (this.client.owners.includes(member.id) || this.client.user?.id == member.id) return;
