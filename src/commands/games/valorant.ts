@@ -54,7 +54,12 @@ export default class ValorantCommand extends Command implements ICommand {
                 subcommand
                     .setName('inventory')
                     .setDescription('Check your valorant inventory')
-            );
+            )
+	    .addSubcommand(subcommand =>
+		subcommand
+		    .setName('logout')
+		    .setDescription('Logout from your account')
+	    );
     }
 
     async run(interaction: CommandInteraction) {
@@ -77,7 +82,7 @@ export default class ValorantCommand extends Command implements ICommand {
                 });
 
                 this.client.valorant.login(member);
-                return interaction.reply({ content: 'Logged in', ephemeral: true });
+                return interaction.reply({ content: 'Logged in successfully', ephemeral: true });
             }
             case 'store': {
                 const isLogged = await this.client.valorant.isAuthenticated(member);
@@ -113,6 +118,14 @@ export default class ValorantCommand extends Command implements ICommand {
                 this.client.valorant.inventoryEmbed(interaction, inv);
                 break;
             }
+		case 'logout': {
+			const isLogged = await this.client.valorant.isAuthenticated(member);
+			if(!isLogged) return interaction.reply({ content: 'You are not logged in', ephemeral: true });
+			if(!member.valorant) return interaction.reply({ content: 'Something went wrong, please try again', ephemeral: true });
+			member.valorant = null;
+			await ValorantDB.deleteOne({ memberId: member.id });
+			return interaction.reply({ content: 'Logged out successfully', ephemeral: true });
+		}
         }
     }
 }
