@@ -20,6 +20,11 @@ export default class UpdateCommand extends Command implements ICommand {
                 subcommand
                     .setName('games')
                     .setDescription('Update Game Roles')
+            )
+            .addSubcommand(subcommand =>
+                subcommand
+                    .setName('vc')
+                    .setDescription('Update Game VC')
             );
     }
 
@@ -32,6 +37,10 @@ export default class UpdateCommand extends Command implements ICommand {
             }
             case 'games': {
                 this.client.update.gameRoles(interaction);
+                break;
+            }
+            case 'vc': {
+                this.client.update.updateGameVC(interaction);
                 break;
             }
         }

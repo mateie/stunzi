@@ -89,9 +89,9 @@ export default class Util {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    capEachFirstLetter(arr: string[]): string {
+    capEachFirstLetter(str: string): string {
         const temp: string[] = [];
-        arr.forEach(str => {
+        str.split(' ').forEach(str => {
             temp.push(this.capFirstLetter(str));
         });
 
