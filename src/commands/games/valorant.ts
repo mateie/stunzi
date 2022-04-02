@@ -1,4 +1,5 @@
-import { CommandInteraction, Guild } from "discord.js";
+import { CommandInteraction, Guild, GuildMember } from "discord.js";
+import { Regions } from "valclient.js/dist/cjs/types/resources";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
 import ICommand from "../../classes/interfaces/ICommand";
@@ -14,7 +15,7 @@ export default class ValorantCommand extends Command implements ICommand {
             .addSubcommand(subcommand =>
                 subcommand
                     .setName('login')
-                    .setDescription('Login to your valorant account')
+                    .setDescription('Login to your valorant account (WE DO NOT KEEP ANY INFORMATION)')
                     .addStringOption(option =>
                         option
                             .setName('username')
@@ -24,7 +25,7 @@ export default class ValorantCommand extends Command implements ICommand {
                     .addStringOption(option =>
                         option
                             .setName('password')
-                            .setDescription('Your Valorant Password (it will be encrypted)')
+                            .setDescription('Your Valorant Password (WE DO NOT STORE IT)')
                             .setRequired(true)
                     )
                     .addStringOption(option =>
@@ -32,10 +33,10 @@ export default class ValorantCommand extends Command implements ICommand {
                             .setName('region')
                             .setDescription('Specify which region you are in')
                             .addChoices([
-                                ['NA', 'NA'],
-                                ['EU', 'EU'],
-                                ['AP', 'AP'],
-                                ['KR', 'KR']
+                                ['NA', 'na'],
+                                ['EU', 'eu'],
+                                ['AP', 'ap'],
+                                ['KR', 'kr']
                             ])
                             .setRequired(true)
                     )
@@ -64,27 +65,23 @@ export default class ValorantCommand extends Command implements ICommand {
 
     async run(interaction: CommandInteraction) {
         const { options } = interaction;
-        const member = <any>interaction.member;
-        const valorant = <any>await ValorantDB.findOne({ memberId: member.id });
+        const member = <GuildMember>interaction.member;
+        if (member.id !== this.client.owners[0]) return interaction.reply({ content: 'This command is disabled for now', ephemeral: true });
         const subcommand = options.getSubcommand();
         switch (subcommand) {
             case 'login': {
-                const username = <string>options.getString('username');
+                const username = <string>options.getString('username')?.toLowerCase();
                 const password = this.client.cypher.encrypt(<string>options.getString('password'));
-                const region = <string>options.getString('region');
+                const region = <Regions>options.getString('region');
 
-                if (valorant) return interaction.reply({ content: 'You are already logged in', ephemeral: true });
-                await ValorantDB.create({
-                    memberId: member.id,
-                    username,
-                    password,
-                    region,
-                });
-
-                this.client.valorant.login(member);
-                return interaction.reply({ content: 'Logged in successfully', ephemeral: true });
+                const success = await this.client.valorant.login(member, username, password, region);
+                if (success) return interaction.reply({ content: 'Logged in successfully', ephemeral: true });
+                else return interaction.reply({ content: 'Couldn\'t log in, contact the owner', ephemeral: true });
             }
             case 'store': {
+                console.log(this.client.valorantAuth.get(member.id));
+            }
+            /*case 'store': {
                 const isLogged = await this.client.valorant.isAuthenticated(member);
                 if (!isLogged) return interaction.reply({ content: 'You are not logged in', ephemeral: true });
                 if (!member.valorant) return interaction.reply({ content: 'Something went wrong, please try again', ephemeral: true });
@@ -125,7 +122,7 @@ export default class ValorantCommand extends Command implements ICommand {
                 member.valorant = null;
                 await ValorantDB.deleteOne({ memberId: member.id });
                 return interaction.reply({ content: 'Logged out successfully', ephemeral: true });
-            }
+            }*/
         }
     }
 }

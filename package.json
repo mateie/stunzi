@@ -51,6 +51,7 @@
     "nekos.life": "^2.0.9",
     "simple-discord-webhooks": "^1.1.1",
     "songlyrics": "^2.2.4",
+    "valclient.js": "^1.2.0",
     "valorant-api-js": "^1.0.6",
     "weather-js": "^2.0.0"
   }

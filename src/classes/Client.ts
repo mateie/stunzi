@@ -1,7 +1,8 @@
 const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
 import { REST } from '@discordjs/rest';
-import { Routes, TeamMemberMembershipState } from 'discord-api-types/v10';
+import { Routes } from 'discord-api-types/v10';
+import { ValClient } from 'valclient.js';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
@@ -34,7 +35,9 @@ export default class Client extends DiscordClient {
     commands: Collection<String, ICommand>;
     menus: Collection<String, IMenu>;
     minecraftCommands: Collection<String, IMineCommand>;
-    tempCreateVC: Collection<string, VoiceChannel>
+    tempCreateVC: Collection<string, VoiceChannel>;
+
+    valorantAuth: Collection<string, ValClient>
 
     commandHandler: CommandHandler;
     menuHandler: MenuHandler;
@@ -68,6 +71,8 @@ export default class Client extends DiscordClient {
         this.menus = new Collection();
         this.minecraftCommands = new Collection();
         this.tempCreateVC = new Collection();
+
+        this.valorantAuth = new Collection();
 
         this.commandHandler = new CommandHandler(this);
         this.menuHandler = new MenuHandler(this);
