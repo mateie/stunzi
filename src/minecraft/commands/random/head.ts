@@ -1,6 +1,6 @@
 import { CommandEvent } from "@scriptserver/command";
 import Client from "../../../classes/Client";
-import IMineCommand from "../../../classes/interfaces/IMineCommand";
+import IMineCommand from "../../../interfaces/IMineCommand";
 import MineCommand from "../../../classes/games/minecraft/MineCommand";
 
 export default class HeadMineCommand extends MineCommand implements IMineCommand {

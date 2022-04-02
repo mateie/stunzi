@@ -1,4 +1,4 @@
-import Client from "../Client";
+import Client from "../classes/Client";
 
 export default interface IEvent {
     readonly client: Client,

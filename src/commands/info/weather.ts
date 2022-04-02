@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import Client from '../../classes/Client';
 import Command from '../../classes/Command';
-import ICommand from '../../classes/interfaces/ICommand';
+import ICommand from '../../interfaces/ICommand';
 
 import Weather from 'weather-js';
 

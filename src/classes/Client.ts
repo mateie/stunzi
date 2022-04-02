@@ -2,7 +2,7 @@ const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
-import { ValClient } from '@mateie/valclient.js';
+import { ValClient } from 'valclient.js';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
@@ -25,9 +25,9 @@ import Warns from './moderation/Warns';
 import Minecraft from './games/Minecraft';
 import Valorant from './games/Valorant';
 
-import ICommand from './interfaces/ICommand';
-import IMenu from './interfaces/IMenu';
-import IMineCommand from './interfaces/IMineCommand';
+import ICommand from '../interfaces/ICommand';
+import IMenu from '../interfaces/IMenu';
+import IMineCommand from '../interfaces/IMineCommand';
 
 export default class Client extends DiscordClient {
     readonly owners: string[];

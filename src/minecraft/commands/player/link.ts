@@ -1,7 +1,7 @@
 import { CommandEvent } from "@scriptserver/command";
 import { GuildMember } from "discord.js";
 import Client from "../../../classes/Client";
-import IMineCommand from "../../../classes/interfaces/IMineCommand";
+import IMineCommand from "../../../interfaces/IMineCommand";
 import MineCommand from "../../../classes/games/minecraft/MineCommand";
 
 import roles from "../../../data/roles";

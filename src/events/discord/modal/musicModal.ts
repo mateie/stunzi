@@ -2,7 +2,7 @@ import { ModalSubmitInteraction } from '@mateie/discord-modals';
 import { Guild, GuildMember, VoiceChannel } from 'discord.js';
 import Client from '../../../classes/Client';
 import Event from '../../../classes/Event';
-import IEvent from '../../../classes/interfaces/IEvent';
+import IEvent from '../../../interfaces/IEvent';
 
 export default class MusicModal extends Event implements IEvent {
     name: string;

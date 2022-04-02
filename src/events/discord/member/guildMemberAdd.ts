@@ -1,7 +1,7 @@
 import { Guild, GuildMember, User, WebhookClient } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
-import IEvent from "../../../classes/interfaces/IEvent";
+import IEvent from "../../../interfaces/IEvent";
 import webhooks from '../../../data/webhooks';
 
 export default class GuildMemberAddEvent extends Event implements IEvent {

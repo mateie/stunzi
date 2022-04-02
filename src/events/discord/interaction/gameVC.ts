@@ -1,7 +1,7 @@
 import { ButtonInteraction, CategoryChannel, Guild, GuildMember, Message, VoiceChannel, VoiceState } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
-import IEvent from "../../../classes/interfaces/IEvent";
+import IEvent from "../../../interfaces/IEvent";
 
 import categories from "../../../data/categories";
 import channels from "../../../data/channels";

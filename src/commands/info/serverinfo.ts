@@ -1,7 +1,7 @@
 import { CommandInteraction, Guild } from "discord.js";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
-import ICommand from "../../classes/interfaces/ICommand";
+import ICommand from "../../interfaces/ICommand";
 
 export default class ServerCommand extends Command implements ICommand {
     constructor(client: Client) {

@@ -1,8 +1,8 @@
 import { CommandInteraction, Guild, GuildMember } from "discord.js";
-import { Regions } from "@mateie/valclient.js/dist/cjs/types/resources";
+import { Regions } from "valclient.js/dist/cjs/types/resources";
 import Client from "../../classes/Client";
 import Command from "../../classes/Command";
-import ICommand from "../../classes/interfaces/ICommand";
+import ICommand from "../../interfaces/ICommand";
 
 export default class ValorantCommand extends Command implements ICommand {
     constructor(client: Client) {

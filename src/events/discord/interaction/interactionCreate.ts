@@ -1,10 +1,10 @@
 import { CommandInteraction, GuildMember, Guild, TextChannel } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
-import IEvent from "../../../classes/interfaces/IEvent";
+import IEvent from "../../../interfaces/IEvent";
 
-import ICommand from "../../../classes/interfaces/ICommand";
-import IMenu from "../../../classes/interfaces/IMenu";
+import ICommand from "../../../interfaces/ICommand";
+import IMenu from "../../../interfaces/IMenu";
 
 import channels from "../../../data/channels";
 

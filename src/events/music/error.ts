@@ -1,7 +1,7 @@
 import { Queue } from "discord-player";
 import Client from "../../classes/Client";
 import Event from "../../classes/Event";
-import IEvent from "../../classes/interfaces/IEvent";
+import IEvent from "../../interfaces/IEvent";
 
 export default class MusicErrorEvent extends Event implements IEvent {
     name: string;

@@ -124,15 +124,6 @@
   resolved "https://registry.yarnpkg.com/@mateie/discord-modals/-/discord-modals-1.3.5.tgz#4e013f691b30141193e655d59bf14b96b9d9be81"
   integrity sha512-3JwJDF6412bbaKRtUqsnq7e39SAxqeRn9QvppbbqXQaTL483rJJiILGhqjn/Lxe3YaSkXlSi87KbWfomZ61zPA==
 
-"@mateie/valclient.js@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@mateie/valclient.js/-/valclient.js-1.2.1.tgz#168b94c37e7ce48874143a77e52a632037cf6dd7"
-  integrity sha512-oGrwWKsfRFXRj2/8EHjUTmGyOPgqV96wuclYjM2Hg26pLEabGm8Y3thBFv58l/yQmjDn+3I6PT4onR2/k5yNKw==
-  dependencies:
-    axios "^0.21.1"
-    axios-cookiejar-support "^1.0.1"
-    tough-cookie "^4.0.0"
-
 "@sapphire/async-queue@^1.1.9":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.3.0.tgz#98b1b364a5fe820366a786827f2e987590de5964"
@@ -411,7 +402,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axios-cookiejar-support@^1.0.1:
+axios-cookiejar-support@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/axios-cookiejar-support/-/axios-cookiejar-support-1.0.1.tgz#7b32af7d932508546c68b1fc5ba8f562884162e1"
   integrity sha512-IZJxnAJ99XxiLqNeMOqrPbfR7fRyIfaoSLdPUf4AMQEGkH8URs0ghJK/xtqBsD+KsSr3pKl4DEQjCn834pHMig==
@@ -426,7 +417,7 @@ axios-cookiejar-support@^2.0.3:
   dependencies:
     http-cookie-agent "^1.0.2"
 
-axios@^0.21.1:
+axios@0.21.4:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
   integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
@@ -1996,7 +1987,7 @@ tiny-typed-emitter@^2.1.0:
   resolved "https://registry.yarnpkg.com/tiny-typed-emitter/-/tiny-typed-emitter-2.1.0.tgz#b3b027fdd389ff81a152c8e847ee2f5be9fad7b5"
   integrity sha512-qVtvMxeXbVej0cQWKqVSSAHmKZEHAvxdF8HEUBFWts8h+xEo5m/lEiPakuyZ3BnCBjOD8i24kzNOiOLLgsSxhA==
 
-tough-cookie@^4.0.0:
+tough-cookie@4.0.0, tough-cookie@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-4.0.0.tgz#d822234eeca882f991f0f908824ad2622ddbece4"
   integrity sha512-tHdtEpQCMrc1YLrMaqXXcj6AxhYi/xgit6mZu1+EDWUn+qhUf8wMQoFIy9NXuq23zAwtcB0t/MjACGR18pcRbg==
@@ -2108,6 +2099,15 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+valclient.js@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/valclient.js/-/valclient.js-1.2.0.tgz#988a8bcb7905ca1586fad7687883cd829536c723"
+  integrity sha512-NEuex0Zhk1qjXiWEL/xlpJ8b98hfcpq+yPBVBS2vf10kZqRTYo0+ZnKo8jG2efri+FvVJY9Fo2RoSCMsCLmn5A==
+  dependencies:
+    axios "0.21.4"
+    axios-cookiejar-support "1.0.1"
+    tough-cookie "4.0.0"
 
 valorant-api-js@^1.0.0, valorant-api-js@^1.0.6:
   version "1.0.6"

@@ -1,7 +1,7 @@
 import { ButtonInteraction, Guild, GuildMember } from "discord.js";
 import Client from '../../../classes/Client';
 import Event from "../../../classes/Event";
-import IEvent from '../../../classes/interfaces/IEvent';
+import IEvent from '../../../interfaces/IEvent';
 import roles from '../../../data/roles';
 
 export default class AcceptRulesEvent extends Event implements IEvent {

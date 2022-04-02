@@ -1,7 +1,7 @@
 import { TextChannel } from "discord.js";
 import Client from "../../../classes/Client";
 import Event from "../../../classes/Event";
-import IEvent from "../../../classes/interfaces/IEvent";
+import IEvent from "../../../interfaces/IEvent";
 import channels from "../../../data/channels";
 
 export default class MinecraftLogoutEvent extends Event implements IEvent {

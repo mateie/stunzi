@@ -1,8 +1,8 @@
 import Client from "../Client";
 
-import { ValClient } from "@mateie/valclient.js";
+import { ValClient } from "valclient.js";
 import { GuildMember } from "discord.js";
-import { Regions } from "@mateie/valclient.js/dist/cjs/types/resources";
+import { Regions } from "valclient.js/dist/cjs/types/resources";
 
 const { RIOT_API } = process.env;
 
@@ -19,16 +19,16 @@ export default class Valorant {
         try {
             await auth.init({
                 auth: {
-                    username: 'mateieatl',
-                    password: 'Mateie2001'
+                    username,
+                    password
                 },
-                region: 'na'
+                region,
             });
 
             this.client.valorantAuth.set(member.id, auth);
             return true;
         } catch (err: any) {
-            //console.error(err);
+            console.error(err);
             return false;
         }
     }
