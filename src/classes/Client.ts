@@ -2,7 +2,7 @@ const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
-import { ValClient } from 'valclient.js';
+import { ValClient } from '@mateie/valclient.js';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
