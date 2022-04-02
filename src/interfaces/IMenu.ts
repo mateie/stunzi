@@ -1,5 +1,5 @@
 import { ContextMenuInteraction, PermissionResolvable } from "discord.js";
-import Client from "../classes/Client";
+import Client from "@classes/Client";
 import { ContextMenuCommandBuilder } from "@discordjs/builders";
 
 export default interface IMenu {

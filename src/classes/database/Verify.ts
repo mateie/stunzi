@@ -1,6 +1,6 @@
 import { Guild } from "discord.js";
-import Client from "../Client";
-import Database from "../Database";
+import Client from "@classes/Client";
+import Database from "@classes/Database";
 
 export default class Verify {
     readonly client: Client;

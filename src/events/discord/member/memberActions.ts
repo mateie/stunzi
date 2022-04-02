@@ -1,7 +1,7 @@
 import { ButtonInteraction, Guild, GuildMember, Integration, Message } from "discord.js";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event";
-import IEvent from "../../../interfaces/IEvent";
+import Client from "@classes/Client";
+import Event from "@classes/Event";
+import IEvent from "@interfaces/IEvent";
 
 export default class MemberActionsEvent extends Event implements IEvent {
     name: string;

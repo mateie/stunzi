@@ -1,5 +1,5 @@
 import { CommandEvent } from "@scriptserver/command";
-import Client from "../classes/Client";
+import Client from "@classes/Client";
 
 export default interface IMineCommand {
     readonly client: Client;

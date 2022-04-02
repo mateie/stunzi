@@ -1,10 +1,10 @@
 import { CommandEvent } from "@scriptserver/command";
-import Client from "../../../classes/Client";
-import IMineCommand from "../../../interfaces/IMineCommand";
-import MineCommand from "../../../classes/games/minecraft/MineCommand";
-import channels from "../../../data/channels";
+import Client from "@classes/Client";
+import IMineCommand from "@interfaces/IMineCommand";
+import MineCommand from "@classes/games/minecraft/MineCommand";
+import channels from "@data/channels";
 
-import MinecraftMember from "../../../schemas/MinecraftMember";
+import MinecraftMember from "@schemas/MinecraftMember";
 import { GuildMember, TextChannel, VoiceChannel } from "discord.js";
 
 export default class MusicMineCommand extends MineCommand implements IMineCommand {

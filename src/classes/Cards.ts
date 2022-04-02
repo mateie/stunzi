@@ -1,7 +1,7 @@
 import { Guild, GuildMember } from "discord.js";
-import Client from "./Client";
+import Client from "@classes/Client";
 import Canvas from 'canvas';
-import { IMember } from "../schemas/Member";
+import { IMember } from "@schemas/Member";
 import { Rank } from 'canvacord';
 
 export default class Cards {

@@ -1,9 +1,9 @@
 import { GuildMember, Message } from 'discord.js';
-import Client from '../../../classes/Client';
-import Event from '../../../classes/Event';
-import IEvent from '../../../interfaces/IEvent';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
 
-import blacklistedWords from '../../../data/blacklistedWords';
+import blacklistedWords from '@data/blacklistedWords';
 
 export default class PreventBlacklistedWordseEvent extends Event implements IEvent {
     name: string;

@@ -1,8 +1,8 @@
 import { QueueFilters } from "discord-player";
 import { Guild, GuildMember, Message, MessageButton, SelectMenuInteraction, VoiceChannel } from "discord.js";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event"
-import IEvent from "../../../interfaces/IEvent";
+import Client from "@classes/Client";
+import Event from "@classes/Event"
+import IEvent from "@interfaces/IEvent";
 
 export default class MusicSelectionsEvent extends Event implements IEvent {
     name: string;

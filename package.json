@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsc",
+    "build": "ttsc -P ./tsconfig.json",
     "start": "node ./build/index.js",
     "dev": "yarn build && node ./build/index.js",
     "watch": "nodemon"
@@ -17,8 +17,12 @@
     "@types/mongoose": "^5.11.97",
     "@types/ms": "^0.7.31",
     "@types/node": "^17.0.23",
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "rimraf": "^3.0.2",
-    "typescript": "^4.6.3"
+    "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
+    "ttypescript": "1.5.12",
+    "typescript": "4.4.2"
   },
   "dependencies": {
     "@discordjs/builders": "^0.12.0",

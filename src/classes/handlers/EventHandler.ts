@@ -1,8 +1,8 @@
-import Client from '../Client';
+import Client from '@classes/Client';
 import { promisify } from 'util';
 import { glob } from 'glob';
 import Ascii from 'ascii-table';
-import events from '../../validation/eventNames';
+import events from '@validation/eventNames';
 
 const PG = promisify(glob);
 

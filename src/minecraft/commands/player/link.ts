@@ -1,12 +1,12 @@
 import { CommandEvent } from "@scriptserver/command";
 import { GuildMember } from "discord.js";
-import Client from "../../../classes/Client";
-import IMineCommand from "../../../interfaces/IMineCommand";
-import MineCommand from "../../../classes/games/minecraft/MineCommand";
+import Client from "@classes/Client";
+import IMineCommand from "@interfaces/IMineCommand";
+import MineCommand from "@classes/games/minecraft/MineCommand";
 
-import roles from "../../../data/roles";
+import roles from "@data/roles";
 
-import MinecraftMember from "../../../schemas/MinecraftMember";
+import MinecraftMember from "@schemas/MinecraftMember";
 
 import { MojangClient } from "@tecc/mojang.js";
 import crafatar from 'crafatar';
@@ -26,7 +26,7 @@ export default class LinkMineCommand extends MineCommand implements IMineCommand
         if (args.length < 1 || args.includes('')) return this.missingArgs(command, this.usage);
         if (!args[0].includes('#')) return this.missingArgs(command, this.usage);
 
-        const member = <GuildMember>this.client.mainGuild.members.cache.find(m => m.user.tag.toLowerCase() === args[0].toLowerCase());
+        const member = <GuildMember>this.client.mainGuild.members.cache.find((m: GuildMember) => m.user.tag.toLowerCase() === args[0].toLowerCase());
         if (!member) return this.server.util.tellRaw('Member not found on discord, make sure your username is correct', player);
 
         const minecraftMember = await MinecraftMember.findOne({ minecraftUsername: player, memberId: member.id });

@@ -1,7 +1,7 @@
 import { ContextMenuInteraction, Guild, GuildMember } from 'discord.js';
-import Client from '../../classes/Client';
-import Menu from '../../classes/Menu';
-import IMenu from '../../interfaces/IMenu';
+import Client from '@classes/Client';
+import Menu from '@classes/Menu';
+import IMenu from '@interfaces/IMenu';
 
 export default class MemberMenu extends Menu implements IMenu {
     constructor(client: Client) {

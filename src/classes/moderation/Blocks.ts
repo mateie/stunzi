@@ -1,7 +1,7 @@
 import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from "discord.js";
 import { ModalSubmitInteraction } from "@mateie/discord-modals";
-import Client from "../Client";
-import Block, { IBlock } from "../../schemas/Block";
+import Client from "@classes/Client";
+import Block, { IBlock } from "@schemas/Block";
 import ms from 'ms';
 
 export default class Blocks {

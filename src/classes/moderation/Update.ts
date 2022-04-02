@@ -1,8 +1,8 @@
 import { Collection, CommandInteraction, EmojiResolvable, Guild, GuildEmoji, Message, MessageEmbed, Role, TextChannel } from "discord.js";
-import Client from "../Client";
-import channels from "../../data/channels";
-import games from "../../data/games";
-import strings from "../../data/strings";
+import Client from "@classes/Client";
+import channels from "@data/channels";
+import games from "@data/games";
+import strings from "@data/strings";
 
 export default class Update {
     readonly client: Client;

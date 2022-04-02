@@ -1,7 +1,7 @@
 import { ModalSubmitInteraction } from "@mateie/discord-modals";
 import { Guild, GuildMember, Message } from "discord.js";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event";
+import Client from "@classes/Client";
+import Event from "@classes/Event";
 
 export default class MemberActionsModal extends Event {
     name: string;

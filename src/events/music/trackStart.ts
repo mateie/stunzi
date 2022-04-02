@@ -1,8 +1,8 @@
 import { Queue, Track } from "discord-player";
 import { TextChannel } from "discord.js";
-import Client from "../../classes/Client";
-import Event from "../../classes/Event"
-import IEvent from "../../interfaces/IEvent";
+import Client from "@classes/Client";
+import Event from "@classes/Event"
+import IEvent from "@interfaces/IEvent";
 
 export default class TrackStartEvent extends Event implements IEvent {
     name: string;

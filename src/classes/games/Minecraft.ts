@@ -1,4 +1,4 @@
-import Client from "../Client";
+import Client from "@classes/Client";
 import { ScriptServer } from "@scriptserver/core";
 import { useEssentials } from "@scriptserver/essentials";
 import { useEvent } from "@scriptserver/event";

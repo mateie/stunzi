@@ -1,8 +1,8 @@
 import { CommandInteraction, Guild, GuildMember, TextChannel, VoiceChannel } from "discord.js";
-import Client from "../../classes/Client";
-import Command from "../../classes/Command";
-import ICommand from "../../interfaces/ICommand";
-import channels from "../../data/channels";
+import Client from "@classes/Client";
+import Command from "@classes/Command";
+import ICommand from "@interfaces/ICommand";
+import channels from "@data/channels";
 
 export default class MusicCommand extends Command implements ICommand {
     constructor(client: Client) {

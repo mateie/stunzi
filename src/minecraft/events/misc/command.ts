@@ -1,8 +1,8 @@
 import { CommandEvent } from "@scriptserver/command";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event";
-import IEvent from "../../../interfaces/IEvent";
-import IMineCommand from "../../../interfaces/IMineCommand";
+import Client from "@classes/Client";
+import Event from "@classes/Event";
+import IEvent from "@interfaces/IEvent";
+import IMineCommand from "@interfaces/IMineCommand";
 
 export default class MinecraftChatEvent extends Event implements IEvent {
     name: string;

@@ -1,11 +1,11 @@
 import { ButtonInteraction, CategoryChannel, Guild, GuildMember, Message, VoiceChannel, VoiceState } from "discord.js";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event";
-import IEvent from "../../../interfaces/IEvent";
+import Client from "@classes/Client";
+import Event from "@classes/Event";
+import IEvent from "@interfaces/IEvent";
 
-import categories from "../../../data/categories";
-import channels from "../../../data/channels";
-import games from "../../../data/games";
+import categories from "@data/categories";
+import channels from "@data/channels";
+import games from "@data/games";
 
 export default class GameVCEvent extends Event implements IEvent {
     name: string;

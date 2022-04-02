@@ -1,6 +1,5 @@
 import { GuildMember } from "discord.js";
-import { IMember } from "../../schemas/Member";
-import Client from "../Client";
+import Client from "@classes/Client";
 
 export default class XP {
     readonly client: Client;

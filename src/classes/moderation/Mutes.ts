@@ -1,8 +1,8 @@
 import { ButtonInteraction, CommandInteraction, Guild, GuildMember, Role, TextChannel } from "discord.js";
 import { ModalSubmitInteraction } from "@mateie/discord-modals";
 import Client from "../Client";
-import Mute, { IMute } from "../../schemas/Mute";
-import roles from "../../data/roles";
+import Mute, { IMute } from "@schemas/Mute";
+import roles from "@data/roles";
 import ms from "ms";
 
 export default class Mutes {

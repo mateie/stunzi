@@ -1,9 +1,9 @@
 import { ButtonInteraction, Guild, GuildMember, Role } from "discord.js";
-import Client from "../../../classes/Client";
-import Event from "../../../classes/Event";
-import IEvent from "../../../interfaces/IEvent";
-import games from '../../../data/games';
-import roles from '../../../data/roles';
+import Client from "@classes/Client";
+import Event from "@classes/Event";
+import IEvent from "@interfaces/IEvent";
+import games from '@data/games';
+import roles from '@data/roles';
 
 export default class GameRolesEvent extends Event implements IEvent {
     name: string;

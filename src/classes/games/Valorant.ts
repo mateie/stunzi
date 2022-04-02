@@ -1,10 +1,8 @@
-import Client from "../Client";
+import Client from "@classes/Client";
 
 import { ValClient } from "valclient.js";
 import { GuildMember } from "discord.js";
 import { Regions } from "valclient.js/dist/cjs/types/resources";
-
-const { RIOT_API } = process.env;
 
 export default class Valorant {
     client: Client;

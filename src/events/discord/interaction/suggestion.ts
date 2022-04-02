@@ -1,8 +1,8 @@
 import { ButtonInteraction, GuildMember, Message, MessageEmbed, Permissions } from 'discord.js';
-import Client from '../../../classes/Client';
-import Event from '../../../classes/Event';
-import IEvent from "../../../interfaces/IEvent";
-import Suggestion from '../../../schemas/Suggestion';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from "@interfaces/IEvent";
+import Suggestion from '@schemas/Suggestion';
 
 export default class SuggestionEvent extends Event implements IEvent {
     name: string;

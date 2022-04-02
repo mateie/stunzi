@@ -1,5 +1,5 @@
 import { Player, Track } from "discord-player";
-import Client from "../Client";
+import Client from "@classes/Client";
 import { promisify } from 'util';
 import { glob } from 'glob';
 import Ascii from 'ascii-table';

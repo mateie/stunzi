@@ -1,9 +1,8 @@
-import Client from "../Client";
+import Client from "@classes/Client";
 import { promisify } from "util";
 import { glob } from "glob";
 import Ascii from 'ascii-table';
-import perms from '../../validation/permissions';
-import disrequire from 'disrequire';
+import perms from '@validation/permissions';
 
 const PG = promisify(glob);
 
