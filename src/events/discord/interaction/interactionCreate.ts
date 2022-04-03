@@ -41,7 +41,11 @@ export default class InteractionCreate extends Event implements IEvent {
                 return interaction.reply({ content: 'An error occurred', ephemeral: true });
             }
 
-            command.run(interaction);
+            try {
+                command.run(interaction);
+            } catch {
+                return interaction.reply({ content: 'An error occured, try again', ephemeral: true });
+            }
         }
 
         if (interaction.isContextMenu()) {
@@ -51,7 +55,11 @@ export default class InteractionCreate extends Event implements IEvent {
                 return interaction.reply({ content: 'An error occured', ephemeral: true });
             }
 
-            menu.run(interaction);
+            try {
+                menu.run(interaction);
+            } catch {
+                return interaction.reply({ content: 'An error occured, try again', ephemeral: true });
+            }
         }
     }
 }
