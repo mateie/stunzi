@@ -11,7 +11,7 @@ export default class Util {
         this.client = client;
     }
 
-    actionRow(): MessageActionRow {
+    row(): MessageActionRow {
         return new MessageActionRow();
     }
 
@@ -19,7 +19,7 @@ export default class Util {
         return new MessageButton();
     }
 
-    selectMenu(): MessageSelectMenu {
+    dropdown(): MessageSelectMenu {
         return new MessageSelectMenu();
     }
 
@@ -27,7 +27,7 @@ export default class Util {
         return new Modal();
     }
 
-    textInput(): TextInputComponent {
+    input(): TextInputComponent {
         return new TextInputComponent();
     }
 
@@ -54,6 +54,10 @@ export default class Util {
 
     attachment(attachment: BufferResolvable | Stream, name?: string, data?: RawMessageAttachmentData): MessageAttachment {
         return new MessageAttachment(attachment, name, data);
+    }
+
+    embedURL(title: string, url: string, display?: string) {
+        return `[${title}](${url.replace(/\)/g, '%29')}${display ? ` "${display}"` : ''})`;
     }
 
     statusEmoji(type: string): string {
@@ -102,7 +106,7 @@ export default class Util {
         const blocked: boolean = false;
         const muted: boolean = false;
 
-        const topRow = this.actionRow()
+        const topRow = this.row()
             .addComponents(
                 this.button()
                     .setCustomId(`show_rank`)
@@ -110,7 +114,7 @@ export default class Util {
                     .setStyle('SECONDARY'),
             );
 
-        const midRow = this.actionRow()
+        const midRow = this.row()
             .addComponents(
                 this.button()
                     .setCustomId(`show_warns`)
@@ -126,7 +130,7 @@ export default class Util {
                     .setStyle('PRIMARY'),
             );
 
-        const bottomRow = this.actionRow()
+        const bottomRow = this.row()
             .addComponents(
                 this.button()
                     .setCustomId(`warn_member`)
@@ -159,7 +163,7 @@ export default class Util {
                 .setStyle('SECONDARY')
         ];
 
-        const row = this.actionRow().addComponents(buttons);
+        const row = this.row().addComponents(buttons);
 
         const embeds = contents.map((content, index) => {
             const embed = this.embed()
@@ -216,7 +220,7 @@ export default class Util {
         })
             .on('end', (_, reason) => {
                 if (reason !== 'messageDelete' && !ephemeral) {
-                    const disabledRow = this.actionRow().addComponents(
+                    const disabledRow = this.row().addComponents(
                         buttons[0].setDisabled(true),
                         buttons[1].setDisabled(true)
                     );
