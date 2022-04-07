@@ -5,8 +5,7 @@ import Command from "@classes/Command";
 import ICommand from "@interfaces/ICommand";
 import { CurrentOffersResponse, ValClient } from "valclient.js";
 import { LoadoutResponse } from "valclient.js/dist/cjs/interfaces/loadout";
-import { guns } from "valclient.js/dist/cjs/types/loadout";
-import { skinsIdMappedByGunName } from "valclient.js/dist/cjs/resources/skins";
+import { guns, GunsType, SkinsType } from "valclient.js/dist/cjs/types/loadout";
 
 export default class ValorantCommand extends Command implements ICommand {
     weapons: [name: string, value: string][];
@@ -89,6 +88,18 @@ export default class ValorantCommand extends Command implements ICommand {
                                     .setRequired(true)
                             )
                     )
+                    .addSubcommand(subcommand =>
+                        subcommand
+                            .setName('default')
+                            .setDescription('Change your weapon skin to default')
+                            .addStringOption(option =>
+                                option
+                                    .setName('weapon')
+                                    .setDescription('Which weapon do you want to change to default?')
+                                    .addChoices(this.weapons)
+                                    .setRequired(true)
+                            )
+                    )
             );
     }
 
@@ -139,6 +150,12 @@ export default class ValorantCommand extends Command implements ICommand {
                     case 'change': {
                         const weapon = <string>options.getString('weapon');
                         return this.client.valorant.changeSkin(interaction, weapon, valorant);
+                    }
+                    case 'default': {
+                        const weapon = <GunsType>options.getString('weapon');
+                        const defaultSkin = `Standard ${weapon}`;
+                        valorant.loadout?.changeGunSkin(weapon, <SkinsType<GunsType>>defaultSkin, 'Level 1', 'Default');
+                        return interaction.reply({ content: `Set ${weapon} to default`, ephemeral: true });
                     }
                 }
             }
