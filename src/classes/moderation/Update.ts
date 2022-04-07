@@ -17,7 +17,7 @@ export default class Update {
         const messages = <Collection<string, Message>>await channel.messages.fetch();
         const message = <Message>messages.first();
         const embed = <MessageEmbed>message.embeds[0];
-        const row = this.client.util.actionRow()
+        const row = this.client.util.row()
             .addComponents(
                 this.client.util.button()
                     .setCustomId('accept_rules')
@@ -48,7 +48,7 @@ export default class Update {
                 .setStyle('SECONDARY');
         });
 
-        const row = this.client.util.actionRow().addComponents(buttons);
+        const row = this.client.util.row().addComponents(buttons);
 
         await message.edit({ embeds: [message.embeds[0]], components: [row] });
         await interaction.reply({ content: 'Updated Game Roles', ephemeral: true });
@@ -75,7 +75,7 @@ export default class Update {
                 .setStyle('SECONDARY');
         });
 
-        const row = this.client.util.actionRow().addComponents(buttons);
+        const row = this.client.util.row().addComponents(buttons);
 
         await message.edit({ embeds: [message.embeds[0]], components: [row] });
         await interaction.reply({ content: 'Updated Voice Channel Roles', ephemeral: true });

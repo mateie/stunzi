@@ -38,7 +38,7 @@ export default class LinkMineCommand extends MineCommand implements IMineCommand
 
         const avatar = await crafatar.getAvatar(uuid);
 
-        const row = this.client.util.actionRow()
+        const row = this.client.util.row()
             .addComponents(
                 this.client.util.button()
                     .setCustomId('confirm_smp_link')

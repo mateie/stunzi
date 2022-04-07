@@ -38,7 +38,7 @@ export default class GameVCEvent extends Event implements IEvent {
                     .setColor('RED')
                     .setDescription('Choose the game mode\n\n**Just select one of them from the dropdown below :>**');
 
-                const row = this.client.util.actionRow().addComponents(
+                const row = this.client.util.row().addComponents(
                     this.client.util.button()
                         .setCustomId('valorant-unrated-vc')
                         .setLabel('Unrated')
@@ -120,7 +120,7 @@ export default class GameVCEvent extends Event implements IEvent {
                     .setColor('DARK_RED')
                     .setDescription('Choose the game mode\n\n**Just select one of them from the dropdown below :>**');
 
-                const row = this.client.util.actionRow()
+                const row = this.client.util.row()
                     .addComponents(
                         this.client.util.button()
                             .setCustomId('dbd_swf_vc')

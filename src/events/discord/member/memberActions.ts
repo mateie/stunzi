@@ -93,7 +93,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                     .setCustomId('warn-member-modal')
                     .setTitle(`Warning ${target.user.tag}`)
                     .addComponents([
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('warn-member-reason')
                             .setLabel('Reason for the warn')
                             .setStyle('SHORT')
@@ -112,7 +112,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                     .setCustomId('block-member-modal')
                     .setTitle(`Blocking ${target.user.tag}`)
                     .addComponents([
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('block-member-time')
                             .setLabel('Time for the block')
                             .setStyle('SHORT')
@@ -120,7 +120,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                             .setMaxLength(2)
                             .setPlaceholder('Type your time here (1m, 1h, 1d)')
                             .setRequired(false),
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('block-member-reason')
                             .setLabel('Reason for the block')
                             .setStyle('SHORT')
@@ -139,7 +139,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                     .setCustomId('mute-member-modal')
                     .setTitle(`Muting ${target.user.tag}`)
                     .addComponents([
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('mute-member-time')
                             .setLabel('Time for the mute')
                             .setStyle('SHORT')
@@ -147,7 +147,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                             .setMaxLength(2)
                             .setPlaceholder('Type your time here (1m, 1h, 1d)')
                             .setRequired(false),
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('mute-member-reason')
                             .setLabel('Reason for the mute')
                             .setStyle('SHORT')

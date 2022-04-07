@@ -58,7 +58,7 @@ export default class Music extends Player {
 
 
     async buttons(message: Message, track: Track): Promise<void> {
-        const topRow = this.client.util.actionRow()
+        const topRow = this.client.util.row()
             .addComponents(
                 this.client.util.button()
                     .setCustomId('show_queue')
@@ -74,7 +74,7 @@ export default class Music extends Player {
                     .setStyle('PRIMARY')
             );
 
-        const midRow = this.client.util.actionRow()
+        const midRow = this.client.util.row()
             .addComponents(
                 this.client.util.button()
                     .setCustomId('pause_track')
@@ -90,7 +90,7 @@ export default class Music extends Player {
                     .setStyle('SUCCESS')
             );
 
-        const bottomRow = this.client.util.actionRow()
+        const bottomRow = this.client.util.row()
             .addComponents(
                 this.client.util.button()
                     .setCustomId('add_tracks')

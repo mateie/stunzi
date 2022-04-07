@@ -161,7 +161,7 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                     .setLabel('Cancel Track Selection')
                     .setStyle('SECONDARY');
 
-                const selectMenu = this.client.util.selectMenu()
+                const dropdown = this.client.util.dropdown()
                     .setCustomId('select_track')
                     .setPlaceholder('Select a track')
                     .setMinValues(1)
@@ -171,8 +171,8 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                 message.components[1].components[2] = cancelButton;
 
                 rows.push(
-                    this.client.util.actionRow()
-                        .addComponents(selectMenu)
+                    this.client.util.row()
+                        .addComponents(dropdown)
                 );
 
                 message.edit({ components: rows });
@@ -193,7 +193,7 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                     .setCustomId('add_tracks_modal')
                     .setTitle('Adding Track(s) to the queue')
                     .addComponents([
-                        this.client.util.textInput()
+                        this.client.util.input()
                             .setCustomId('track_query')
                             .setLabel('Track/Playlist URL or a name')
                             .setStyle('SHORT')
@@ -238,7 +238,7 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                     .setLabel('Cancel Filter Enabling')
                     .setStyle('SECONDARY');
 
-                const selectMenu = this.client.util.selectMenu()
+                const dropdown = this.client.util.dropdown()
                     .setCustomId('select_filter_enable')
                     .setPlaceholder('Select a filter to enable')
                     .setMinValues(1)
@@ -248,8 +248,8 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                 message.components[2].components[1] = cancelButton;
 
                 rows.push(
-                    this.client.util.actionRow()
-                        .addComponents(selectMenu)
+                    this.client.util.row()
+                        .addComponents(dropdown)
                 );
 
                 message.edit({ components: rows });
@@ -286,7 +286,7 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                     .setLabel('Cancel Filter Disabling')
                     .setStyle('SECONDARY');
 
-                const selectMenu = this.client.util.selectMenu()
+                const dropdown = this.client.util.dropdown()
                     .setCustomId('select_filter_disable')
                     .setPlaceholder('Select as filter to disable')
                     .setMaxValues(1)
@@ -296,8 +296,8 @@ export default class MusicButtonsEvent extends Event implements IEvent {
                 rows[2].components[2] = cancelButton;
 
                 rows.push(
-                    this.client.util.actionRow()
-                        .addComponents(selectMenu)
+                    this.client.util.row()
+                        .addComponents(dropdown)
                 );
 
                 message.edit({ components: rows });
