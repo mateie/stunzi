@@ -52,8 +52,8 @@ export default class Util {
             .setFooter({ text: 'Owned by Stealth and Bunzi' });
     }
 
-    attachment(attachment: BufferResolvable | Stream, name?: string, data?: RawMessageAttachmentData): MessageAttachment {
-        return new MessageAttachment(attachment, name, data);
+    attachment(attachment: BufferResolvable | Stream, name?: string): MessageAttachment {
+        return new MessageAttachment(attachment, name);
     }
 
     embedURL(title: string, url: string, display?: string) {
