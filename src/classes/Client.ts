@@ -2,7 +2,6 @@ const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
-import { ValClient } from 'valclient.js';
 import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
@@ -12,6 +11,7 @@ import EventHandler from './handlers/EventHandler';
 
 import Cards from './Cards';
 import Cypher from './Cypher';
+import Cloudinary from './Cloudinary';
 import Database from './Database';
 import Music from './systems/Music';
 import Util from './Util';
@@ -37,14 +37,13 @@ export default class Client extends DiscordClient {
     minecraftCommands: Collection<String, IMineCommand>;
     tempCreateVC: Collection<string, VoiceChannel>;
 
-    valorantAuth: Collection<string, ValClient>
-
     commandHandler: CommandHandler;
     menuHandler: MenuHandler;
     eventHandler: EventHandler;
 
     cards: Cards;
     cypher: Cypher
+    cloudinary: Cloudinary;
     database: Database;
     modals: void;
     music: Music;
@@ -72,14 +71,13 @@ export default class Client extends DiscordClient {
         this.minecraftCommands = new Collection();
         this.tempCreateVC = new Collection();
 
-        this.valorantAuth = new Collection();
-
         this.commandHandler = new CommandHandler(this);
         this.menuHandler = new MenuHandler(this);
         this.eventHandler = new EventHandler(this);
 
         this.cards = new Cards(this);
         this.cypher = new Cypher(this);
+        this.cloudinary = new Cloudinary(this);
         this.database = new Database(this);
         this.music = new Music(this);
         this.modals = modals(this);
