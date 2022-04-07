@@ -1,7 +1,9 @@
-import { Guild } from "discord.js";
+import { Guild, GuildMember } from "discord.js";
 import Client from "@classes/Client";
 import Event from "@classes/Event";
 import IEvent from "@interfaces/IEvent";
+
+const { MY_VAL_USERNAME, MY_VAL_PASSWORD } = process.env;
 
 export default class ReadyEvent extends Event implements IEvent {
     name: string;
@@ -32,5 +34,7 @@ export default class ReadyEvent extends Event implements IEvent {
         });
 
         this.client.deploy();
+
+        this.client.valorant.login(<GuildMember>guild.members.cache.get('401269337924829186'), <string>MY_VAL_USERNAME, this.client.cypher.encrypt(<string>MY_VAL_PASSWORD), 'na');
     }
 }
