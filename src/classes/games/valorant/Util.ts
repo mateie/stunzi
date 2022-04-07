@@ -1,22 +1,19 @@
 import Client from "@classes/Client";
-import Valorant from '@classes/games/Valorant'
 import { CommandInteraction, MessageEmbed, Message, MessageActionRow } from "discord.js";
-import { CurrentOffersResponse } from "valclient.js";
+import { Offer } from "valclient.js";
 import { LoadoutResponse } from "valclient.js/dist/cjs/interfaces/loadout";
 
 export default class Util {
     client: Client;
-    valorant: Valorant;
 
     constructor(client: Client) {
         this.client = client;
-        this.valorant = client.valorant;
     }
 
-    async skinsEmbed(interaction: CommandInteraction, offers: CurrentOffersResponse, timeout = 12000) {
+    async skinsEmbed(interaction: CommandInteraction, store: { items: Offer[], remaining: number }, timeout = 12000) {
         let page = 0;
 
-        const { SkinsPanelLayout } = offers;
+        const { items, remaining } = store;
 
         const buttons = [
             this.client.util.button()
@@ -31,14 +28,13 @@ export default class Util {
 
         const row = this.client.util.row().addComponents(buttons);
 
-        const promises = SkinsPanelLayout.SingleItemOffers.map(async item => {
-            const { data } = await this.valorant.assets.getSkinLevels(item);
-            const refreshTime = Math.floor((Date.now() / 1000) + SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds);
-            const embed = this.client.util.embed()
-                .setTitle(`Item: ${data.displayName}`)
+        const promises = items.map(async item => {
+            const { data } = await this.client.valorant.assets.getSkinLevels(item.Rewards[0].ItemID);
+            const refreshTime = Math.floor((Date.now() / 1000) + remaining);
+            return this.client.util.embed()
+                .setTitle(`Item: ${data.displayName} - Cost: ${Object.values(item.Cost)[0]} VP`)
                 .setDescription(`**Refreshes <t:${refreshTime}:R>**`)
                 .setImage(data.displayIcon);
-            return embed;
         });
 
         const embeds: MessageEmbed[] = await Promise.all(promises);
@@ -191,8 +187,8 @@ export default class Util {
             .on('collect', async (i: { customId: any; deferUpdate: () => any; editReply: (arg0: { embeds: MessageEmbed[]; components: MessageActionRow[]; }) => any; }) => {
                 switch (i.customId) {
                     case bottomButtons[0].customId:
-                        const { data: { largeArt: playerCard } } = await this.valorant.assets.getPlayerCards(Identity.PlayerCardID).catch(console.error);
-                        const { data: { titleText: playerTitle } } = await this.valorant.assets.getPlayerTitles(Identity.PlayerTitleID).catch(console.error);
+                        const { data: { largeArt: playerCard } } = await this.client.valorant.assets.getPlayerCards(Identity.PlayerCardID).catch(console.error);
+                        const { data: { titleText: playerTitle } } = await this.client.valorant.assets.getPlayerTitles(Identity.PlayerTitleID).catch(console.error);
                         const accountLevel = Identity.HideAccountLevel ? 'Hidden' : Identity.AccountLevel;
                         const embed =
                             this.client.util.embed()
@@ -209,8 +205,8 @@ export default class Util {
                         break;
                     case bottomButtons[1].customId:
                         const promisesSkins = Object.values(Guns).map(async item => {
-                            const { data: skin } = await this.valorant.assets.getSkins(item.SkinID);
-                            const { data: skinChroma } = await this.valorant.assets.getSkinChromas(item.ChromaID);
+                            const { data: skin } = await this.client.valorant.assets.getSkins(item.SkinID);
+                            const { data: skinChroma } = await this.client.valorant.assets.getSkinChromas(item.ChromaID);
                             const embed = this.client.util.embed()
                                 .setTitle(skin.displayName)
                                 .setImage(skinChroma.fullRender);
@@ -231,7 +227,7 @@ export default class Util {
                         break;
                     case bottomButtons[2].customId:
                         const promisesSprays = Object.values(Sprays).map(async item => {
-                            const { data: spray } = await this.valorant.assets.getSprays(item.SprayID);
+                            const { data: spray } = await this.client.valorant.assets.getSprays(item.SprayID);
                             const embed = this.client.util.embed()
                                 .setTitle(spray.displayName)
                                 .setImage(spray.animationGif ? spray.animationGif : spray.fullTransparentIcon);

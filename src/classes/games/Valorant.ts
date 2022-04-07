@@ -1,6 +1,6 @@
 import Client from "@classes/Client";
 
-import { Entitlements, ValClient, YourItems } from "valclient.js";
+import { Entitlements, Offer, ValClient, YourItems } from "valclient.js";
 import { Collection, CommandInteraction, GuildMember, Message, MessageAttachment, MessageComponentInteraction, MessageEmbed } from "discord.js";
 import { Regions } from "valclient.js/dist/cjs/types/resources";
 import ValorantAssets from 'valorant-api-js';
@@ -26,225 +26,20 @@ export default class Valorant {
         this.accounts = new Collection();
     }
 
-    /*async changeSkin(interaction: CommandInteraction, weapon: string, account: ValClient, timeout = 12000) {
-        const member = <GuildMember>interaction.member;
+    async getStore(interaction: CommandInteraction, account: ValClient) {
+        const allStoreItems = await account.store?.offers();
+        const storeItems = await account.store?.currentOffers();
 
-        let skinPage = 0;
-
-        const skins = skinsIdMappedByGunName[weapon as keyof typeof skinsIdMappedByGunName];
-        const skinIds = Object.values(skins);
-
-        const allSkins = await Promise.all(skinIds.map(async id => {
-            const { data } = await this.assets.getSkins(id);
-            return data;
-        }));
-
-        const playerLevels = <YourItems<Entitlements>>await account.store?.yourItems('skin_level');
-
-        const playerSkins: Collection<string, any> = new Collection();
-
-        playerLevels?.Entitlements.forEach((item: any) => {
-            allSkins.forEach(skin => {
-                if (skin.levels[0].uuid === item.ItemID) {
-                    playerSkins.set(skin.displayName, skin);
-                }
-            });
-        });
-
-        const skinButtons = [
-            this.client.util.button()
-                .setCustomId('previous_skin')
-                .setLabel('Previous Skin')
-                .setStyle('SECONDARY'),
-            this.client.util.button()
-                .setCustomId('select_skin')
-                .setLabel('Select')
-                .setStyle('SUCCESS'),
-            this.client.util.button()
-                .setCustomId('cancel_embed')
-                .setLabel('Cancel')
-                .setStyle('DANGER'),
-            this.client.util.button()
-                .setCustomId('next_skin')
-                .setLabel('Next Skin')
-                .setStyle('SECONDARY')
-        ];
-
-        const row = this.client.util.row().setComponents(skinButtons);
-
-        if (interaction.deferred === false) {
-            await interaction.deferReply();
+        const store: { items: Offer[], remaining: number } = {
+            items: [],
+            remaining: <number>storeItems?.SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds,
         }
 
-        const skinEmbeds = playerSkins.map((skin: any) => {
-            return this.client.util.embed()
-                .setAuthor({ name: skin.displayName })
-                .setTitle(`You have ${playerSkins.size} skins for ${weapon} *Except Default*`)
-                .setImage(skin.displayIcon);
-        });
+        storeItems?.SkinsPanelLayout.SingleItemOffers.forEach(id => store.items.push(<Offer>allStoreItems?.Offers.find(item => item.OfferID === id)));
 
-        const skinMessage = <Message>await interaction.editReply({
-            embeds: [skinEmbeds[skinPage]],
-            components: [row]
-        });
+        return this.util.skinsEmbed(interaction, store);
+    }
 
-        const filter = (i: MessageComponentInteraction) => (i.customId === skinButtons[0].customId ||
-            i.customId === skinButtons[1].customId ||
-            i.customId === skinButtons[2].customId ||
-            i.customId === skinButtons[3].customId) && member.id === i.user.id;
-
-        skinMessage.createMessageComponentCollector({
-            filter
-        })
-            .on('collect', async i => {
-                switch (i.customId) {
-                    case 'previous_skin': {
-                        skinPage = skinPage > 0 ? --skinPage : skinEmbeds.length - 1;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [skinEmbeds[skinPage]],
-                            components: [row]
-                        });
-                        break;
-                    }
-                    case 'next_skin': {
-                        skinPage = skinPage + 1 < skinEmbeds.length ? ++skinPage : 0;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [skinEmbeds[skinPage]],
-                            components: [row]
-                        });
-                        break;
-                    }
-                    case 'cancel_embed': {
-                        await i.deferUpdate();
-                        await i.deleteReply();
-                        break;
-                    }
-                    case 'select_skin': {
-                        await i.deferUpdate();
-
-                        const currentEmbed = <MessageEmbed>skinEmbeds[skinPage];
-                        const chosenSkin = playerSkins.get(<string>currentEmbed.author?.name);
-
-                        const decidedWeapon = <GunsType>weapon;
-                        const decidedSkin = <SkinsType<GunsType>>chosenSkin.displayName;
-                        let decidedLevel = <Levels>'Level 1';
-                        let decidedColor = <VariantSkin<SkinsType<GunsType>>>'Default';
-
-                        if (chosenSkin.levels.length > 1) {
-                            let levelPage = 0;
-
-                            const levelButtons = [
-                                this.client.util.button()
-                                    .setCustomId('previous_level')
-                                    .setLabel('Previous Level')
-                                    .setStyle('SECONDARY'),
-                                this.client.util.button()
-                                    .setCustomId('select_level')
-                                    .setLabel('Select')
-                                    .setStyle('SUCCESS'),
-                                this.client.util.button()
-                                    .setCustomId('cancel_embed')
-                                    .setLabel('Cancel')
-                                    .setStyle('DANGER'),
-                                this.client.util.button()
-                                    .setCustomId('next_level')
-                                    .setLabel('Next Level')
-                                    .setStyle('SECONDARY'),
-                            ]
-
-                            const levelRow = this.client.util.row().setComponents(levelButtons)
-
-                            const levels = chosenSkin.levels;
-
-                            skinButtons.forEach(button => button.setDisabled(true));
-                            row.setComponents(skinButtons);
-                            currentEmbed.setDescription('***Fetching Levels, Please Wait...***');
-
-                            skinMessage.edit({ components: [row], embeds: [currentEmbed] });
-
-                            const levelEmbeds = levels.map((level: any) => {
-                                return this.client.util.embed()
-                                    .setTitle(level.displayName.includes('Level') ? level.displayName : `${level.displayName} Level 1`);
-                            });
-
-                            const levelAttachments: MessageAttachment[] = await Promise.all(levels.map(async (level: any) => {
-                                const video = <UploadApiResponse>await this.client.cloudinary.getSkinVideos(member, level).catch(console.error);
-                                return this.client.util.attachment(video.secure_url, `${member.id}_${level.displayName.replace(' ', '_')}.mp4`);
-                            }));
-
-                            const filter = (i: MessageComponentInteraction) => (i.customId === levelButtons[0].customId ||
-                                i.customId === levelButtons[1].customId ||
-                                i.customId === levelButtons[2].customId ||
-                                i.customId === levelButtons[3].customId) && member.id === i.user.id;
-
-                            const levelMessage = <Message>await skinMessage.edit({
-                                embeds: [levelEmbeds[levelPage]],
-                                files: [levelAttachments[levelPage]],
-                                components: [levelRow],
-                            });
-
-                            const collector = levelMessage.createMessageComponentCollector({
-                                filter,
-                            })
-                                .on('collect', async i => {
-                                    switch (i.customId) {
-                                        case 'previous_level': {
-                                            levelButtons.forEach(button => button.setDisabled(true));
-                                            await skinMessage.edit({
-                                                components: [levelRow]
-                                            });
-
-                                            levelPage = levelPage > 0 ? --levelPage : levelEmbeds.length - 1;
-
-                                            await i.deferUpdate();
-                                            await i.editReply({
-                                                embeds: [levelEmbeds[levelPage]],
-                                                files: [levelAttachments[levelPage]],
-                                                components: [levelRow.setComponents(levelButtons.map(button => button.setDisabled(false)))]
-                                            });
-                                            break;
-                                        }
-                                        case 'next_level': {
-                                            levelButtons.forEach(button => button.setDisabled(true));
-                                            await skinMessage.edit({
-                                                components: [levelRow]
-                                            });
-
-                                            levelPage = levelPage + 1 < levelEmbeds.length ? ++levelPage : 0;
-
-                                            await i.deferUpdate();
-                                            await i.editReply({
-                                                embeds: [levelEmbeds[levelPage]],
-                                                files: [levelAttachments[levelPage]],
-                                                components: [levelRow.setComponents(levelButtons.map(button => button.setDisabled(false)))]
-                                            });
-                                            break;
-                                        }
-                                        case 'select_level': {
-                                            const chosenLevel = chosenSkin.levels[levelPage];
-                                            decidedLevel = !chosenLevel.displayName.includes('Level')
-                                                ? 'Level 1'
-                                                : chosenLevel.displayName.split(' ').slice(-2).join(' ');
-
-                                            await i.deferUpdate();
-                                            collector.stop();
-                                            break;
-                                        }
-                                    }
-                                })
-                                .on('end', i => {
-                                    console.log(i);
-                                });
-                        }
-                        break;
-                    }
-                }
-            });
-    }*/
     async changeSkin(interaction: CommandInteraction, weapon: string, account: ValClient, timeout = 12000) {
         const member = <GuildMember>interaction.member;
 
