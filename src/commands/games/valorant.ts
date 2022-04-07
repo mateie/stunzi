@@ -126,9 +126,16 @@ export default class ValorantCommand extends Command implements ICommand {
                         }
                         break;
                     }
+                    case 'xp': {
+                        const xp = await valorant.pvp?.accountXp();
+                        const embed = this.client.util.embed()
+                            .setTitle('Your Current XP')
+                            .setDescription(`***Level***: ${xp?.Progress.Level}\n***XP***: ${xp?.Progress.XP}`);
+
+                        return interaction.reply({ embeds: [embed], ephemeral: true });
+                    }
                     case 'store': {
-                        const store = <CurrentOffersResponse>await valorant.store?.currentOffers();
-                        return this.client.valorant.util.skinsEmbed(interaction, store);
+                        return this.client.valorant.getStore(interaction, valorant);
                     }
                     case 'wallet': {
                         const wallet = await valorant.store?.wallet();
@@ -160,6 +167,5 @@ export default class ValorantCommand extends Command implements ICommand {
                 }
             }
         }
-
     }
 }
