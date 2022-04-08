@@ -7,6 +7,6 @@ export default interface ICommand {
     permission: PermissionResolvable | undefined;
     data:
     | SlashCommandBuilder,
-    run: (interaction: CommandInteraction) => void | Promise<void>
+    run: (interaction: CommandInteraction) => any | Promise<any>
     mentionRole: (roleId: string) => string;
 }

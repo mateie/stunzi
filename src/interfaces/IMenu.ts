@@ -7,6 +7,6 @@ export default interface IMenu {
     permission: PermissionResolvable | undefined;
     data:
     | ContextMenuCommandBuilder
-    run: (interaction: ContextMenuInteraction) => void | Promise<void>;
+    run: (interaction: ContextMenuInteraction) => any | Promise<any>;
     mentionRole: (roleId: string) => string;
 }
