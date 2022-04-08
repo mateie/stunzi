@@ -44,6 +44,9 @@ export default class Rank extends CanvaRank {
             .renderEmojis(true)
             .setProgressBar(cardData.progressbar, 'COLOR');
 
-        return image.build({});
+        return image.build({
+            fontX: 'Sans',
+            fontY: 'Sans',
+        });
     }
 }
