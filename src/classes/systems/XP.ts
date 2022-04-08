@@ -15,10 +15,30 @@ export default class XP {
         await dbMember.save();
     }
 
+    async setLevel(member: GuildMember, level: number) {
+        const dbMember = await this.client.database.get.member(member);
+
+        dbMember.level = level;
+        await dbMember.save();
+    }
+
+    async levelUp(member: GuildMember) {
+        const dbMember = await this.client.database.get.member(member);
+
+        dbMember.level += 1;
+        await dbMember.save();
+    }
+
     async getXP(member: GuildMember): Promise<number> {
         const dbMember = await this.client.database.get.member(member);
 
         return dbMember.xp;
+    }
+
+    async getLevel(member: GuildMember): Promise<number> {
+        const dbMember = await this.client.database.get.member(member);
+
+        return dbMember.level;
     }
 
     calculateLevel(xp: number): number {
@@ -38,6 +58,8 @@ export default class XP {
     }
 
     calculateReqXP(xp: number) {
+
+
         let currentLevel = this.calculateLevel(xp);
         const nextLevel = this.calculateLevel(xp) + 1;
 
