@@ -2,13 +2,15 @@ import { Guild, GuildMember } from "discord.js";
 import Client from "@classes/Client";
 import Canvas from 'canvas';
 import { IMember } from "@schemas/Member";
-import { Rank } from 'canvacord';
+import Rank from "./cards/Rank";
 
 export default class Cards {
     readonly client: Client;
+    readonly rank: Rank;
 
     constructor(client: Client) {
         this.client = client;
+        this.rank = new Rank(this.client);
     }
 
     public async boosterThanks(member: GuildMember) {
@@ -49,7 +51,7 @@ export default class Cards {
         const currentXP = member.xp - this.client.xp.calculateXPForLevel(member.level);
         const neededXP = this.client.xp.calculateReqXP(member.xp) + currentXP;
 
-        const rank = await this.getRank(member);
+        const rank = await this.rank.getRank(member);
 
         const info = {
             rank,
@@ -62,44 +64,5 @@ export default class Cards {
         };
 
         return info;
-    }
-
-    public async getRank(member: IMember): Promise<number | undefined> {
-        const members = await this.client.database.get.allMembers();
-        const sorted = members.sort((a, b) => b.xp - a.xp);
-
-        const mapped = sorted.map((u, i) => ({
-            id: u.id,
-            xp: u.xp,
-            rank: i + 1
-        }));
-
-        const rank = mapped.find(u => u.id == member.id)?.rank;
-
-        return rank;
-    }
-
-    public async getRankCard(member: GuildMember) {
-        const memberD = await this.client.database.get.member(member);
-        const cardData = await this.getCardData(memberD);
-
-        const image = new Rank()
-            .setBackground(Buffer.isBuffer(cardData.background) ? 'IMAGE' : 'COLOR', cardData.background)
-            .setLevelColor(cardData.text)
-            .setRankColor(cardData.text)
-            .setAvatar(member.user.displayAvatarURL({ format: 'png' }))
-            .setUsername(member.user.username)
-            .setDiscriminator(member.user.discriminator)
-            .setCurrentXP(cardData.currentXP)
-            .setRequiredXP(cardData.neededXP)
-            .setLevel(cardData.level, 'Level')
-            .setRank(<number>cardData.rank, 'Rank')
-            .renderEmojis(true)
-            .setProgressBar(cardData.progressbar, 'COLOR');
-
-        return image.build({
-            fontX: 'Manrope',
-            fontY: 'Manrope'
-        });
     }
 }

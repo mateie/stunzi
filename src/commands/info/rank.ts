@@ -25,7 +25,7 @@ export default class RankCommand extends Command implements ICommand {
 
         if (member.user.bot) return interaction.reply({ content: `${member} is a bot`, ephemeral: true });
 
-        const image = await this.client.cards.getRankCard(member);
+        const image = await this.client.cards.rank.getRankCard(member);
         const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
         interaction.reply({ files: [attachment] });
     }
