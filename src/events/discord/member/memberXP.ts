@@ -16,6 +16,8 @@ export default class MemberXPEvent extends Event implements IEvent {
     async run(message: Message) {
         const member = <GuildMember>message.member;
 
+        if (message.author.bot) return;
+
         const today = new Date();
         const ifWeekend = today.getDay() == 6 || today.getDay() == 0;
 
