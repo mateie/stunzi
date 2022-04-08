@@ -11,8 +11,6 @@ export default class Cloudinary {
     constructor(client: Client) {
         this.client = client;
 
-
-
         this.v2 = v2;
 
         this.v2.config({
@@ -26,7 +24,6 @@ export default class Cloudinary {
     getSkinVideos(member: GuildMember, level: any) {
         return new Promise((resolve, reject) => {
             const filename = `${level.uuid}-${member.id}`;
-            console.log(level);
             this.v2.uploader.upload(level.streamedVideo, {
                 resource_type: 'video',
                 format: 'mp4',
