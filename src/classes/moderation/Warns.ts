@@ -31,7 +31,7 @@ export default class Warns {
         return warns;
     }
 
-    async totalWarns(member: GuildMember) {
+    async total(member: GuildMember) {
         const warns = await this.getAll(member);
         return warns.length;
     }
