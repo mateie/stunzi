@@ -31,6 +31,6 @@ export default class TrackStartEvent extends Event implements IEvent {
 
         const message = await channel.send({ embeds: [embed] });
 
-        this.client.music.buttons(message, track);
+        this.client.music.buttons(message);
     }
 }
