@@ -10,6 +10,12 @@ export interface IMember extends Document {
         text: string;
         progressbar: string;
     },
+    reports: [
+        {
+                by: string;
+                reason: string;
+        }
+    ]
 }
 
 export const Member: Schema = new Schema({
@@ -44,6 +50,12 @@ export const Member: Schema = new Schema({
             default: '#FF5349',
         },
     },
+    reports: [
+        {
+            by: String,
+            reason: String,
+        }
+    ]
 });
 
 Member.pre('save', function (next: () => void) {

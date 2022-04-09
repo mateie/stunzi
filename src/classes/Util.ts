@@ -1,7 +1,8 @@
 import Client from './Client';
-import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, MessageSelectMenu } from 'discord.js';
-import { Modal, TextInputComponent, showModal as modalShow } from '@mateie/discord-modals';
+import { BufferResolvable, ButtonInteraction, CommandInteraction, ContextMenuInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, MessageSelectMenu } from 'discord.js';
+import { Modal, TextInputComponent, showModal as modalShow, ModalSubmitInteraction } from '@mateie/discord-modals';
 import { Stream } from 'stream';
+import { roleMention } from '@discordjs/builders';
 
 export default class Util {
     readonly client: Client;
@@ -30,6 +31,10 @@ export default class Util {
         return new TextInputComponent();
     }
 
+    mentionRole(roleId: string): string {
+        return roleMention(roleId);
+    }
+
     showModal(
         modal: Modal,
         options: {
@@ -49,6 +54,50 @@ export default class Util {
             .setColor('PURPLE')
             .setTimestamp(new Date())
             .setFooter({ text: 'Owned by Stealth and Bunzi' });
+    }
+
+    async memberInfo(
+        interaction: CommandInteraction | ButtonInteraction | ContextMenuInteraction | ModalSubmitInteraction,
+        member: GuildMember
+    ) {
+        const avatar = member.user.displayAvatarURL({ dynamic: true });
+        const activities: string[] = [];
+        const status = {
+            emoji: ':white_circle:',
+            text: 'Offline'
+        };
+
+        if (member.presence) {
+            member.presence.activities.forEach(act => {
+                const type = `***${act.type.charAt(0).toUpperCase() + act.type.split('_').join(' ').slice(1).toLowerCase()}***:`;
+
+                activities.push(`
+                    ${type} ${act.state ? this.client.util.list(act.state.split('; ')) : ''} ${act.type === 'PLAYING' ? act.name : ''} ${act.type === 'LISTENING' ? '-' : ''} ${act.details ? act.details : ''}
+                `);
+            });
+
+            status.emoji = this.client.util.statusEmoji(member.presence.status);
+            status.text = member.presence.status !== 'dnd' ? `${member.presence.status.charAt(0).toUpperCase()}${member.presence.status.slice(1)}` : 'Do Not Disturb';
+        }
+
+        const roles = member.roles.cache.filter(role => role.name !== '@everyone');
+        const mappedRoles = roles.map(role => this.mentionRole(role.id)).join(', ');
+
+        const embed = this.embed()
+            .setAuthor({ name: member.user.tag, iconURL: avatar, url: avatar })
+            .setColor(member.displayHexColor)
+            .setURL(avatar)
+            .setThumbnail(avatar)
+            .setDescription(`**Status**: ${status.emoji} ${status.text} ${activities.length > 0 ? `\n**Activities**: ${activities.join('')}` : ''}`)
+            .addFields([
+                { name: 'Joined Server', value: `<t:${Math.floor(<number>member.joinedTimestamp / 1000)}:R>`, inline: true },
+                { name: 'Joined Discord', value: `<t:${Math.floor(<number>member.user.createdTimestamp / 1000)}:R>`, inline: true },
+                { name: `Roles(${roles.size})`, value: mappedRoles }
+            ])
+            .setFooter({ text: `ID: ${member.id}`});
+
+        const rows = await this.memberActionRow(<GuildMember>interaction.member);
+        return interaction.reply({ embeds: [embed], components: rows });
     }
 
     attachment(attachment: BufferResolvable | Stream, name?: string): MessageAttachment {
@@ -111,6 +160,10 @@ export default class Util {
                     .setCustomId('show_rank')
                     .setLabel('Show Rank')
                     .setStyle('SECONDARY'),
+                this.button()
+                    .setCustomId('report_member')
+                    .setLabel('Report Member')
+                    .setStyle('DANGER')
             );
 
         const midRow = this.row()

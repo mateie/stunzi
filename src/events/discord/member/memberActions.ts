@@ -16,30 +16,48 @@ export default class MemberActionsEvent extends Event implements IEvent {
     async run(interaction: ButtonInteraction) {
         if (!interaction.isButton()) return;
 
-        const message: Message = <Message>interaction.message;
-        const member: GuildMember = <GuildMember>interaction.member;
-        const guild: Guild = <Guild>interaction.guild;
-        const customId: string = interaction.customId;
-
         if (![
             'show_rank',
             'show_warns',
             'show_blocks',
+            'report_member',
             'show_mutes',
             'warn_member',
             'block_member',
             'mute_member',
             'unblock_member',
             'unmute_member'
-        ].includes(customId)) return;
+        ].includes(interaction.customId)) return;
 
-        const target: GuildMember = <GuildMember>guild.members.cache.get(message.embeds[0].fields[0].value);
+        const message: Message = <Message>interaction.message;
+        const member: GuildMember = <GuildMember>interaction.member;
+        const guild: Guild = <Guild>interaction.guild;
 
-        switch (customId) {
+        const target: GuildMember = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
+
+        switch (interaction.customId) {
         case 'show_rank': {
             const image = await this.client.cards.rank.getRankCard(target);
             const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
             return interaction.reply({ files: [attachment], ephemeral: true });
+        }
+        case 'report_member': {
+            const modal = this.client.util.modal()
+                .setCustomId('report-member-modal')
+                .setTitle(`Reporting ${target.user.tag}`)
+                .addComponents([
+                    this.client.util.input()
+                        .setCustomId('report-member-reason')
+                        .setLabel('Reason for the report')
+                        .setStyle('SHORT')
+                        .setMinLength(4)
+                        .setMaxLength(100)
+                        .setPlaceholder('Type your reason here')
+                        .setRequired(true)
+                ]);
+        
+            this.client.util.showModal(modal, { client: this.client, interaction });
+            break;
         }
         case 'show_warns': {
             if (!member.permissions.has('VIEW_AUDIT_LOG')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
@@ -116,7 +134,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                         .setCustomId('block-member-time')
                         .setLabel('Time for the block')
                         .setStyle('SHORT')
-                        .setMaxLength(2)
+                        .setMinLength(2)
                         .setMaxLength(2)
                         .setPlaceholder('Type your time here (1m, 1h, 1d)')
                         .setRequired(false),
@@ -124,7 +142,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                         .setCustomId('block-member-reason')
                         .setLabel('Reason for the block')
                         .setStyle('SHORT')
-                        .setMaxLength(4)
+                        .setMinLength(4)
                         .setMaxLength(100)
                         .setPlaceholder('Type your reason here')
                         .setRequired(true)
@@ -143,7 +161,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                         .setCustomId('mute-member-time')
                         .setLabel('Time for the mute')
                         .setStyle('SHORT')
-                        .setMaxLength(2)
+                        .setMinLength(2)
                         .setMaxLength(2)
                         .setPlaceholder('Type your time here (1m, 1h, 1d)')
                         .setRequired(false),
@@ -151,7 +169,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
                         .setCustomId('mute-member-reason')
                         .setLabel('Reason for the mute')
                         .setStyle('SHORT')
-                        .setMaxLength(4)
+                        .setMinLength(4)
                         .setMaxLength(100)
                         .setPlaceholder('Type your reason here')
                         .setRequired(true)

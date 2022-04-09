@@ -12,6 +12,9 @@ export default {
         },
         minecraft: {
             serverChat: '957571549454532638',
+        },
+        staff: {
+            memberReports: '962236934221078558'
         }
     },
     voice: {

@@ -17,9 +17,9 @@ export default class MemberActionsModal extends Event {
         const message = <Message>interaction.message;
         const guild = <Guild>interaction.guild;
 
-        if (!['warn-member-modal', 'block-member-modal', 'mute-member-modal'].includes(interaction.customId)) return;
+        if (!['warn-member-modal', 'block-member-modal', 'mute-member-modal', 'report-member-modal'].includes(interaction.customId)) return;
 
-        const target = <GuildMember>guild.members.cache.get(message.embeds[0].fields[0].value);
+        const target = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
 
         switch (interaction.customId) {
         case 'warn-member-modal': {
@@ -37,6 +37,11 @@ export default class MemberActionsModal extends Event {
             const muteReason = interaction.getTextInputValue('mute-member-reason');
             const muteTime = interaction.getTextInputValue('mute-member-time');
             this.client.mutes.create(interaction, target, muteTime, muteReason);
+            break;
+        }
+        case 'report-member-modal': {
+            const reportReason = interaction.getTextInputValue('report-member-reason');
+            this.client.reports.create(interaction, target, reportReason);
             break;
         }
         }

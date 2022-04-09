@@ -20,6 +20,7 @@ import XP from './systems/XP';
 
 import Blocks from './moderation/Blocks';
 import Mutes from './moderation/Mutes';
+import Reports from './moderation/Reports';
 import Update from './moderation/Update';
 import Warns from './moderation/Warns';
 
@@ -54,6 +55,7 @@ export default class Client extends DiscordClient {
 
     blocks: Blocks;
     mutes: Mutes;
+    reports: Reports;
     update: Update;
     warns: Warns;
 
@@ -88,6 +90,7 @@ export default class Client extends DiscordClient {
 
         this.blocks = new Blocks(this);
         this.mutes = new Mutes(this);
+        this.reports = new Reports(this);
         this.update = new Update(this);
         this.warns = new Warns(this);
 
