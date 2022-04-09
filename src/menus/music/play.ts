@@ -25,7 +25,7 @@ export default class MenuNameMenu extends Menu implements IMenu {
 
         const voiceChannel = <VoiceChannel>member.voice.channel;
 
-        if (message.content.length < 1) return interaction.reply({ content: `Track not provided`, ephemeral: true });
+        if (message.content.length < 1) return interaction.reply({ content: 'Track not provided', ephemeral: true });
 
         if (!voiceChannel) return interaction.reply({ content: 'You must be in a voice channel to queue a track', ephemeral: true });
 
@@ -49,22 +49,27 @@ export default class MenuNameMenu extends Menu implements IMenu {
             }
         }
 
-        await interaction.deferReply({ ephemeral: true }).catch(() => { });
+        try {
 
-        const result = await this.client.music.search(message.content, {
-            requestedBy: interaction.user
-        });
+            await interaction.deferReply({ ephemeral: true });
 
-        if (result.tracks.length < 1 || !result.tracks[0]) {
-            await interaction.followUp({ content: `Track **${message.content} was not found` });
-            return;
+            const result = await this.client.music.search(message.content, {
+                requestedBy: interaction.user
+            });
+
+            if (result.tracks.length < 1 || !result.tracks[0]) {
+                await interaction.followUp({ content: `Track **${message.content} was not found` });
+                return;
+            }
+
+            if (result.playlist) queue.addTracks(result.playlist.tracks);
+            else queue.addTrack(result.tracks[0]);
+
+            if (!queue.playing) queue.play();
+
+            await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true });
+        } catch(err) {
+            console.error(err);
         }
-
-        if (result.playlist) queue.addTracks(result.playlist.tracks);
-        else queue.addTrack(result.tracks[0]);
-
-        if (!queue.playing) queue.play();
-
-        await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true }).catch(() => { });
     }
 }

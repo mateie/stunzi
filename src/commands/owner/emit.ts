@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class EmitCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -28,12 +28,12 @@ export default class EmitCommand extends Command implements ICommand {
         const choices: string = <string>interaction.options.getString('member');
         const member = <GuildMember>interaction.member;
         switch (choices) {
-            case 'guildMemberAdd':
-                this.client.emit('guildMemberAdd', member);
-                break;
-            case 'guildMemberRemove':
-                this.client.emit('guildMemberRemove', member);
-                break;
+        case 'guildMemberAdd':
+            this.client.emit('guildMemberAdd', member);
+            break;
+        case 'guildMemberRemove':
+            this.client.emit('guildMemberRemove', member);
+            break;
         }
 
         interaction.reply({ content: 'Emitted', ephemeral: true });

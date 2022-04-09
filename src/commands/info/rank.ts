@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class RankCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -9,13 +9,13 @@ export default class RankCommand extends Command implements ICommand {
 
         this.data
             .setName('rank')
-            .setDescription("Look at your/someone's current rank")
+            .setDescription('Look at your/someone\'s current rank')
             .addUserOption(option =>
                 option
                     .setName('member')
-                    .setDescription("Who's profile do you want to view?")
+                    .setDescription('Who\'s profile do you want to view?')
                     .setRequired(false)
-            )
+            );
     }
 
     async run(interaction: CommandInteraction) {

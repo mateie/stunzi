@@ -19,4 +19,4 @@ export default {
         streaming: '938249918232010773',
         createAVC: '959353575065128960',
     }
-}
+};

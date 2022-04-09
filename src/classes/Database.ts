@@ -1,11 +1,11 @@
 const { DB } = process.env;
-import mongoose from "mongoose";
-import Client from "./Client";
+import mongoose from 'mongoose';
+import Client from './Client';
 
-import Check from "./database/Check";
-import Verify from "./database/Verify";
-import Create from "./database/Create";
-import Get from "./database/Get";
+import Check from './database/Check';
+import Verify from './database/Verify';
+import Create from './database/Create';
+import Get from './database/Get';
 
 export default class Database {
     readonly client: Client;

@@ -1,7 +1,7 @@
-import Client from "@classes/Client";
-import { CommandInteraction, MessageEmbed, Message, MessageActionRow } from "discord.js";
-import { Offer } from "valclient.js";
-import { LoadoutResponse } from "valclient.js/dist/cjs/interfaces/loadout";
+import Client from '@classes/Client';
+import { CommandInteraction, MessageEmbed, Message } from 'discord.js';
+import { Offer } from 'valclient.js';
+import { LoadoutResponse } from 'valclient.js/dist/cjs/interfaces/loadout';
 
 export default class Util {
     client: Client;
@@ -59,14 +59,14 @@ export default class Util {
 
         collector.on('collect', async i => {
             switch (i.customId) {
-                case buttons[0].customId:
-                    page = page > 0 ? --page : embeds.length - 1;
-                    break;
-                case buttons[1].customId:
-                    page = page + 1 < embeds.length ? ++page : 0;
-                    break;
-                default:
-                    break;
+            case buttons[0].customId:
+                page = page > 0 ? --page : embeds.length - 1;
+                break;
+            case buttons[1].customId:
+                page = page + 1 < embeds.length ? ++page : 0;
+                break;
+            default:
+                break;
             }
 
             await i.deferUpdate();
@@ -157,101 +157,103 @@ export default class Util {
             time: timeout
         });
 
-        let embeds: string | any[];
+        let embeds: MessageEmbed[];
 
         pageCollector
             .on('collect', async (i) => {
                 switch (i.customId) {
-                    case topButtons[0].customId:
-                        page = page > 0 ? --page : embeds.length - 1;
+                case topButtons[0].customId:
+                    page = page > 0 ? --page : embeds.length - 1;
 
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            components: [topRow, bottomRow]
-                        });
-                        break;
-                    case topButtons[1].customId:
-                        page = page + 1 < embeds.length ? ++page : 0;
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        components: [topRow, bottomRow]
+                    });
+                    break;
+                case topButtons[1].customId:
+                    page = page + 1 < embeds.length ? ++page : 0;
 
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            components: [topRow, bottomRow]
-                        });
-                        break;
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        components: [topRow, bottomRow]
+                    });
+                    break;
                 }
             });
 
         menuCollector
-            .on('collect', async (i: { customId: any; deferUpdate: () => any; editReply: (arg0: { embeds: MessageEmbed[]; components: MessageActionRow[]; }) => any; }) => {
+            .on('collect', async i => {
                 switch (i.customId) {
-                    case bottomButtons[0].customId:
-                        const { data: { largeArt: playerCard } } = await this.client.valorant.assets.getPlayerCards(Identity.PlayerCardID).catch(console.error);
-                        const { data: { titleText: playerTitle } } = await this.client.valorant.assets.getPlayerTitles(Identity.PlayerTitleID).catch(console.error);
-                        const accountLevel = Identity.HideAccountLevel ? 'Hidden' : Identity.AccountLevel;
-                        const embed =
+                case bottomButtons[0].customId: {
+                    const { data: { largeArt: playerCard } } = await this.client.valorant.assets.getPlayerCards(Identity.PlayerCardID).catch(console.error);
+                    const { data: { titleText: playerTitle } } = await this.client.valorant.assets.getPlayerTitles(Identity.PlayerTitleID).catch(console.error);
+                    const accountLevel = Identity.HideAccountLevel ? 'Hidden' : Identity.AccountLevel;
+                    const embed =
                             this.client.util.embed()
                                 .setTitle(playerTitle)
                                 .setImage(playerCard)
                                 .setDescription(`Account Level: ${accountLevel}`);
 
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embed],
-                            components: [bottomRow]
-                        });
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embed],
+                        components: [bottomRow]
+                    });
 
-                        break;
-                    case bottomButtons[1].customId:
-                        const promisesSkins = Object.values(Guns).map(async item => {
-                            const { data: skin } = await this.client.valorant.assets.getSkins(item.SkinID);
-                            const { data: skinChroma } = await this.client.valorant.assets.getSkinChromas(item.ChromaID);
-                            const embed = this.client.util.embed()
-                                .setTitle(skin.displayName)
-                                .setImage(skinChroma.fullRender);
-
-                            return embed;
-                        });
-
-                        embeds = await Promise.all(promisesSkins);
-
-                        page = 0;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            components: [topRow, bottomRow]
-                        });
-
-                        break;
-                    case bottomButtons[2].customId:
-                        const promisesSprays = Object.values(Sprays).map(async item => {
-                            const { data: spray } = await this.client.valorant.assets.getSprays(item.SprayID);
-                            const embed = this.client.util.embed()
-                                .setTitle(spray.displayName)
-                                .setImage(spray.animationGif ? spray.animationGif : spray.fullTransparentIcon);
-
-                            return embed;
-                        });
-
-                        embeds = await Promise.all(promisesSprays);
-
-                        page = 0;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            components: [topRow, bottomRow]
-                        });
-
-                        break;
-                    case bottomButtons[3].customId:
-                        interaction.deleteReply();
-                        pageCollector.stop();
-                        return menuCollector.stop();
+                    break;
                 }
+                case bottomButtons[1].customId: {
+                    const promisesSkins = Object.values(Guns).map(async item => {
+                        const { data: skin } = await this.client.valorant.assets.getSkins(item.SkinID);
+                        const { data: skinChroma } = await this.client.valorant.assets.getSkinChromas(item.ChromaID);
+                        const embed = this.client.util.embed()
+                            .setTitle(skin.displayName)
+                            .setImage(skinChroma.fullRender);
 
+                        return embed;
+                    });
+
+                    embeds = await Promise.all(promisesSkins);
+
+                    page = 0;
+
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        components: [topRow, bottomRow]
+                    });
+
+                    break;
+                }
+                case bottomButtons[2].customId: {
+                    const promisesSprays = Object.values(Sprays).map(async item => {
+                        const { data: spray } = await this.client.valorant.assets.getSprays(item.SprayID);
+                        const embed = this.client.util.embed()
+                            .setTitle(spray.displayName)
+                            .setImage(spray.animationGif ? spray.animationGif : spray.fullTransparentIcon);
+
+                        return embed;
+                    });
+
+                    embeds = await Promise.all(promisesSprays);
+
+                    page = 0;
+
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        components: [topRow, bottomRow]
+                    });
+
+                    break;
+                }
+                case bottomButtons[3].customId:
+                    interaction.deleteReply();
+                    pageCollector.stop();
+                    return menuCollector.stop();
+                }
                 menuCollector.resetTimer();
             });
     }

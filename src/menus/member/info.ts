@@ -54,7 +54,7 @@ export default class MemberMenu extends Menu implements IMenu {
                 { name: `Roles (${roles.size})`, value: mappedRoles }
             ]);
 
-        const rows = await this.client.util.memberActionRow(<GuildMember>interaction.member, member);
+        const rows = await this.client.util.memberActionRow(<GuildMember>interaction.member);
         interaction.reply({ embeds: [embed], components: rows });
     }
 }

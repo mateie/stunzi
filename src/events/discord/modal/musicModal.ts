@@ -29,16 +29,16 @@ export default class MusicModal extends Event implements IEvent {
         if (queue.connection.channel.id !== voiceChannel.id) return interaction.reply({ content: `I'm already playing music in ${guild.me?.voice.channel}`, ephemeral: true });
 
         switch (interaction.customId) {
-            case 'add_tracks_modal': {
-                const query = interaction.getTextInputValue('track_query');
-                const result = await this.client.music.search(query, {
-                    requestedBy: interaction.user
-                });
-                if (result.playlist) queue.addTracks(result.playlist.tracks);
-                else queue.addTrack(result.tracks[0]);
-                return interaction.reply({ content: `Added to the queue`, ephemeral: true });
-                break;
-            }
+        case 'add_tracks_modal': {
+            const query = interaction.getTextInputValue('track_query');
+            const result = await this.client.music.search(query, {
+                requestedBy: interaction.user
+            });
+            if (result.playlist) queue.addTracks(result.playlist.tracks);
+            else queue.addTrack(result.tracks[0]);
+            return interaction.reply({ content: 'Added to the queue', ephemeral: true });
+            break;
+        }
         }
     }
 }

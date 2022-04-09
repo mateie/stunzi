@@ -1,6 +1,6 @@
-import { roleMention, ContextMenuCommandBuilder } from "@discordjs/builders";
-import { PermissionResolvable } from "discord.js";
-import Client from "./Client";
+import { roleMention, ContextMenuCommandBuilder } from '@discordjs/builders';
+import { PermissionResolvable } from 'discord.js';
+import Client from './Client';
 
 export default class Menu {
     readonly client: Client;

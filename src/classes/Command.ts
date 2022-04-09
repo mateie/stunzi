@@ -1,6 +1,6 @@
-import { roleMention, SlashCommandBuilder } from "@discordjs/builders";
-import { PermissionResolvable } from "discord.js";
-import Client from "./Client";
+import { roleMention, SlashCommandBuilder } from '@discordjs/builders';
+import { PermissionResolvable } from 'discord.js';
+import Client from './Client';
 
 export default class Command {
     readonly client: Client;

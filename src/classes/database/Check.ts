@@ -1,8 +1,8 @@
-import { Guild as DiscordGuild, GuildMember } from "discord.js";
-import Guild from "@schemas/Guild";
-import Member from "@schemas/Member";
-import Client from "@classes/Client";
-import Database from "@classes/Database";
+import { Guild as DiscordGuild, GuildMember } from 'discord.js';
+import Guild from '@schemas/Guild';
+import Member from '@schemas/Member';
+import Client from '@classes/Client';
+import Database from '@classes/Database';
 
 export default class Check {
     readonly client: Client;

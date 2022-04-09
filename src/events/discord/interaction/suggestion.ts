@@ -1,7 +1,7 @@
-import { ButtonInteraction, GuildMember, Message, MessageEmbed, Permissions } from 'discord.js';
+import { ButtonInteraction, GuildMember, Message, MessageEmbed } from 'discord.js';
 import Client from '@classes/Client';
 import Event from '@classes/Event';
-import IEvent from "@interfaces/IEvent";
+import IEvent from '@interfaces/IEvent';
 import Suggestion from '@schemas/Suggestion';
 
 export default class SuggestionEvent extends Event implements IEvent {
@@ -34,16 +34,16 @@ export default class SuggestionEvent extends Event implements IEvent {
             if (!embed) return;
 
             switch (customId) {
-                case 'suggest-accept': {
-                    embed.fields[2] = { name: 'Status', value: 'Accepted', inline: true };
-                    message.edit({ embeds: [embed.setColor('GREEN')], components: [] });
-                    return interaction.reply({ content: 'Suggestion accepted', ephemeral: true });
-                }
-                case 'suggest-decline': {
-                    embed.fields[2] = { name: 'Status', value: 'Declined', inline: true };
-                    message.edit({ embeds: [embed.setColor('RED')], components: [] });
-                    return interaction.reply({ content: 'Suggestion declined', ephemeral: true });
-                }
+            case 'suggest-accept': {
+                embed.fields[2] = { name: 'Status', value: 'Accepted', inline: true };
+                message.edit({ embeds: [embed.setColor('GREEN')], components: [] });
+                return interaction.reply({ content: 'Suggestion accepted', ephemeral: true });
+            }
+            case 'suggest-decline': {
+                embed.fields[2] = { name: 'Status', value: 'Declined', inline: true };
+                message.edit({ embeds: [embed.setColor('RED')], components: [] });
+                return interaction.reply({ content: 'Suggestion declined', ephemeral: true });
+            }
             }
         } catch (err) {
             console.error(err);

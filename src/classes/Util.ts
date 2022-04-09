@@ -1,8 +1,7 @@
-import Client from "./Client";
-import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, MessageSelectMenu } from "discord.js";
+import Client from './Client';
+import { BufferResolvable, ButtonInteraction, CommandInteraction, GuildMember, Interaction, Message, MessageActionRow, MessageAttachment, MessageButton, MessageEmbed, MessageSelectMenu } from 'discord.js';
 import { Modal, TextInputComponent, showModal as modalShow } from '@mateie/discord-modals';
-import { Stream } from "stream";
-import { RawMessageAttachmentData } from "discord.js/typings/rawDataTypes";
+import { Stream } from 'stream';
 
 export default class Util {
     readonly client: Client;
@@ -62,14 +61,14 @@ export default class Util {
 
     statusEmoji(type: string): string {
         switch (type) {
-            case 'dnd':
-                return ':red_circle:';
-            case 'idle':
-                return ':yellow_circle:';
-            case 'online':
-                return ':green_circle:';
-            default:
-                return ':white_circle:';
+        case 'dnd':
+            return ':red_circle:';
+        case 'idle':
+            return ':yellow_circle:';
+        case 'online':
+            return ':green_circle:';
+        default:
+            return ':white_circle:';
         }
     }
 
@@ -82,7 +81,7 @@ export default class Util {
         return temp;
     }
 
-    list(arr: string[], conj: string = 'and'): string {
+    list(arr: string[], conj = 'and'): string {
         const len = arr.length;
         if (len == 0) return '';
         if (len == 1) return arr[0];
@@ -102,14 +101,14 @@ export default class Util {
         return temp.join(' ');
     }
 
-    async memberActionRow(executer: GuildMember, member: GuildMember): Promise<MessageActionRow[]> {
-        const blocked: boolean = false;
-        const muted: boolean = false;
+    async memberActionRow(executer: GuildMember): Promise<MessageActionRow[]> {
+        const blocked = false;
+        const muted = false;
 
         const topRow = this.row()
             .addComponents(
                 this.button()
-                    .setCustomId(`show_rank`)
+                    .setCustomId('show_rank')
                     .setLabel('Show Rank')
                     .setStyle('SECONDARY'),
             );
@@ -117,15 +116,15 @@ export default class Util {
         const midRow = this.row()
             .addComponents(
                 this.button()
-                    .setCustomId(`show_warns`)
+                    .setCustomId('show_warns')
                     .setLabel('Show Warns')
                     .setStyle('PRIMARY'),
                 this.button()
-                    .setCustomId(`show_blocks`)
+                    .setCustomId('show_blocks')
                     .setLabel('Show Blocks')
                     .setStyle('PRIMARY'),
                 this.button()
-                    .setCustomId(`show_mutes`)
+                    .setCustomId('show_mutes')
                     .setLabel('Show Mutes')
                     .setStyle('PRIMARY'),
             );
@@ -133,15 +132,15 @@ export default class Util {
         const bottomRow = this.row()
             .addComponents(
                 this.button()
-                    .setCustomId(`warn_member`)
+                    .setCustomId('warn_member')
                     .setLabel('Warn Member')
                     .setStyle('DANGER'),
                 this.button()
-                    .setCustomId(blocked ? `unblock_member` : `block_member`)
+                    .setCustomId(blocked ? 'unblock_member' : 'block_member')
                     .setLabel(blocked ? 'Unblock Member' : 'Block Member')
                     .setStyle(blocked ? 'SUCCESS' : 'DANGER'),
                 this.button()
-                    .setCustomId(muted ? `unmute_member` : `mute_member`)
+                    .setCustomId(muted ? 'unmute_member' : 'mute_member')
                     .setLabel(muted ? 'Unmute Member' : 'Mute Member')
                     .setStyle(muted ? 'SUCCESS' : 'DANGER'),
             );
@@ -149,7 +148,7 @@ export default class Util {
         return executer.permissions.has('VIEW_AUDIT_LOG') ? [topRow, midRow, bottomRow] : [topRow];
     }
 
-    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: string[] | string[][], title?: string, ephemeral: boolean = false, timeout: number = 12000) {
+    async pagination(interaction: ButtonInteraction | CommandInteraction, contents: string[] | string[][], title?: string, ephemeral = false, timeout = 12000) {
         let page = 0;
 
         const buttons = [
@@ -166,7 +165,7 @@ export default class Util {
         const row = this.row().addComponents(buttons);
 
         const embeds = contents.map((content, index) => {
-            const embed = this.embed()
+            const embed = this.embed();
             if (typeof content == 'object') {
                 embed
                     .setDescription(content.join('\n'));
@@ -201,14 +200,14 @@ export default class Util {
 
         collector.on('collect', async i => {
             switch (i.customId) {
-                case buttons[0].customId:
-                    page = page > 0 ? --page : embeds.length - 1;
-                    break;
-                case buttons[1].customId:
-                    page = page + 1 < embeds.length ? ++page : 0;
-                    break;
-                default:
-                    break;
+            case buttons[0].customId:
+                page = page > 0 ? --page : embeds.length - 1;
+                break;
+            case buttons[1].customId:
+                page = page + 1 < embeds.length ? ++page : 0;
+                break;
+            default:
+                break;
             }
 
             await i.deferUpdate();

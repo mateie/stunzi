@@ -10,4 +10,4 @@ export default {
     goodbyer: GOODBYER,
     logs: LOGS,
     bot_error: BOT_ERROR,
-}
+};

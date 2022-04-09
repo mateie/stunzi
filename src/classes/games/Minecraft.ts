@@ -1,12 +1,12 @@
-import Client from "@classes/Client";
-import { ScriptServer } from "@scriptserver/core";
-import { useEssentials } from "@scriptserver/essentials";
-import { useEvent } from "@scriptserver/event";
-import { useUtil } from "@scriptserver/util";
+import Client from '@classes/Client';
+import { ScriptServer } from '@scriptserver/core';
+import { useEssentials } from '@scriptserver/essentials';
+import { useEvent } from '@scriptserver/event';
+import { useUtil } from '@scriptserver/util';
 import { useCommand } from '@scriptserver/command';
 
-import { promisify } from "util";
-import { glob } from "glob";
+import { promisify } from 'util';
+import { glob } from 'glob';
 import Ascii from 'ascii-table';
 
 const { RCON_PASSWORD } = process.env;
@@ -62,7 +62,7 @@ export default class Minecraft extends ScriptServer {
 
             if (!event.name) {
                 const l = file.split('/');
-                table.addRow('Missing', `❌ Event name is missing: ${l[4] + `/` + l[5]}`);
+                table.addRow('Missing', `❌ Event name is missing: ${l[4] + '/' + l[5]}`);
                 return;
             }
 
@@ -88,7 +88,7 @@ export default class Minecraft extends ScriptServer {
             const command = new Command(this.client);
 
             if (!command.name) return table.addRow(file.split('/')[6], '❌ Failed', 'Missing name');
-            if (!command.run) return table.addRow(command.data.name, '❌ Failed', 'Missing `run` function')
+            if (!command.run) return table.addRow(command.data.name, '❌ Failed', 'Missing `run` function');
             if (typeof command.run !== 'function') return table.addRow(command.data.name, '❌ Failed', '`run` should be a function');
 
             this.client.minecraftCommands.set(command.name, command);

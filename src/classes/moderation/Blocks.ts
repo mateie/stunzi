@@ -1,7 +1,7 @@
-import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from "discord.js";
-import { ModalSubmitInteraction } from "@mateie/discord-modals";
-import Client from "@classes/Client";
-import Block, { IBlock } from "@schemas/Block";
+import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from 'discord.js';
+import { ModalSubmitInteraction } from '@mateie/discord-modals';
+import Client from '@classes/Client';
+import Block, { IBlock } from '@schemas/Block';
 import ms from 'ms';
 
 export default class Blocks {
@@ -58,7 +58,7 @@ export default class Blocks {
                     this.unblock(member);
                 }, expireDate);
             }
-        })
+        });
     }
 
     async unblock(member: GuildMember) {

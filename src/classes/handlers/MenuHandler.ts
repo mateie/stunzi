@@ -1,6 +1,6 @@
-import Client from "@classes/Client";
-import { promisify } from "util";
-import { glob } from "glob";
+import Client from '@classes/Client';
+import { promisify } from 'util';
+import { glob } from 'glob';
 import Ascii from 'ascii-table';
 import perms from '@validation/permissions';
 
@@ -8,7 +8,7 @@ const PG = promisify(glob);
 
 export default class MenuHandler {
     readonly client: Client;
-    private readonly files: Promise<string[]>
+    private readonly files: Promise<string[]>;
 
     constructor(client: Client) {
         this.client = client;
@@ -35,7 +35,7 @@ export default class MenuHandler {
             if (!menu.run) return table.addRow(menu.data.name, '❌ Failed', 'Missing `run` function');
             if (typeof menu.run !== 'function') return table.addRow(menu.data.name, '❌ Failed', '`run` should be a function');
 
-            this.client.menus.set(menu.data.name, menu); ``
+            this.client.menus.set(menu.data.name, menu); '';
 
             await table.addRow(menu.data.name, '✔ Loaded');
         });

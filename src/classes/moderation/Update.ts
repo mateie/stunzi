@@ -1,8 +1,8 @@
-import { Collection, CommandInteraction, EmojiResolvable, Guild, GuildEmoji, Message, MessageEmbed, Role, TextChannel } from "discord.js";
-import Client from "@classes/Client";
-import channels from "@data/channels";
-import games from "@data/games";
-import strings from "@data/strings";
+import { Collection, CommandInteraction, EmojiResolvable, Guild, GuildEmoji, Message, MessageEmbed, Role, TextChannel } from 'discord.js';
+import Client from '@classes/Client';
+import channels from '@data/channels';
+import games from '@data/games';
+import strings from '@data/strings';
 
 export default class Update {
     readonly client: Client;
@@ -23,7 +23,7 @@ export default class Update {
                     .setCustomId('accept_rules')
                     .setLabel('Accept Rules')
                     .setStyle('SUCCESS')
-            )
+            );
         await message.edit({ content: null, embeds: [embed.setDescription(strings.rules)], components: [row] });
         await interaction.reply({ content: 'Updated Rules', ephemeral: true });
     }

@@ -1,11 +1,11 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface IWarn extends Document {
     memberId: string;
     time: number;
     by: string;
     reason: string;
-};
+}
 
 export const Warn: Schema = new Schema({
     memberId: String,
@@ -14,4 +14,4 @@ export const Warn: Schema = new Schema({
     reason: String,
 });
 
-export default model<IWarn>("Warn", Warn);
+export default model<IWarn>('Warn', Warn);

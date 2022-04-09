@@ -1,7 +1,7 @@
-import { GuildMember, Message, TextChannel } from "discord.js";
-import Client from "@classes/Client";
-import Event from "@classes/Event"
-import IEvent from "@interfaces/IEvent";
+import { GuildMember, Message, TextChannel } from 'discord.js';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
 import channels from '@data/channels';
 
 export default class PreventSendingMessage extends Event implements IEvent {
@@ -33,7 +33,7 @@ export default class PreventSendingMessage extends Event implements IEvent {
 
         if (this.client.owners.includes(member.id) || this.client.user?.id == member.id) return;
 
-        await message.delete()
+        await message.delete();
         const msg = await channel.send({ content: 'You cannot send messages here' });
         setTimeout(async () => {
             await msg.delete();

@@ -1,10 +1,10 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface ILockdown extends Document {
     channelId: string;
     time: number;
     reason: string;
-};
+}
 
 export const Lockdown: Schema = new Schema({
     channelId: String,
@@ -12,4 +12,4 @@ export const Lockdown: Schema = new Schema({
     reason: String,
 });
 
-export default model<ILockdown>("Lockdown", Lockdown);
+export default model<ILockdown>('Lockdown', Lockdown);

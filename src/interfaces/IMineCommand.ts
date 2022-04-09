@@ -1,5 +1,6 @@
-import { CommandEvent } from "@scriptserver/command";
-import Client from "@classes/Client";
+/* eslint-disable semi */
+import { CommandEvent } from '@scriptserver/command';
+import Client from '@classes/Client';
 
 export default interface IMineCommand {
     readonly client: Client;

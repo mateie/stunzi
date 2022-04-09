@@ -1,7 +1,7 @@
-import Client from "@classes/Client";
-import { IMember } from "@schemas/Member";
-import { Rank as CanvaRank } from "canvacord";
-import { GuildMember } from "discord.js";
+import Client from '@classes/Client';
+import { IMember } from '@schemas/Member';
+import { Rank as CanvaRank } from 'canvacord';
+import { GuildMember } from 'discord.js';
 
 export default class Rank extends CanvaRank {
     readonly client: Client;

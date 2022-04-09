@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface ITicket extends Document {
     ticketId: string;
@@ -7,7 +7,7 @@ export interface ITicket extends Document {
     closed: boolean;
     locked: boolean;
     type: string;
-};
+}
 
 export const Ticket: Schema = new Schema({
     ticketId: String,
@@ -19,4 +19,4 @@ export const Ticket: Schema = new Schema({
 });
 
 
-export default model<ITicket>("Ticket", Ticket);
+export default model<ITicket>('Ticket', Ticket);

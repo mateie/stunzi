@@ -1,7 +1,7 @@
-import { CommandInteraction, Guild, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, Guild, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class BlocksCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -16,7 +16,7 @@ export default class BlocksCommand extends Command implements ICommand {
                     .setName('member')
                     .setDescription('Member to check the blocks for')
                     .setRequired(true)
-            )
+            );
     }
 
     async run(interaction: CommandInteraction) {

@@ -1,7 +1,7 @@
-import { CommandInteraction, Guild } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, Guild } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class ServerCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -34,7 +34,7 @@ export default class ServerCommand extends Command implements ICommand {
                         `
                     },
                     {
-                        name: `👥| Users`,
+                        name: '👥| Users',
                         value: `
                             - Members: ${members.cache.filter(m => !m.user.bot).size}
                             - Bots: ${members.cache.filter(m => m.user.bot).size}
@@ -43,7 +43,7 @@ export default class ServerCommand extends Command implements ICommand {
                         `
                     },
                     {
-                        name: `📃 | Channels`,
+                        name: '📃 | Channels',
                         value: `
                             - Text: ${channels.cache.filter(ch => ch.type == 'GUILD_TEXT').size}
                             - Voice: ${channels.cache.filter(ch => ch.type == 'GUILD_VOICE').size}
@@ -56,7 +56,7 @@ export default class ServerCommand extends Command implements ICommand {
                         `
                     },
                     {
-                        name: `😯 | Emojis & Stickers`,
+                        name: '😯 | Emojis & Stickers',
                         value: `
                             - Animated: ${emojis.cache.filter(e => e.animated == true).size}
                             - Static: ${emojis.cache.filter(e => !e.animated).size}
@@ -66,9 +66,9 @@ export default class ServerCommand extends Command implements ICommand {
                         `
                     },
                     {
-                        name: `Nitro Statistics`,
+                        name: 'Nitro Statistics',
                         value: `
-                            - Tier: ${guild.premiumTier.replace("TIER_", '')}
+                            - Tier: ${guild.premiumTier.replace('TIER_', '')}
                             - Boosts: ${guild.premiumSubscriptionCount}
                             - Boosters: ${members.cache.filter(m => m.premiumSince !== null).size}
                         `

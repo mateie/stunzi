@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class MemberCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -13,9 +13,9 @@ export default class MemberCommand extends Command implements ICommand {
             .addUserOption(option =>
                 option
                     .setName('member')
-                    .setDescription("Which user's information do you want to view?")
+                    .setDescription('Which user\'s information do you want to view?')
                     .setRequired(false)
-            )
+            );
     }
 
     async run(interaction: CommandInteraction) {
@@ -61,7 +61,7 @@ export default class MemberCommand extends Command implements ICommand {
                 { name: `Roles(${roles.size})`, value: mappedRoles }
             ]);
 
-        const rows = await this.client.util.memberActionRow(<GuildMember>interaction.member, member);
+        const rows = await this.client.util.memberActionRow(<GuildMember>interaction.member);
         interaction.reply({ embeds: [embed], components: rows });
     }
 }

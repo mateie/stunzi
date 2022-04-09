@@ -32,18 +32,18 @@ export default class SMPCommand extends Command implements ICommand {
     async run(interaction: CommandInteraction) {
         const { options } = interaction;
         switch (options.getSubcommand()) {
-            case 'whisper': {
-                const username = <string>options.getString('username');
-                const message = options.getString('message');
-                const member = <GuildMember>interaction.member;
+        case 'whisper': {
+            const username = <string>options.getString('username');
+            const message = options.getString('message');
+            const member = <GuildMember>interaction.member;
 
-                const online = await this.client.minecraft.rconConnection.util.isOnline(username);
+            const online = await this.client.minecraft.rconConnection.util.isOnline(username);
 
-                if (!online) return interaction.reply({ content: `${username} is not online`, ephemeral: true });
+            if (!online) return interaction.reply({ content: `${username} is not online`, ephemeral: true });
 
-                await this.client.minecraft.rconConnection.send(`tellraw ${username} ["",{"text":"${member.user.tag} ","bold":true},{"text":"whispered you: ","italic":true},{"text":"${message}"}]`);
-                return interaction.reply({ content: `Whispered to **${username}**`, ephemeral: true });
-            }
+            await this.client.minecraft.rconConnection.send(`tellraw ${username} ["",{"text":"${member.user.tag} ","bold":true},{"text":"whispered you: ","italic":true},{"text":"${message}"}]`);
+            return interaction.reply({ content: `Whispered to **${username}**`, ephemeral: true });
+        }
         }
     }
 }

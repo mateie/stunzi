@@ -1,22 +1,22 @@
-import Client from "@classes/Client";
+import Client from '@classes/Client';
 
-import { Entitlements, Offer, ValClient, YourItems } from "valclient.js";
-import { Collection, CommandInteraction, GuildMember, Message, MessageAttachment, MessageComponentInteraction, MessageEmbed } from "discord.js";
-import { Regions } from "valclient.js/dist/cjs/types/resources";
+import { Entitlements, Offer, ValClient, YourItems } from 'valclient.js';
+import { Collection, CommandInteraction, GuildMember, Message, MessageAttachment, MessageComponentInteraction, MessageEmbed } from 'discord.js';
+import { Regions } from 'valclient.js/dist/cjs/types/resources';
 import ValorantAssets from 'valorant-api-js';
 
-import Util from "./valorant/Util";
-import { skinsIdMappedByGunName } from "valclient.js/dist/cjs/resources/skins";
-import { UploadApiResponse } from "cloudinary";
-import { GunsType, Levels, SkinsType } from "valclient.js/dist/cjs/types/loadout";
-import { VariantSkin } from "valclient.js/dist/cjs/types/chroma";
+import Util from './valorant/Util';
+import { skinsIdMappedByGunName } from 'valclient.js/dist/cjs/resources/skins';
+import { UploadApiResponse } from 'cloudinary';
+import { GunsType, Levels, SkinsType } from 'valclient.js/dist/cjs/types/loadout';
+import { VariantSkin } from 'valclient.js/dist/cjs/types/chroma';
 
 export default class Valorant {
     client: Client;
     util: Util;
     assets: any;
 
-    accounts: Collection<string, ValClient>
+    accounts: Collection<string, ValClient>;
 
     constructor(client: Client) {
         this.client = client;
@@ -33,7 +33,7 @@ export default class Valorant {
         const store: { items: Offer[], remaining: number } = {
             items: [],
             remaining: <number>storeItems?.SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds,
-        }
+        };
 
         storeItems?.SkinsPanelLayout.SingleItemOffers.forEach(id => store.items.push(<Offer>allStoreItems?.Offers.find(item => item.OfferID === id)));
 
@@ -64,7 +64,7 @@ export default class Valorant {
             });
         });
 
-        if (playerSkins.size < 1) return interaction.reply({ content: `Couldn\'t find skins for ${weapon} in your loadout`, ephemeral: true });
+        if (playerSkins.size < 1) return interaction.reply({ content: `Couldn't find skins for ${weapon} in your loadout`, ephemeral: true });
 
         const buttons = [
             this.client.util.button()
@@ -121,132 +121,94 @@ export default class Valorant {
 
         const collector = message.createMessageComponentCollector({
             filter,
+            time: timeout,
         })
             .on('collect', async i => {
                 switch (i.customId) {
-                    case 'nav_previous': {
-                        buttons.forEach(button => button.setDisabled(true));
+                case 'nav_previous': {
+                    buttons.forEach(button => button.setDisabled(true));
+                    row.setComponents(buttons);
+                    await message.edit({
+                        components: [row],
+                    });
+
+                    page = page > 0 ? --page : embeds.length - 1;
+
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        files: attachments[page] ? [attachments[page]] : [],
+                        components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
+                    });
+                    break;
+                }
+                case 'nav_next': {
+                    buttons.forEach(button => button.setDisabled(true));
+                    row.setComponents(buttons);
+                    await message.edit({
+                        components: [row],
+                    });
+
+                    page = page + 1 < embeds.length ? ++page : 0;
+
+                    await i.deferUpdate();
+                    await i.editReply({
+                        embeds: [embeds[page]],
+                        files: attachments[page] ? [attachments[page]] : [],
+                        components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
+                    });
+                    break;
+                }
+                case 'cancel_selection': {
+                    await i.deferUpdate();
+                    await i.deleteReply();
+                    break;
+                }
+                case 'select_skin': {
+                    await i.deferUpdate();
+
+                    const cEmbed = <MessageEmbed>embeds[page];
+                    const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
+
+                    page = 0;
+
+                    dSkin = <SkinsType<GunsType>>chosenSkin.displayName;
+
+                    if (chosenSkin.levels.length > 1) {
+                        cEmbed.setDescription('***Fetching Levels, Please Wait...***');
+                        row.components.forEach(button => button.setDisabled(true));
                         row.setComponents(buttons);
-                        await message.edit({
-                            components: [row],
+
+                        buttons[1].setCustomId('select_level');
+
+                        const levels = chosenSkin.levels;
+
+                        message.edit({ components: [row], embeds: [cEmbed] });
+
+                        embeds = levels.map((level: any, index: number) => {
+                            return this.client.util.embed()
+                                .setAuthor({ name: chosenSkin.displayName })
+                                .setTitle(`Level ${index + 1}`);
                         });
 
-                        page = page > 0 ? --page : embeds.length - 1;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            files: attachments[page] ? [attachments[page]] : [],
-                            components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
-                        });
-                        break;
-                    }
-                    case 'nav_next': {
-                        buttons.forEach(button => button.setDisabled(true));
-                        row.setComponents(buttons);
-                        await message.edit({
-                            components: [row],
-                        });
-
-                        page = page + 1 < embeds.length ? ++page : 0;
-
-                        await i.deferUpdate();
-                        await i.editReply({
-                            embeds: [embeds[page]],
-                            files: attachments[page] ? [attachments[page]] : [],
-                            components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
-                        });
-                        break;
-                    }
-                    case 'cancel_selection': {
-                        await i.deferUpdate();
-                        await i.deleteReply();
-                        break;
-                    }
-                    case 'select_skin': {
-                        await i.deferUpdate();
-
-                        const cEmbed = <MessageEmbed>embeds[page];
-                        const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
-
-                        page = 0;
-
-                        dSkin = <SkinsType<GunsType>>chosenSkin.displayName;
-
-                        if (chosenSkin.levels.length > 1) {
-                            cEmbed.setDescription('***Fetching Levels, Please Wait...***');
-                            row.components.forEach(button => button.setDisabled(true));
-                            row.setComponents(buttons);
-
-                            buttons[1].setCustomId('select_level');
-
-                            const levels = chosenSkin.levels;
-
-                            message.edit({ components: [row], embeds: [cEmbed] });
-
-                            embeds = levels.map((level: any, index: number) => {
-                                return this.client.util.embed()
-                                    .setAuthor({ name: chosenSkin.displayName })
-                                    .setTitle(`Level ${index + 1}`);
-                            });
-
-                            attachments = await Promise.all(levels.map(async (level: any, index: number) => {
-                                try {
-                                    const video = <UploadApiResponse>await this.client.cloudinary.getSkinVideos(member, level);
-                                    return this.client.util.attachment(video.secure_url, `${member.id}_${level.displayName.replace(' ', '_')}.mp4`);
-                                } catch (err) {
-                                    console.error(err);
-                                    embeds[index].setDescription(this.client.util.embedURL('Video for the level', level.streamedVideo));
-                                    return null;
-                                }
-                            }));
-
-                            await message.edit({
-                                embeds: [embeds[page]],
-                                files: attachments[page] ? [attachments[page]] : [],
-                                components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
-                            });
-                        } else {
-                            attachments = [];
-
-                            if (chosenSkin.chromas.length > 1) {
-                                buttons[1].setCustomId('select_color');
-
-                                const colors = chosenSkin.chromas;
-
-                                message.edit({ components: [row], embeds: [cEmbed] });
-
-                                embeds = colors.map((color: any) => {
-                                    const colorName = color.displayName.split('\n')[1] ? color.displayName.split('\n')[1].replace('(', '').replace(')', '') : 'Default';
-                                    return this.client.util.embed()
-                                        .setAuthor({ name: chosenSkin.displayName })
-                                        .setTitle(colorName)
-                                        .setImage(color.fullRender);
-                                });
-
-                                await message.edit({
-                                    embeds: [embeds[page]],
-                                    attachments: [],
-                                    components: [row]
-                                });
-                            } else {
-                                collector.stop();
+                        attachments = await Promise.all(levels.map(async (level: any, index: number) => {
+                            try {
+                                const video = <UploadApiResponse>await this.client.cloudinary.getSkinVideos(member, level);
+                                return this.client.util.attachment(video.secure_url, `${member.id}_${level.displayName.replace(' ', '_')}.mp4`);
+                            } catch (err) {
+                                console.error(err);
+                                embeds[index].setDescription(this.client.util.embedURL('Video for the level', level.streamedVideo));
+                                return null;
                             }
-                        }
-                        break;
-                    }
-                    case 'select_level': {
-                        await i.deferUpdate();
+                        }));
 
+                        await message.edit({
+                            embeds: [embeds[page]],
+                            files: attachments[page] ? [attachments[page]] : [],
+                            components: [row.setComponents(buttons.map(button => button.setDisabled(false)))],
+                        });
+                    } else {
                         attachments = [];
-
-                        const cEmbed = <MessageEmbed>embeds[page];
-                        const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
-
-                        page = 0;
-
-                        const chosenLevel = chosenSkin.levels.find((level: any) => level.displayName.includes(cEmbed.title));
-                        dLevel = chosenLevel.displayName.includes('Level') ? chosenLevel.displayName.split(' ').slice(-2).join(' ') : 'Level 1';
 
                         if (chosenSkin.chromas.length > 1) {
                             buttons[1].setCustomId('select_color');
@@ -271,20 +233,59 @@ export default class Valorant {
                         } else {
                             collector.stop();
                         }
-                        break;
                     }
-                    case 'select_color': {
-                        await i.deferUpdate();
+                    break;
+                }
+                case 'select_level': {
+                    await i.deferUpdate();
 
-                        const cEmbed = <MessageEmbed>embeds[page];
-                        const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
+                    attachments = [];
 
-                        page = 0;
+                    const cEmbed = <MessageEmbed>embeds[page];
+                    const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
 
-                        const chosenColor = chosenSkin.chromas.find((chroma: any) => chroma.displayName.includes(cEmbed.title));
-                        dColor = chosenColor ? chosenColor.displayName.split('\n')[1].replace('(', '').replace(')', '').split(' ')[2] : 'Default';
-                        collector.stop('finished');
+                    page = 0;
+
+                    const chosenLevel = chosenSkin.levels.find((level: any) => level.displayName.includes(cEmbed.title));
+                    dLevel = chosenLevel.displayName.includes('Level') ? chosenLevel.displayName.split(' ').slice(-2).join(' ') : 'Level 1';
+
+                    if (chosenSkin.chromas.length > 1) {
+                        buttons[1].setCustomId('select_color');
+
+                        const colors = chosenSkin.chromas;
+
+                        message.edit({ components: [row], embeds: [cEmbed] });
+
+                        embeds = colors.map((color: any) => {
+                            const colorName = color.displayName.split('\n')[1] ? color.displayName.split('\n')[1].replace('(', '').replace(')', '') : 'Default';
+                            return this.client.util.embed()
+                                .setAuthor({ name: chosenSkin.displayName })
+                                .setTitle(colorName)
+                                .setImage(color.fullRender);
+                        });
+
+                        await message.edit({
+                            embeds: [embeds[page]],
+                            attachments: [],
+                            components: [row]
+                        });
+                    } else {
+                        collector.stop();
                     }
+                    break;
+                }
+                case 'select_color': {
+                    await i.deferUpdate();
+
+                    const cEmbed = <MessageEmbed>embeds[page];
+                    const chosenSkin = playerSkins.get(<string>cEmbed.author?.name);
+
+                    page = 0;
+
+                    const chosenColor = chosenSkin.chromas.find((chroma: any) => chroma.displayName.includes(cEmbed.title));
+                    dColor = chosenColor ? chosenColor.displayName.split('\n')[1].replace('(', '').replace(')', '').split(' ')[2] : 'Default';
+                    collector.stop('finished');
+                }
                 }
             })
             .on('end', async (i, reason) => {
@@ -298,7 +299,7 @@ export default class Valorant {
                         components: [],
                     });
                 }
-            })
+            });
     }
 
     async login(member: GuildMember, username: string, password: string, region: Regions) {

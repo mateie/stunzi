@@ -1,7 +1,7 @@
-import { CommandInteraction, Options } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class UpdateCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -31,18 +31,18 @@ export default class UpdateCommand extends Command implements ICommand {
     async run(interaction: CommandInteraction) {
         const { options } = interaction;
         switch (options.getSubcommand()) {
-            case 'rules': {
-                this.client.update.rules(interaction);
-                break;
-            }
-            case 'games': {
-                this.client.update.gameRoles(interaction);
-                break;
-            }
-            case 'vc': {
-                this.client.update.updateGameVC(interaction);
-                break;
-            }
+        case 'rules': {
+            this.client.update.rules(interaction);
+            break;
+        }
+        case 'games': {
+            this.client.update.gameRoles(interaction);
+            break;
+        }
+        case 'vc': {
+            this.client.update.updateGameVC(interaction);
+            break;
+        }
         }
     }
 }

@@ -1,9 +1,9 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface IGuild extends Document {
     id: string;
     name: string;
-};
+}
 
 export const Guild: Schema = new Schema({
     id: {
@@ -17,4 +17,4 @@ export const Guild: Schema = new Schema({
     },
 });
 
-export default model<IGuild>("Guild", Guild);
+export default model<IGuild>('Guild', Guild);

@@ -36,7 +36,7 @@ export default class HugCommand extends Command implements ICommand {
             interaction.reply({ embeds: [embed] });
         } catch (err) {
             console.error(err);
-            interaction.reply({ content: `Couldn\'t hug ${person}`, ephemeral: true });
+            interaction.reply({ content: `Couldn't hug ${person}`, ephemeral: true });
         }
     }
 }

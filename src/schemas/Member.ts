@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface IMember extends Document {
     id: string;
@@ -10,7 +10,7 @@ export interface IMember extends Document {
         text: string;
         progressbar: string;
     },
-};
+}
 
 export const Member: Schema = new Schema({
     id: {
@@ -52,4 +52,4 @@ Member.pre('save', function (next: () => void) {
     next();
 });
 
-export default model<IMember>("Member", Member);
+export default model<IMember>('Member', Member);

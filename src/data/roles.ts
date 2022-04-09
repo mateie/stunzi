@@ -8,4 +8,4 @@ export default {
         valorant_role: '942216726366531596',
         minecraft_role: '957701128907272192'
     },
-}
+};

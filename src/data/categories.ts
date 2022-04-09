@@ -3,4 +3,4 @@ export default {
     valorant: '959366090251726848',
     dead_by_daylight: '959533621474103406',
     minecraft: '957571472937877507',
-}
+};

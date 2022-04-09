@@ -1,5 +1,5 @@
-import { CommandEvent } from "@scriptserver/command";
-import { RconConnection } from "@scriptserver/core";
+import { CommandEvent } from '@scriptserver/command';
+import { RconConnection } from '@scriptserver/core';
 import Client from '@classes/Client';
 
 export default class MineCommand {
@@ -28,6 +28,6 @@ export default class MineCommand {
     }
 
     notLinked(player: string) {
-        this.server.util.tellRaw(`Your Minecraft and Discord accounts are not linked, link them to use this command`, player);
+        this.server.util.tellRaw('Your Minecraft and Discord accounts are not linked, link them to use this command', player);
     }
 }

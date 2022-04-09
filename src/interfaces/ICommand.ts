@@ -1,6 +1,7 @@
-import { CommandInteraction, PermissionResolvable } from "discord.js";
-import Client from "@classes/Client";
-import { SlashCommandBuilder } from "@discordjs/builders";
+/* eslint-disable semi */
+import { CommandInteraction, PermissionResolvable } from 'discord.js';
+import Client from '@classes/Client';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
 export default interface ICommand {
     readonly client: Client,

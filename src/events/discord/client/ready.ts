@@ -1,7 +1,7 @@
-import { Guild, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Event from "@classes/Event";
-import IEvent from "@interfaces/IEvent";
+import { Guild, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
 
 const { MY_VAL_USERNAME, MY_VAL_PASSWORD } = process.env;
 

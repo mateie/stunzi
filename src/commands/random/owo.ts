@@ -15,7 +15,7 @@ export default class OWOCommand extends Command implements ICommand {
                     .setName('text')
                     .setDescription('OwO :>')
                     .setRequired(true)
-            )
+            );
     }
 
     async run(interaction: CommandInteraction) {

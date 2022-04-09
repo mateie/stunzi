@@ -4,7 +4,7 @@ export interface IStation extends Document {
     memberId: string;
     channelId: string;
     sharedWith: [string],
-};
+}
 
 export const Station: Schema = new Schema({
     memberId: {

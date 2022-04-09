@@ -27,7 +27,7 @@ export default class EventHandler {
 
             if (!events.includes(event.name) || !event.name) {
                 const l = file.split('/');
-                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + `/` + l[5]}`);
+                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + '/' + l[5]}`);
                 return;
             }
 

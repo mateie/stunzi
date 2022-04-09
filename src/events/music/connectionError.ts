@@ -1,7 +1,7 @@
-import { Queue } from "discord-player";
-import Client from "@classes/Client";
-import Event from "@classes/Event";
-import IEvent from "@interfaces/IEvent";
+import { Queue } from 'discord-player';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
 
 export default class ConnectionErrorEvent extends Event implements IEvent {
     name: string;

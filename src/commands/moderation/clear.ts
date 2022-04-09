@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember, TextChannel } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember, TextChannel } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class ClearCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -28,7 +28,7 @@ export default class ClearCommand extends Command implements ICommand {
 
         const channel = <TextChannel>interaction.channel;
 
-        const amount = <number>options.getNumber('amount');;
+        const amount = <number>options.getNumber('amount');
         const member = <GuildMember>options.getMember('target');
 
         const embed = this.client.util.embed();
@@ -48,6 +48,6 @@ export default class ClearCommand extends Command implements ICommand {
         await channel.bulkDelete(amount, true).then(messages => {
             embed.setDescription(`Cleared ${messages.size} from this channel`);
             return interaction.reply({ embeds: [embed] });
-        })
+        });
     }
 }

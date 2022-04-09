@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command"
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 export default class BlockCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -26,7 +26,7 @@ export default class BlockCommand extends Command implements ICommand {
                 option
                     .setName('reason')
                     .setDescription('Why do you want to block this member')
-            )
+            );
     }
 
     async run(interaction: CommandInteraction) {

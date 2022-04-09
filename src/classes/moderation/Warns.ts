@@ -1,7 +1,7 @@
-import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from "discord.js";
-import { ModalSubmitInteraction } from "@mateie/discord-modals";
-import Client from "@classes/Client";
-import Warn, { IWarn } from "@schemas/Warn";
+import { ButtonInteraction, CommandInteraction, GuildMember } from 'discord.js';
+import { ModalSubmitInteraction } from '@mateie/discord-modals';
+import Client from '@classes/Client';
+import Warn, { IWarn } from '@schemas/Warn';
 
 export default class Warns {
     readonly client: Client;

@@ -32,7 +32,7 @@ export default class Cloudinary {
             }, (err, result) => {
                 if (err) reject(err);
                 resolve(result);
-            })
-        })
+            });
+        });
     }
 }

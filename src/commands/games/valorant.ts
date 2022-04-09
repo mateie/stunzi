@@ -1,11 +1,11 @@
-import { CommandInteraction, Guild, GuildMember } from "discord.js";
-import { Regions } from "valclient.js/dist/cjs/types/resources";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
-import { CurrentOffersResponse, ValClient } from "valclient.js";
-import { LoadoutResponse } from "valclient.js/dist/cjs/interfaces/loadout";
-import { guns, GunsType, SkinsType } from "valclient.js/dist/cjs/types/loadout";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import { Regions } from 'valclient.js/dist/cjs/types/resources';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
+import { ValClient } from 'valclient.js';
+import { LoadoutResponse } from 'valclient.js/dist/cjs/interfaces/loadout';
+import { guns, GunsType, SkinsType } from 'valclient.js/dist/cjs/types/loadout';
 
 export default class ValorantCommand extends Command implements ICommand {
     weapons: [name: string, value: string][];
@@ -112,60 +112,60 @@ export default class ValorantCommand extends Command implements ICommand {
         const valorant = <ValClient>this.client.valorant.accounts.get(member.id);
         if (subcommand !== 'login' && !valorant) return interaction.reply({ content: 'You are not logged in', ephemeral: true });
         switch (subcommandGroup) {
-            case 'account': {
-                switch (subcommand) {
-                    case 'login': {
-                        const username = <string>options.getString('username')?.toLowerCase();
-                        const password = this.client.cypher.encrypt(<string>options.getString('password'));
-                        const region = <Regions>options.getString('region');
+        case 'account': {
+            switch (subcommand) {
+            case 'login': {
+                const username = <string>options.getString('username')?.toLowerCase();
+                const password = this.client.cypher.encrypt(<string>options.getString('password'));
+                const region = <Regions>options.getString('region');
 
-                        const success = await this.client.valorant.login(member, username, password, region);
-                        if (success == true) return interaction.reply({ content: 'Logged in successfully', ephemeral: true });
-                        else {
-                            return interaction.reply({ content: success.message, ephemeral: true });
-                        }
-                        break;
-                    }
-                    case 'xp': {
-                        const xp = await valorant.pvp?.accountXp();
-                        const embed = this.client.util.embed()
-                            .setTitle('Your Current XP')
-                            .setDescription(`***Level***: ${xp?.Progress.Level}\n***XP***: ${xp?.Progress.XP}`);
-
-                        return interaction.reply({ embeds: [embed], ephemeral: true });
-                    }
-                    case 'store': {
-                        return this.client.valorant.getStore(interaction, valorant);
-                    }
-                    case 'wallet': {
-                        const wallet = await valorant.store?.wallet();
-                        return interaction.reply({ content: `**VP**: ${wallet?.valorant_points}\n**Radianite**: ${wallet?.radianite_points}`, ephemeral: true });
-                    }
-                    case 'logout': {
-                        this.client.valorant.accounts.delete(member.id);
-                        return interaction.reply({ content: 'Logged out', ephemeral: true });
-                    }
-                }
+                const success = await this.client.valorant.login(member, username, password, region);
+                if (success == true) return interaction.reply({ content: 'Logged in successfully', ephemeral: true });
+                
+                return interaction.reply({ content: success.message, ephemeral: true });
+                
                 break;
             }
-            case 'loadout': {
-                switch (subcommand) {
-                    case 'view': {
-                        const loadout = <LoadoutResponse>await valorant.loadout?.current();
-                        return this.client.valorant.util.inventoryEmbed(interaction, loadout);
-                    }
-                    case 'change': {
-                        const weapon = <string>options.getString('weapon');
-                        return this.client.valorant.changeSkin(interaction, weapon, valorant);
-                    }
-                    case 'default': {
-                        const weapon = <GunsType>options.getString('weapon');
-                        const defaultSkin = `Standard ${weapon}`;
-                        valorant.loadout?.changeGunSkin(weapon, <SkinsType<GunsType>>defaultSkin, 'Level 1', 'Default');
-                        return interaction.reply({ content: `Set ${weapon} to default`, ephemeral: true });
-                    }
-                }
+            case 'xp': {
+                const xp = await valorant.pvp?.accountXp();
+                const embed = this.client.util.embed()
+                    .setTitle('Your Current XP')
+                    .setDescription(`***Level***: ${xp?.Progress.Level}\n***XP***: ${xp?.Progress.XP}`);
+
+                return interaction.reply({ embeds: [embed], ephemeral: true });
             }
+            case 'store': {
+                return this.client.valorant.getStore(interaction, valorant);
+            }
+            case 'wallet': {
+                const wallet = await valorant.store?.wallet();
+                return interaction.reply({ content: `**VP**: ${wallet?.valorant_points}\n**Radianite**: ${wallet?.radianite_points}`, ephemeral: true });
+            }
+            case 'logout': {
+                this.client.valorant.accounts.delete(member.id);
+                return interaction.reply({ content: 'Logged out', ephemeral: true });
+            }
+            }
+            break;
+        }
+        case 'loadout': {
+            switch (subcommand) {
+            case 'view': {
+                const loadout = <LoadoutResponse>await valorant.loadout?.current();
+                return this.client.valorant.util.inventoryEmbed(interaction, loadout);
+            }
+            case 'change': {
+                const weapon = <string>options.getString('weapon');
+                return this.client.valorant.changeSkin(interaction, weapon, valorant);
+            }
+            case 'default': {
+                const weapon = <GunsType>options.getString('weapon');
+                const defaultSkin = `Standard ${weapon}`;
+                valorant.loadout?.changeGunSkin(weapon, <SkinsType<GunsType>>defaultSkin, 'Level 1', 'Default');
+                return interaction.reply({ content: `Set ${weapon} to default`, ephemeral: true });
+            }
+            }
+        }
         }
     }
 }

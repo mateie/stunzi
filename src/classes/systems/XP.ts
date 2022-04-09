@@ -1,5 +1,5 @@
-import { GuildMember } from "discord.js";
-import Client from "@classes/Client";
+import { GuildMember } from 'discord.js';
+import Client from '@classes/Client';
 
 export default class XP {
     readonly client: Client;
@@ -8,7 +8,7 @@ export default class XP {
         this.client = client;
     }
 
-    async giveXP(member: GuildMember, amount: number = 1) {
+    async giveXP(member: GuildMember, amount = 1) {
         const dbMember = await this.client.database.get.member(member);
 
         dbMember.xp += amount;

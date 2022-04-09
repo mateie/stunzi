@@ -1,13 +1,13 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface ISuggestion extends Document {
     messageId: string;
-    details: Array<Object>
-};
+    details: Array<Record<string, unknown>>
+}
 
 export const Suggestion: Schema = new Schema({
     messageId: String,
     details: Array,
 });
 
-export default model<ISuggestion>("Suggestion", Suggestion);
+export default model<ISuggestion>('Suggestion', Suggestion);

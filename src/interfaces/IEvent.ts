@@ -1,4 +1,5 @@
-import Client from "@classes/Client";
+/* eslint-disable semi */
+import Client from '@classes/Client';
 
 export default interface IEvent {
     readonly client: Client,

@@ -1,8 +1,8 @@
-import { Guild, GuildMember, User, WebhookClient } from "discord.js";
-import Client from "@classes/Client";
-import Event from "@classes/Event";
-import IEvent from "@interfaces/IEvent";
-import webhooks from "@data/webhooks";
+import { Guild, GuildMember, User, WebhookClient } from 'discord.js';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
+import webhooks from '@data/webhooks';
 
 export default class GuildMemberRemoveEvent extends Event implements IEvent {
     name: string;

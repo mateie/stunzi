@@ -1,12 +1,12 @@
-import { CommandInteraction, GuildMember, Guild, TextChannel } from "discord.js";
-import Client from "@classes/Client";
-import Event from "@classes/Event";
-import IEvent from "@interfaces/IEvent";
+import { CommandInteraction, GuildMember, Guild, TextChannel } from 'discord.js';
+import Client from '@classes/Client';
+import Event from '@classes/Event';
+import IEvent from '@interfaces/IEvent';
 
-import ICommand from "@interfaces/ICommand";
-import IMenu from "@interfaces/IMenu";
+import ICommand from '@interfaces/ICommand';
+import IMenu from '@interfaces/IMenu';
 
-import channels from "@data/channels";
+import channels from '@data/channels';
 
 export default class InteractionCreate extends Event implements IEvent {
     name: string;
@@ -32,7 +32,7 @@ export default class InteractionCreate extends Event implements IEvent {
             }
         }
 
-        if (interaction.type === 'APPLICATION_COMMAND' && commandName !== 'music' && channel.id === channels.text.music) return interaction.reply({ content: `You can only use music commands here`, ephemeral: true })
+        if (interaction.type === 'APPLICATION_COMMAND' && commandName !== 'music' && channel.id === channels.text.music) return interaction.reply({ content: 'You can only use music commands here', ephemeral: true });
 
         if (interaction.isCommand()) {
             const command = <ICommand>this.client.commands.get(commandName);

@@ -1,8 +1,8 @@
-import { CommandInteraction, Guild, GuildMember, TextChannel, VoiceChannel } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
-import channels from "@data/channels";
+import { CommandInteraction, Guild, GuildMember, TextChannel, VoiceChannel } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
+import channels from '@data/channels';
 
 export default class MusicCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -92,114 +92,115 @@ export default class MusicCommand extends Command implements ICommand {
         let queue = this.client.music.getQueue(guild);
 
         switch (options.getSubcommand()) {
-            case 'play': {
-                if (!queue) {
-                    queue = this.client.music.createQueue(guild, {
-                        metadata: channel
-                    });
-
-                    try {
-                        if (!queue.connection) await queue.connect(voiceChannel);
-                    } catch {
-                        queue.destroy();
-                        return await interaction.reply({ content: "Could not join your voice channel", ephemeral: true }).catch(() => { });
-                    }
-                }
-
-                await interaction.deferReply({ ephemeral: true }).catch(() => { });
-
-                const query = <string>options.getString('query');
-                const result = await this.client.music.search(query, {
-                    requestedBy: interaction.user
+        case 'play': {
+            if (!queue) {
+                queue = this.client.music.createQueue(guild, {
+                    metadata: channel
                 });
 
-                if (!result.tracks[0]) {
-                    await interaction.followUp({ content: `Track **${query} was not found` });
-                    break;
+                try {
+                    if (!queue.connection) await queue.connect(voiceChannel);
+                } catch {
+                    queue.destroy();
+                    return await interaction.reply({ content: 'Could not join your voice channel', ephemeral: true });
                 }
+            }
 
-                if (result.playlist) queue.addTracks(result.playlist.tracks);
-                else queue.addTrack(result.tracks[0]);
+            await interaction.deferReply({ ephemeral: true });
 
-                if (!queue.playing) queue.play();
+            const query = <string>options.getString('query');
+            const result = await this.client.music.search(query, {
+                requestedBy: interaction.user
+            });
 
-                await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true }).catch(() => { });
-
+            if (!result.tracks[0]) {
+                await interaction.followUp({ content: `Track **${query} was not found` });
                 break;
             }
-            case 'pause': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
 
-                if (queue.connection.status === 'paused') return interaction.reply({ content: 'Music is already paused', ephemeral: true });
+            if (result.playlist) queue.addTracks(result.playlist.tracks);
+            else queue.addTrack(result.tracks[0]);
 
-                queue.setPaused(true);
-                return interaction.reply({ content: 'Track paused', ephemeral: true });
+            if (!queue.playing) queue.play();
+
+            await interaction.followUp({ content: 'Track/Playlist Recieved', ephemeral: true });
+
+            break;
+        }
+        case 'pause': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+
+            if (queue.connection.status === 'paused') return interaction.reply({ content: 'Music is already paused', ephemeral: true });
+
+            queue.setPaused(true);
+            return interaction.reply({ content: 'Track paused', ephemeral: true });
+        }
+        case 'resume': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+
+            if (queue.connection.status === 'playing') return interaction.reply({ content: 'Music is already playing', ephemeral: true });
+
+            queue.setPaused(false);
+            return interaction.reply({ content: 'Track resumed', ephemeral: true });
+        }
+        case 'stop': {
+            if (!member.permissions.has('MOVE_MEMBERS')) return interaction.reply({ content: 'You cannot stop the player, not enough permissions', ephemeral: true });
+
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+
+            queue.stop();
+            return interaction.reply({ content: 'Player stopped', ephemeral: true });
+        }
+        case 'queue': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+
+            const mapped = queue.tracks.map((track, index) => {
+                return `\`${index + 1}\`. ${track.author} - ${track.title} | ${track.duration}`;
+            });
+
+            const chunked = this.client.util.chunk(mapped, 10);
+
+            if (chunked.length < 1) return await interaction.reply({ content: 'There are no upcoming tracks', ephemeral: true });
+
+            this.client.util.pagination(interaction, chunked, 'Upcoming Tracks');
+            break;
+        }
+        case 'skip': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+            if (queue.tracks.length < 1) return interaction.reply({
+                content: 'There are no upcoming tracks to skip to', ephemeral: true
+            });
+
+            const position = options.getNumber('to');
+            if (!position) {
+                queue.skip();
+                return interaction.reply({ content: 'Current track skipped' });
             }
-            case 'resume': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+            const skipTo = position - 1;
+            const track = queue.tracks[skipTo];
+            queue.skipTo(skipTo);
+            return interaction.reply({ content: `Skipped to: **${track.author} - ${track.title}**`, ephemeral: true });
+        }
+        case 'shuffle': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
 
-                if (queue.connection.status === 'playing') return interaction.reply({ content: 'Music is already playing', ephemeral: true });
+            if (queue.tracks.length < 2) return await interaction.reply({ content: 'There are no upcoming tracks', ephemeral: true });
 
-                queue.setPaused(false);
-                return interaction.reply({ content: 'Track resumed', ephemeral: true });
-            }
-            case 'stop': {
-                if (!member.permissions.has('MOVE_MEMBERS')) return interaction.reply({ content: 'You cannot stop the player, not enough permissions', ephemeral: true });
+            return interaction.reply({ content: 'Queue shuffled', ephemeral: true });
+        }
+        case 'seek': {
+            if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
 
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+            const duration = <string>options.getString('duration');
+            const durationPattern = /^[0-5]?[0-9](:[0-5][0-9]){1,2}$/;
+            if (!durationPattern.test(duration)) return interaction.reply({ content: 'Duration provided in incorrect format' });
 
-                queue.stop();
-                return interaction.reply({ content: 'Player stopped', ephemeral: true });
-            }
-            case 'queue': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
+            const durationMs = this.client.util.durationMs(duration);
+            if (durationMs > queue.current.durationMS) return interaction.reply({ content: 'Duration you provided exceeds track duration', ephemeral: true });
 
-                const mapped = queue.tracks.map((track, index) => {
-                    return `\`${index + 1}\`. ${track.author} - ${track.title} | ${track.duration}`;
-                });
-
-                const chunked = this.client.util.chunk(mapped, 10);
-
-                if (chunked.length < 1) return await interaction.reply({ content: 'There are no upcoming tracks', ephemeral: true });
-
-                this.client.util.pagination(interaction, chunked, 'Upcoming Tracks');
-            }
-            case 'skip': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
-                if (queue.tracks.length < 1) return interaction.reply({
-                    content: 'There are no upcoming tracks to skip to', ephemeral: true
-                });
-
-                const position = options.getNumber('to');
-                if (!position) {
-                    queue.skip();
-                    return interaction.reply({ content: 'Current track skipped' });
-                };
-                const skipTo = position - 1;
-                const track = queue.tracks[skipTo];
-                queue.skipTo(skipTo);
-                return interaction.reply({ content: `Skipped to: **${track.author} - ${track.title}**`, ephemeral: true });
-            }
-            case 'shuffle': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
-
-                if (queue.tracks.length < 2) return await interaction.reply({ content: 'There are no upcoming tracks', ephemeral: true });
-
-                return interaction.reply({ content: 'Queue shuffled', ephemeral: true });
-            }
-            case 'seek': {
-                if (!queue) return interaction.reply({ content: 'Music is not playing', ephemeral: true });
-
-                const duration = <string>options.getString('duration');
-                const durationPattern = /^[0-5]?[0-9](:[0-5][0-9]){1,2}$/;
-                if (!durationPattern.test(duration)) return interaction.reply({ content: 'Duration provided in incorrect format' });
-
-                const durationMs = this.client.util.durationMs(duration);
-                if (durationMs > queue.current.durationMS) return interaction.reply({ content: 'Duration you provided exceeds track duration', ephemeral: true });
-
-                queue.seek(durationMs);
-                return interaction.reply({ content: `Seeked to ${duration}`, ephemeral: true });
-            }
+            queue.seek(durationMs);
+            return interaction.reply({ content: `Seeked to ${duration}`, ephemeral: true });
+        }
         }
     }
 }

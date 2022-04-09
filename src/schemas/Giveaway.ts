@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface IGiveaway extends Document {
     messageId: string,
@@ -24,7 +24,7 @@ export interface IGiveaway extends Document {
     },
     thumbnail: string,
     hostedBy: string,
-    winnerIds: { type: Array<String> },
+    winnerIds: { type: Array<string> },
     reaction: Schema.Types.Mixed,
     botsCanWin: boolean,
     embedColor: Schema.Types.Mixed,
@@ -49,11 +49,11 @@ export interface IGiveaway extends Document {
     },
     isDrop: boolean,
     allowedMentions: {
-        parse: { type: Array<String> },
-        users: { type: Array<String> },
-        roles: { type: Array<String> }
+        parse: { type: Array<string> },
+        users: { type: Array<string> },
+        roles: { type: Array<string> }
     }
-};
+}
 
 export const Giveaway: Schema = new Schema({
     messageId: String,

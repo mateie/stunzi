@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const { TOKEN } = process.env;
 import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
 import { REST } from '@discordjs/rest';
@@ -32,9 +33,9 @@ import IMineCommand from '../interfaces/IMineCommand';
 export default class Client extends DiscordClient {
     readonly owners: string[];
 
-    commands: Collection<String, ICommand>;
-    menus: Collection<String, IMenu>;
-    minecraftCommands: Collection<String, IMineCommand>;
+    commands: Collection<string, ICommand>;
+    menus: Collection<string, IMenu>;
+    minecraftCommands: Collection<string, IMineCommand>;
     tempCreateVC: Collection<string, VoiceChannel>;
 
     commandHandler: CommandHandler;
@@ -42,7 +43,7 @@ export default class Client extends DiscordClient {
     eventHandler: EventHandler;
 
     cards: Cards;
-    cypher: Cypher
+    cypher: Cypher;
     cloudinary: Cloudinary;
     database: Database;
     modals: void;
@@ -139,7 +140,7 @@ export default class Client extends DiscordClient {
                         if (!cmdPerms) return null;
 
                         return guild.roles.cache.filter(r => r.permissions.has(cmdPerms));
-                    }
+                    };
 
                     const fullPermissions = commands.reduce((accum: any, r: any) => {
                         const roles = Roles(r.name);
@@ -154,7 +155,7 @@ export default class Client extends DiscordClient {
 
                     await guild.commands.permissions.set({ fullPermissions });
                 })
-                .catch(console.error)
+                .catch(console.error);
 
             console.info('Pushed Application Commands to REST');
         } catch (err) {

@@ -32,10 +32,10 @@ export default class WeatherCommand extends Command implements ICommand {
                 const embed = this.client.util.embed()
                     .setTitle(`${place.location.name}`)
                     .setThumbnail(place.current.imageUrl)
-                    .addField("Temperature: ", place.current.temperature + "°F", true)
-                    .addField("Wind Speed: ", place.current.winddisplay, true)
-                    .addField("Humidity: ", `${place.current.humidity}%`, true)
-                    .addField("Timezone: ", `UTC${place.location.timezone}`, true);
+                    .addField('Temperature: ', place.current.temperature + '°F', true)
+                    .addField('Wind Speed: ', place.current.winddisplay, true)
+                    .addField('Humidity: ', `${place.current.humidity}%`, true)
+                    .addField('Timezone: ', `UTC${place.location.timezone}`, true);
 
                 interaction.reply({ embeds: [embed] });
             });

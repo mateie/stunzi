@@ -1,6 +1,6 @@
-import Client from "@classes/Client";
-import { promisify } from "util";
-import { glob } from "glob";
+import Client from '@classes/Client';
+import { promisify } from 'util';
+import { glob } from 'glob';
 import Ascii from 'ascii-table';
 import perms from '@validation/permissions';
 
@@ -20,7 +20,7 @@ export default class CommandHandler {
         const table = new Ascii('Commands Loaded');
         const files = await this.files;
 
-        files.forEach(async file => {
+        files.forEach(async file => { 
             const { default: Command } = require(file);
             if (typeof Command !== 'function') return table.addRow('❌ Command is not a class');
             const command = new Command(this.client);
@@ -32,7 +32,7 @@ export default class CommandHandler {
                 if (perms.includes(command.permission)) command.data.defaultPermission = false;
                 else return table.addRow(command.data.name, '❌ Failed', 'Permission is invalid');
             }
-            if (!command.run) return table.addRow(command.data.name, '❌ Failed', 'Missing `run` function')
+            if (!command.run) return table.addRow(command.data.name, '❌ Failed', 'Missing `run` function');
             if (typeof command.run !== 'function') return table.addRow(command.data.name, '❌ Failed', '`run` should be a function');
 
             this.client.commands.set(command.data.name, command);

@@ -1,9 +1,10 @@
-import { Player, Track } from "discord-player";
-import Client from "@classes/Client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Player } from 'discord-player';
+import Client from '@classes/Client';
 import { promisify } from 'util';
 import { glob } from 'glob';
 import Ascii from 'ascii-table';
-import { Message } from "discord.js";
+import { Message } from 'discord.js';
 import songLyrics from 'songlyrics';
 
 
@@ -40,7 +41,7 @@ export default class Music extends Player {
 
             if (!event.name) {
                 const l = file.split('/');
-                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + `/` + l[5]}`);
+                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + '/' + l[5]}`);
                 return;
             }
 
@@ -57,7 +58,7 @@ export default class Music extends Player {
     }
 
 
-    async buttons(message: Message, track: Track): Promise<void> {
+    async buttons(message: Message): Promise<void> {
         const topRow = this.client.util.row()
             .addComponents(
                 this.client.util.button()

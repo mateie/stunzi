@@ -6,7 +6,7 @@ export interface IBlock extends Document {
     by: string;
     reason: string;
     expired: boolean;
-};
+}
 
 export const Block: Schema = new Schema({
     memberId: String,
@@ -19,4 +19,4 @@ export const Block: Schema = new Schema({
     }
 });
 
-export default model<IBlock>("Block", Block);
+export default model<IBlock>('Block', Block);

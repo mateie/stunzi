@@ -1,7 +1,7 @@
-import { CommandInteraction, GuildMember } from "discord.js";
-import Client from "@classes/Client";
-import Command from "@classes/Command";
-import ICommand from "@interfaces/ICommand";
+import { CommandInteraction, GuildMember } from 'discord.js';
+import Client from '@classes/Client';
+import Command from '@classes/Command';
+import ICommand from '@interfaces/ICommand';
 
 const colornames = require('colornames');
 const isHexColor = require('is-hex-color');
@@ -19,9 +19,9 @@ export default class CardCommand extends Command implements ICommand {
                     .setDescription('What do you want to customize?')
                     .setRequired(true)
                     .addChoices([
-                        ["Background", "background"],
-                        ["Text", 'text'],
-                        ["Progressbar", "progressbar"]
+                        ['Background', 'background'],
+                        ['Text', 'text'],
+                        ['Progressbar', 'progressbar']
                     ])
             )
             .addStringOption(option =>

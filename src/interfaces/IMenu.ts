@@ -1,6 +1,7 @@
-import { ContextMenuInteraction, PermissionResolvable } from "discord.js";
-import Client from "@classes/Client";
-import { ContextMenuCommandBuilder } from "@discordjs/builders";
+/* eslint-disable semi */
+import { ContextMenuInteraction, PermissionResolvable } from 'discord.js';
+import Client from '@classes/Client';
+import { ContextMenuCommandBuilder } from '@discordjs/builders';
 
 export default interface IMenu {
     readonly client: Client,

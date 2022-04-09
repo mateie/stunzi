@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 
 export interface IMute extends Document {
     memberId: string;
@@ -6,7 +6,7 @@ export interface IMute extends Document {
     by: string;
     reason: string;
     expired: boolean;
-};
+}
 
 export const Mute: Schema = new Schema({
     memberId: String,
@@ -19,4 +19,4 @@ export const Mute: Schema = new Schema({
     }
 });
 
-export default model<IMute>("Mute", Mute);
+export default model<IMute>('Mute', Mute);

@@ -1,11 +1,11 @@
-import { CommandEvent } from "@scriptserver/command";
-import Client from "@classes/Client";
-import IMineCommand from "@interfaces/IMineCommand";
-import MineCommand from "@classes/games/minecraft/MineCommand";
-import channels from "@data/channels";
+import { CommandEvent } from '@scriptserver/command';
+import Client from '@classes/Client';
+import IMineCommand from '@interfaces/IMineCommand';
+import MineCommand from '@classes/games/minecraft/MineCommand';
+import channels from '@data/channels';
 
-import MinecraftMember from "@schemas/MinecraftMember";
-import { GuildMember, TextChannel, VoiceChannel } from "discord.js";
+import MinecraftMember from '@schemas/MinecraftMember';
+import { GuildMember, TextChannel, VoiceChannel } from 'discord.js';
 
 export default class MusicMineCommand extends MineCommand implements IMineCommand {
     constructor(client: Client) {
@@ -24,7 +24,7 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
         const subcommand = _[0];
         const args = _.slice(1, _.length);
 
-        if (subcommand.length < 1 || !subcommand) return this.missingSub(command, <string>this.subcommands?.join(' | '))
+        if (subcommand.length < 1 || !subcommand) return this.missingSub(command, <string>this.subcommands?.join(' | '));
 
         const { player } = command;
 
@@ -45,59 +45,59 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
         let queue = this.client.music.getQueue(guild);
 
         switch (subcommand) {
-            case 'play': {
-                if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
+        case 'play': {
+            if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
 
-                if (!queue) {
-                    queue = this.client.music.createQueue(guild, {
-                        metadata: channel
-                    });
-
-                    try {
-                        if (!queue.connection) await queue.connect(voiceChannel);
-                    } catch {
-                        queue.destroy();
-                        return this.server.util.tellRaw('Could not join your voice channel', player);
-                    }
-                }
-
-                const query = args.join('');
-                const result = await this.client.music.search(query, {
-                    requestedBy: member.user,
+            if (!queue) {
+                queue = this.client.music.createQueue(guild, {
+                    metadata: channel
                 });
 
-                if (result.tracks.length < 1 || !result.tracks[0])
-                    return this.server.util.tellRaw(`Track ${query} was not found`);
-
-                if (result.playlist) queue.addTracks(result.playlist.tracks);
-                else queue.addTrack(result.tracks[0]);
-
-                if (!queue.playing) queue.play();
-
-                this.server.util.tellRaw('Track/Playlist Received', player);
-                break;
+                try {
+                    if (!queue.connection) await queue.connect(voiceChannel);
+                } catch {
+                    queue.destroy();
+                    return this.server.util.tellRaw('Could not join your voice channel', player);
+                }
             }
-            case 'skip': {
-                if (!queue) return this.server.util.tellRaw('Music is not playing', player);
-                if (queue.tracks.length < 1)
-                    return this.server.util.tellRaw('There are no upcoming tracks to skip to', player);
 
-                queue.skip();
-                return this.server.util.tellRaw('Current track skipped', player)
-            }
-            case 'skipto': {
-                if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
+            const query = args.join('');
+            const result = await this.client.music.search(query, {
+                requestedBy: member.user,
+            });
 
-                if (!queue) return this.server.util.tellRaw('Music is not playing', player);
-                if (queue.tracks.length < 1)
-                    return this.server.util.tellRaw('There are no upcoming tracks to skip to', player);
+            if (result.tracks.length < 1 || !result.tracks[0])
+                return this.server.util.tellRaw(`Track ${query} was not found`);
 
-                const position = parseInt(args[0]);
-                const skipto = position - 1;
-                const track = queue.tracks[skipto];
-                queue.skipTo(skipto);
-                return this.server.util.tellRaw(`Skipped to ${track.author} - ${track.title}`, player);
-            }
+            if (result.playlist) queue.addTracks(result.playlist.tracks);
+            else queue.addTrack(result.tracks[0]);
+
+            if (!queue.playing) queue.play();
+
+            this.server.util.tellRaw('Track/Playlist Received', player);
+            break;
+        }
+        case 'skip': {
+            if (!queue) return this.server.util.tellRaw('Music is not playing', player);
+            if (queue.tracks.length < 1)
+                return this.server.util.tellRaw('There are no upcoming tracks to skip to', player);
+
+            queue.skip();
+            return this.server.util.tellRaw('Current track skipped', player);
+        }
+        case 'skipto': {
+            if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
+
+            if (!queue) return this.server.util.tellRaw('Music is not playing', player);
+            if (queue.tracks.length < 1)
+                return this.server.util.tellRaw('There are no upcoming tracks to skip to', player);
+
+            const position = parseInt(args[0]);
+            const skipto = position - 1;
+            const track = queue.tracks[skipto];
+            queue.skipTo(skipto);
+            return this.server.util.tellRaw(`Skipped to ${track.author} - ${track.title}`, player);
+        }
         }
     }
 }
