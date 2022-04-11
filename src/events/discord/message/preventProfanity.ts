@@ -2,7 +2,7 @@ import Client from '@classes/Client';
 import Event from '@classes/Event';
 import IEvent from '@interfaces/IEvent';
 
-export default class PreventProfanityeEvent extends Event implements IEvent {
+export default class PreventProfanityEvent extends Event implements IEvent {
     name: string;
     once: undefined;
 
