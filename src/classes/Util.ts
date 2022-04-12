@@ -56,6 +56,10 @@ export default class Util {
             .setFooter({ text: 'Owned by Stealth and Bunzi' });
     }
 
+    convertToPercentage(num: number) {
+        return Math.floor(num * 100);
+    }
+
     async memberInfo(
         interaction: CommandInteraction | ButtonInteraction | ContextMenuInteraction | ModalSubmitInteraction,
         member: GuildMember
