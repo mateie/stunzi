@@ -23,6 +23,7 @@ import Mutes from './moderation/Mutes';
 import Reports from './moderation/Reports';
 import Update from './moderation/Update';
 import Warns from './moderation/Warns';
+import Whitelist from './moderation/Whitelist';
 
 import Minecraft from './games/Minecraft';
 import Valorant from './games/Valorant';
@@ -58,6 +59,7 @@ export default class Client extends DiscordClient {
     reports: Reports;
     update: Update;
     warns: Warns;
+    whitelist: Whitelist;
 
     minecraft: Minecraft;
     valorant: Valorant;
@@ -93,6 +95,7 @@ export default class Client extends DiscordClient {
         this.reports = new Reports(this);
         this.update = new Update(this);
         this.warns = new Warns(this);
+        this.whitelist = new Whitelist(this);
 
         this.minecraft = new Minecraft(this);
         this.valorant = new Valorant(this);

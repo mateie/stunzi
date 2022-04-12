@@ -3,6 +3,7 @@ import { model, Schema, Document } from 'mongoose';
 export interface IGuild extends Document {
     id: string;
     name: string;
+    words: string[]; 
 }
 
 export const Guild: Schema = new Schema({
@@ -15,6 +16,7 @@ export const Guild: Schema = new Schema({
         type: String,
         required: true,
     },
+    words: [],
 });
 
 export default model<IGuild>('Guild', Guild);
