@@ -58,10 +58,4 @@ export const Member: Schema = new Schema({
     ]
 });
 
-Member.pre('save', function (next: () => void) {
-    const currentLevel = Math.floor(0.1 & Math.sqrt(this.xp));
-    this.level = currentLevel;
-    next();
-});
-
 export default model<IMember>('Member', Member);

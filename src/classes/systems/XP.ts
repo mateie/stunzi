@@ -25,7 +25,7 @@ export default class XP {
     async levelUp(member: GuildMember) {
         const dbMember = await this.client.database.get.member(member);
 
-        dbMember.level += 1;
+        dbMember.level = dbMember.level + 1;
         await dbMember.save();
     }
 
@@ -58,8 +58,6 @@ export default class XP {
     }
 
     calculateReqXP(xp: number) {
-
-
         let currentLevel = this.calculateLevel(xp);
         const nextLevel = this.calculateLevel(xp) + 1;
 
