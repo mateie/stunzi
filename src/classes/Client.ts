@@ -7,7 +7,6 @@ import modals from '@mateie/discord-modals';
 import NekoClient from 'nekos.life';
 
 import CommandHandler from './handlers/CommandHandler';
-import MenuHandler from './handlers/MenuHandler';
 import EventHandler from './handlers/EventHandler';
 
 import Cards from './Cards';
@@ -29,19 +28,17 @@ import Minecraft from './games/Minecraft';
 import Valorant from './games/Valorant';
 
 import ICommand from '../interfaces/ICommand';
-import IMenu from '../interfaces/IMenu';
+import IMenu from '@interfaces/IMenu';
 import IMineCommand from '../interfaces/IMineCommand';
 
 export default class Client extends DiscordClient {
     readonly owners: string[];
 
-    commands: Collection<string, ICommand>;
-    menus: Collection<string, IMenu>;
+    commands: Collection<string, ICommand | IMenu>;
     minecraftCommands: Collection<string, IMineCommand>;
     tempCreateVC: Collection<string, VoiceChannel>;
 
     commandHandler: CommandHandler;
-    menuHandler: MenuHandler;
     eventHandler: EventHandler;
 
     cards: Cards;
@@ -72,12 +69,10 @@ export default class Client extends DiscordClient {
         this.owners = ['401269337924829186', '190120411864891392'];
 
         this.commands = new Collection();
-        this.menus = new Collection();
         this.minecraftCommands = new Collection();
         this.tempCreateVC = new Collection();
 
         this.commandHandler = new CommandHandler(this);
-        this.menuHandler = new MenuHandler(this);
         this.eventHandler = new EventHandler(this);
 
         this.cards = new Cards(this);
@@ -106,7 +101,6 @@ export default class Client extends DiscordClient {
     async init(): Promise<void> {
         await this.eventHandler.load();
         await this.commandHandler.load();
-        await this.menuHandler.load();
         await this.music.loadEvents();
 
         await this.minecraft.loadEvents();
@@ -117,17 +111,12 @@ export default class Client extends DiscordClient {
         const clientId = <string>this.user?.id;
         const guild = this.mainGuild;
         const allCommands = this.commands;
-        const allMenus = this.menus;
         const token: string = <string>this.token;
 
         const body: any[] = [];
 
-        allCommands.forEach((command: ICommand) => {
+        allCommands.forEach((command: ICommand | IMenu) => {
             body.push(command.data.toJSON());
-        });
-
-        allMenus.forEach((menu: IMenu) => {
-            body.push(menu.data.toJSON());
         });
 
         const rest = new REST({ version: '10' }).setToken(token);
@@ -139,8 +128,7 @@ export default class Client extends DiscordClient {
                 Routes.applicationGuildCommands(clientId, guild.id),
                 { body }
             )
-                .then(async (commands: any) => {
-                    commands = commands.filter((c: any) => c.type == 1);
+                .then(async (commands: any) => { 
                     const Roles = (commandName: string) => {
                         const cmdPerms = this.commands.get(commandName)?.permission;
                         if (!cmdPerms) return null;
