@@ -1,9 +1,10 @@
-import { CommandInteraction, GuildMember, Guild, TextChannel } from 'discord.js';
+import { CommandInteraction, GuildMember, Guild, TextChannel, ContextMenuInteraction } from 'discord.js';
 import Client from '@classes/Client';
 import Event from '@classes/Event';
 import IEvent from '@interfaces/IEvent';
 
 import ICommand from '@interfaces/ICommand';
+import IMenu from '@interfaces/IMenu';
 
 import channels from '@data/channels';
 
@@ -17,7 +18,7 @@ export default class InteractionCreate extends Event implements IEvent {
         this.name = 'interactionCreate';
     }
 
-    async run(interaction: CommandInteraction): Promise<void> {
+    async run(interaction: CommandInteraction | ContextMenuInteraction): Promise<void> {
         const { commandName } = interaction;
         const guild = <Guild>interaction.guild;
         const member = <GuildMember>interaction.member;
@@ -33,8 +34,18 @@ export default class InteractionCreate extends Event implements IEvent {
 
         if (interaction.type === 'APPLICATION_COMMAND' && commandName !== 'music' && channel.id === channels.text.music) return interaction.reply({ content: 'You can only use music commands here', ephemeral: true });
 
-        if (interaction.isCommand() && interaction.isContextMenu()) {
+        if (interaction.isCommand()) {
             const command = <ICommand>this.client.commands.get(commandName);
+
+            try {
+                await command.run(interaction);
+            } catch {
+                return interaction.reply({ content: 'An error occured, try again', ephemeral: true }).catch(console.error);
+            }
+        }
+
+        if(interaction.isContextMenu()) {
+            const command = <IMenu>this.client.commands.get(commandName);
 
             try {
                 await command.run(interaction);
