@@ -41,6 +41,7 @@
     "src/**/*.ts"
   ],
   "exclude": [
+    "minecraft",
     "node_modules",
     "build"
   ]
