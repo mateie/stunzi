@@ -5,7 +5,6 @@ import IEvent from '@interfaces/IEvent';
 
 export default class MemberActionsEvent extends Event implements IEvent {
     name: string;
-    once: undefined;
 
     constructor(client: Client) {
         super(client);

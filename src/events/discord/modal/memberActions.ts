@@ -5,7 +5,6 @@ import Event from '@classes/Event';
 
 export default class MemberActionsModal extends Event {
     name: string;
-    once: undefined;
 
     constructor(client: Client) {
         super(client);

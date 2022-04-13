@@ -9,7 +9,6 @@ const { RAPID_API } = process.env;
 
 export default class PreventProfanityEvent extends Event implements IEvent {
     name: string;
-    once: undefined;
 
     constructor(client: Client) {
         super(client);

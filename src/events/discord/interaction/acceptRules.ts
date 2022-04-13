@@ -6,7 +6,6 @@ import roles from '@data/roles';
 
 export default class AcceptRulesEvent extends Event implements IEvent {
     name: string;
-    once: undefined;
 
     constructor(client: Client) {
         super(client);

@@ -6,7 +6,6 @@ import Suggestion from '@schemas/Suggestion';
 
 export default class SuggestionEvent extends Event implements IEvent {
     name: string;
-    once: undefined;
 
     constructor(client: Client) {
         super(client);
