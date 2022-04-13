@@ -13,11 +13,13 @@ export default class MemberActionsModal extends Event {
     }
 
     async run(interaction: ModalSubmitInteraction) {
+        if (!['warn-member-modal', 'block-member-modal', 'mute-member-modal', 'report-member-modal'].includes(interaction.customId)) return;
+
         const message = <Message>interaction.message;
         const guild = <Guild>interaction.guild;
 
-        if (!['warn-member-modal', 'block-member-modal', 'mute-member-modal', 'report-member-modal'].includes(interaction.customId)) return;
-
+        if (!message) return;
+        
         const target = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
 
         switch (interaction.customId) {
