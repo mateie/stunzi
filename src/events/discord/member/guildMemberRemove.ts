@@ -1,4 +1,4 @@
-import { Guild, GuildMember, User, WebhookClient } from 'discord.js';
+import { Guild, GuildMember, User } from 'discord.js';
 import Client from '@classes/Client';
 import Event from '@classes/Event';
 import IEvent from '@interfaces/IEvent';
@@ -16,7 +16,7 @@ export default class GuildMemberRemoveEvent extends Event implements IEvent {
     run(member: GuildMember) {
         const { user, guild }: { user: User, guild: Guild } = member;
 
-        const Goodbyer: WebhookClient = new WebhookClient({ url: <string>webhooks.goodbyer });
+        const webhook = this.client.webhooks.get(webhooks.goodbyer);
 
         const avatar = <string>user.avatarURL({ dynamic: true });
 
@@ -30,6 +30,6 @@ export default class GuildMemberRemoveEvent extends Event implements IEvent {
                 Farewell, I hope you had a good stay
             `);
 
-        Goodbyer.send({ embeds: [goodbye] });
+        webhook?.send({ embeds: [goodbye] });
     }
 }
