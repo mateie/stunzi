@@ -32,7 +32,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
         const member: GuildMember = <GuildMember>interaction.member;
         const guild: Guild = <Guild>interaction.guild;
 
-        const target: GuildMember = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
+        const target = <GuildMember>await guild.members.fetch(<string>message?.embeds[0]?.footer?.text.split(':')[1]);
 
         switch (interaction.customId) {
         case 'show_rank': {
