@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const { TOKEN } = process.env;
-import { Client as DiscordClient, Collection, Guild, VoiceChannel } from 'discord.js';
+import { Client as DiscordClient, Collection, Guild, VoiceChannel, Webhook } from 'discord.js';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v10';
 import modals from '@mateie/discord-modals';
@@ -8,6 +8,7 @@ import NekoClient from 'nekos.life';
 
 import CommandHandler from './handlers/CommandHandler';
 import EventHandler from './handlers/EventHandler';
+import WebhookHandler from './handlers/WebhookHandler';
 
 import Cards from './Cards';
 import Cypher from './Cypher';
@@ -35,11 +36,13 @@ export default class Client extends DiscordClient {
     readonly owners: string[];
 
     commands: Collection<string, ICommand | IMenu>;
+    webhooks: Collection<string, Webhook>;
     minecraftCommands: Collection<string, IMineCommand>;
     tempCreateVC: Collection<string, VoiceChannel>;
 
     commandHandler: CommandHandler;
     eventHandler: EventHandler;
+    webhookHandler: WebhookHandler;
 
     cards: Cards;
     cypher: Cypher;
@@ -69,11 +72,13 @@ export default class Client extends DiscordClient {
         this.owners = ['401269337924829186', '190120411864891392'];
 
         this.commands = new Collection();
+        this.webhooks = new Collection();
         this.minecraftCommands = new Collection();
         this.tempCreateVC = new Collection();
 
         this.commandHandler = new CommandHandler(this);
         this.eventHandler = new EventHandler(this);
+        this.webhookHandler = new WebhookHandler(this);
 
         this.cards = new Cards(this);
         this.cypher = new Cypher(this);
