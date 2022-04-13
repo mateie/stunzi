@@ -32,9 +32,17 @@ export default class EventHandler {
             }
 
             if (event.once) {
-                this.client.once(event.name, (...args) => event.run(...args));
+                if (event.process) {
+                    process.once(event.name, (...args) => event.run(...args));
+                } else {
+                    this.client.once(event.name, (...args) => event.run(...args));
+                }
             } else {
-                this.client.on(event.name, (...args) => event.run(...args));
+                if (event.process) {
+                    process.on(event.name, (...args) => event.run(...args));
+                } else {
+                    this.client.on(event.name, (...args) => event.run(...args));
+                }
             }
 
             table.addRow(event.name, '✔ Loaded');
