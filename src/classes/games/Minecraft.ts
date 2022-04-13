@@ -26,7 +26,7 @@ export default class Minecraft extends ScriptServer {
             javaServer: {
                 path: `${process.cwd()}/minecraft`,
                 jar: 'paper.jar',
-                args: ['-Xms2G', '-Xmx2G'],
+                args: ['-Xms4G', '-Xmx4G'],
                 pipeStdout: false,
                 pipeStdin: false,
             },

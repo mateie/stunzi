@@ -44,6 +44,7 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
 
         let queue = this.client.music.getQueue(guild);
 
+        console.log(subcommand);
         switch (subcommand) {
         case 'play': {
             if (args.length < 1) return this.missingSubArgs(command, subcommand, this.usage[subcommand]);
@@ -79,9 +80,6 @@ export default class MusicMineCommand extends MineCommand implements IMineComman
         }
         case 'skip': {
             if (!queue) return this.server.util.tellRaw('Music is not playing', player);
-            if (queue.tracks.length < 1)
-                return this.server.util.tellRaw('There are no upcoming tracks to skip to', player);
-
             queue.skip();
             return this.server.util.tellRaw('Current track skipped', player);
         }
