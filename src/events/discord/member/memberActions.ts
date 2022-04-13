@@ -32,7 +32,15 @@ export default class MemberActionsEvent extends Event implements IEvent {
         const member: GuildMember = <GuildMember>interaction.member;
         const guild: Guild = <Guild>interaction.guild;
 
-        if (interaction.customId === 'report_member') {
+        const target: GuildMember = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
+
+        switch (interaction.customId) {
+        case 'show_rank': {
+            const image = await this.client.cards.rank.getRankCard(target);
+            const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
+            return interaction.reply({ files: [attachment], ephemeral: true });
+        }
+        case 'report-member': {
             const modal = this.client.util.modal()
                 .setCustomId('report-member-modal')
                 .setTitle(`Reporting ${target.user.tag}`)
@@ -48,15 +56,6 @@ export default class MemberActionsEvent extends Event implements IEvent {
                 ]);
         
             return this.client.util.showModal(modal, { client: this.client, interaction });
-        }
-
-        const target: GuildMember = <GuildMember>await guild.members.fetch(<string>message.embeds[0].footer?.text.split(':')[1]);
-
-        switch (interaction.customId) {
-        case 'show_rank': {
-            const image = await this.client.cards.rank.getRankCard(target);
-            const attachment = this.client.util.attachment(image, `rank-${member.user.username}.png`);
-            return interaction.reply({ files: [attachment], ephemeral: true });
         }
         case 'show_warns': {
             if (!member.permissions.has('VIEW_AUDIT_LOG')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
