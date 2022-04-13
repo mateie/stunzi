@@ -25,10 +25,12 @@ export default class EventHandler {
             if (typeof Event !== 'function') return table.addRow('❌ Event is not a class');
             const event = new Event(this.client);
 
-            if (!events.includes(event.name) || !event.name) {
-                const l = file.split('/');
-                table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + '/' + l[5]}`);
-                return;
+            if (!event.process) {
+                if (!events.includes(event.name) || !event.name) {
+                    const l = file.split('/');
+                    table.addRow(`${event.name || 'Missing'}`, `❌ Event name is either invalid or missing: ${l[4] + '/' + l[5]}`);
+                    return;
+                }
             }
 
             if (event.once) {
