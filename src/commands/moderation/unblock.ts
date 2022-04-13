@@ -7,6 +7,7 @@ export default class UnblockCommand extends Command implements ICommand {
     constructor(client: Client) {
         super(client);
 
+        this.permission = 'MODERATE_MEMBERS';
         this.data
             .setName('unblock')
             .setDescription('Allow a member to use commands again')

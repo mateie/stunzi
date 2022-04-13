@@ -4,13 +4,12 @@ import Client from './Client';
 
 export default class Command {
     readonly client: Client;
-    data:
-        | SlashCommandBuilder;
-    permission: PermissionResolvable | undefined;
+    permission: PermissionResolvable | null;
+    data!: SlashCommandBuilder;
     constructor(client: Client) {
-        this.client = client;
-        this.permission = undefined;
-        this.data = <SlashCommandBuilder>new SlashCommandBuilder();
+        this.client = client; 
+        this.permission = null;
+        this.data = new SlashCommandBuilder();
     }
 
     mentionRole(roleId: string): string {

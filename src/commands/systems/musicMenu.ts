@@ -4,7 +4,7 @@ import Menu from '@classes/Menu';
 import IMenu from '@interfaces/IMenu';
 import channels from '@data/channels';
 
-export default class MenuNameMenu extends Menu implements IMenu {
+export default class MusicMenu extends Menu implements IMenu {
     constructor(client: Client) {
         super(client);
 

@@ -7,6 +7,7 @@ export default class ClearCommand extends Command implements ICommand {
     constructor(client: Client) {
         super(client);
 
+        this.permission = 'MANAGE_MESSAGES';
         this.data
             .setName('clear')
             .setDescription('Clear a channel')

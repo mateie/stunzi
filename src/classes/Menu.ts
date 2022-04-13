@@ -1,16 +1,15 @@
-import { roleMention, ContextMenuCommandBuilder } from '@discordjs/builders';
+import { ContextMenuCommandBuilder, roleMention } from '@discordjs/builders';
 import { PermissionResolvable } from 'discord.js';
 import Client from './Client';
 
-export default class Menu {
+export default class Command {
     readonly client: Client;
-    data:
-        | ContextMenuCommandBuilder;
-    permission: PermissionResolvable | undefined;
+    permission: PermissionResolvable | null;
+    data!: ContextMenuCommandBuilder;
     constructor(client: Client) {
         this.client = client;
-        this.permission = undefined;
-        this.data = <ContextMenuCommandBuilder>new ContextMenuCommandBuilder();
+        this.permission = null;
+        this.data = new ContextMenuCommandBuilder();
     }
 
     mentionRole(roleId: string): string {

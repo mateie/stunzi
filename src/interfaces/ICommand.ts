@@ -5,9 +5,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 export default interface ICommand {
     readonly client: Client,
-    permission: PermissionResolvable | undefined;
-    data:
-    | SlashCommandBuilder,
-    run: (interaction: CommandInteraction) => any | Promise<any>
-    mentionRole: (roleId: string) => string;
+    permission: PermissionResolvable | null;
+    data: SlashCommandBuilder;
+    run: (interaction: CommandInteraction) => any | Promise<any>;
 }

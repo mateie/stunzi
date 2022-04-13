@@ -31,6 +31,7 @@ export default class WhitelistCommand extends Command implements ICommand {
         switch (options.getSubcommand()) {
         case 'add': {
             const word = <string>options.getString('word');
+            if (await this.client.whitelist.check(word, guild)) return interaction.reply({ content: 'The word is already in the whitelist', ephemeral: true });
             return this.client.whitelist.add(interaction, word, guild);
         }
         }

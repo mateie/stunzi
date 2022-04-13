@@ -1,8 +1,8 @@
 import { ContextMenuInteraction, Guild, GuildMember } from 'discord.js';
 import Client from '@classes/Client';
+import { ModalSubmitInteraction } from '@mateie/discord-modals';
 import Menu from '@classes/Menu';
 import IMenu from '@interfaces/IMenu';
-import { ModalSubmitInteraction } from '@mateie/discord-modals';
 
 export default class ReportMemberMenu extends Menu implements IMenu {
     constructor(client: Client) {

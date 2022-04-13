@@ -71,7 +71,7 @@ export default class MusicCommand extends Command implements ICommand {
             );
     }
 
-    async run(interaction: CommandInteraction): Promise<any> {
+    async run(interaction: CommandInteraction) {
         const { options } = interaction;
 
         const guild = <Guild>interaction.guild;

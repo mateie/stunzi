@@ -4,7 +4,6 @@ import Event from '@classes/Event';
 import IEvent from '@interfaces/IEvent';
 
 import ICommand from '@interfaces/ICommand';
-import IMenu from '@interfaces/IMenu';
 
 import channels from '@data/channels';
 
@@ -34,21 +33,11 @@ export default class InteractionCreate extends Event implements IEvent {
 
         if (interaction.type === 'APPLICATION_COMMAND' && commandName !== 'music' && channel.id === channels.text.music) return interaction.reply({ content: 'You can only use music commands here', ephemeral: true });
 
-        if (interaction.isCommand()) {
+        if (interaction.isCommand() && interaction.isContextMenu()) {
             const command = <ICommand>this.client.commands.get(commandName);
 
             try {
                 await command.run(interaction);
-            } catch {
-                return interaction.reply({ content: 'An error occured, try again', ephemeral: true }).catch(console.error);
-            }
-        }
-
-        if (interaction.isContextMenu()) {
-            const menu = <IMenu>this.client.menus.get(commandName);
-
-            try {
-                await menu.run(interaction);
             } catch {
                 return interaction.reply({ content: 'An error occured, try again', ephemeral: true }).catch(console.error);
             }
