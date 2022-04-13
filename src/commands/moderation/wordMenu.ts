@@ -3,7 +3,7 @@ import Client from '@classes/Client';
 import Menu from '@classes/Menu';
 import IMenu from '@interfaces/IMenu';
 
-export default class WhitelistMenu extends Menu implements IMenu {
+export default class WordMenu extends Menu implements IMenu {
     constructor(client: Client) {
         super(client);
 
