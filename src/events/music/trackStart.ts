@@ -6,7 +6,6 @@ import IEvent from '@interfaces/IEvent';
 
 export default class TrackStartEvent extends Event implements IEvent {
     name: string;
-    ;
 
     constructor(client: Client) {
         super(client);

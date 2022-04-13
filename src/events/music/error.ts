@@ -5,7 +5,6 @@ import IEvent from '@interfaces/IEvent';
 
 export default class MusicErrorEvent extends Event implements IEvent {
     name: string;
-    ;
 
     constructor(client: Client) {
         super(client);
