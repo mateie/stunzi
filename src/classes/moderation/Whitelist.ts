@@ -64,6 +64,12 @@ export default class Whitelist {
         return already;
     }
 
+    async get(guild: Guild) {
+        const dbGuild = await this.client.database.get.guild(guild);
+        
+        return dbGuild.words;
+    }
+
     async isToxic(
         word: string | string[],
     ) {
