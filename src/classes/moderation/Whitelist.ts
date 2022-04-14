@@ -1,5 +1,8 @@
 import Client from '@classes/Client';
 import { ButtonInteraction, CommandInteraction, ContextMenuInteraction, Guild } from 'discord.js';
+import axios, { AxiosRequestConfig } from 'axios';
+
+const { RAPID_API } = process.env;
 
 export default class Whitelist {
     client: Client;
@@ -59,6 +62,28 @@ export default class Whitelist {
         });
 
         return already;
+    }
+
+    async isToxic(
+        word: string | string[],
+    ) {
+        const opts: AxiosRequestConfig = {
+            method: 'GET',
+            url: 'https://community-purgomalum.p.rapidapi.com/containsprofanity',
+            params: {text: word},
+            headers: {
+                'X-RapidAPI-Host': 'community-purgomalum.p.rapidapi.com',
+                'X-RapidAPI-Key': <string>RAPID_API
+            }
+        };
+
+        try { 
+            const { data: toxic } = await axios.request(opts);
+            if (!toxic) return false;
+            return true;
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     async remove(
