@@ -32,6 +32,11 @@ export default class WordtCommand extends Command implements ICommand {
                             .setDescription('Word to remove from the whitelist (seperate each word with a comma if multiple)')
                             .setRequired(true)
                     )
+            )
+            .addSubcommand(subcommand =>
+                subcommand
+                    .setName('list')
+                    .setDescription('List all the words')
             );
     }
 
@@ -64,8 +69,11 @@ export default class WordtCommand extends Command implements ICommand {
                 
             const exists = await this.client.whitelist.check(word, guild);
             if (!exists) return interaction.reply({ content: `The word **${word}** is not in a whitelist`, ephemeral: true });
-            return this.client.whitelist.remove(interaction, word, guild);
-                
+            return this.client.whitelist.remove(interaction, word, guild);   
+        }
+        case 'list': {
+            const list = await this.client.whitelist.get(guild);
+            return interaction.reply({ content: `Current Word Whitelist: **${list.join(', ')}**`, ephemeral: true });
         }
         }
     }
