@@ -8,6 +8,7 @@ export default class Rank extends CanvaRank {
 
     constructor(client: Client) {
         super();
+        
         this.client = client;
     }
 
