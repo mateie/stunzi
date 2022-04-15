@@ -58,4 +58,6 @@ export const Member: Schema = new Schema({
     ]
 });
 
-export default model<IMember>('Member', Member);
+const name = 'members';
+
+export default model<IMember>(name, Member, name);

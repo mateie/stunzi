@@ -12,4 +12,6 @@ export const MinecraftMember: Schema = new Schema({
     minecraftUsername: String,
 });
 
-export default model<IMinecraftMember>('MinecraftMember', MinecraftMember);
+const name = 'minecraft-members';
+
+export default model<IMinecraftMember>(name, MinecraftMember, name);

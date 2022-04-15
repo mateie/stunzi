@@ -18,5 +18,6 @@ export const Ticket: Schema = new Schema({
     type: String,
 });
 
+const name = 'tickets';
 
-export default model<ITicket>('Ticket', Ticket);
+export default model<ITicket>(name, Ticket, name);

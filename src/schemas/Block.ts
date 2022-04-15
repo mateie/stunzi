@@ -19,4 +19,6 @@ export const Block: Schema = new Schema({
     }
 });
 
-export default model<IBlock>('Block', Block);
+const name = 'blocks';
+
+export default model<IBlock>(name, Block, name);

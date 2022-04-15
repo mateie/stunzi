@@ -14,4 +14,6 @@ export const Warn: Schema = new Schema({
     reason: String,
 });
 
-export default model<IWarn>('Warn', Warn);
+const name = 'warns';
+
+export default model<IWarn>(name, Warn, name);

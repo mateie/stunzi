@@ -19,4 +19,6 @@ export const Guild: Schema = new Schema({
     words: [],
 });
 
-export default model<IGuild>('Guild', Guild);
+const name = 'guilds';
+
+export default model<IGuild>(name, Guild, name);

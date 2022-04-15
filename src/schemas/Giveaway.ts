@@ -110,4 +110,6 @@ export const Giveaway: Schema = new Schema({
     }
 }, { id: false });
 
-export default model<IGiveaway>('Giveaway', Giveaway);
+const name = 'giveaways';
+
+export default model<IGiveaway>(name, Giveaway, name);

@@ -12,4 +12,6 @@ export const Lockdown: Schema = new Schema({
     reason: String,
 });
 
-export default model<ILockdown>('Lockdown', Lockdown);
+const name = 'lockdowns';
+
+export default model<ILockdown>(name, Lockdown, name);

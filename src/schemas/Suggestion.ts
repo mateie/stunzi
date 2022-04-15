@@ -10,4 +10,6 @@ export const Suggestion: Schema = new Schema({
     details: Array,
 });
 
-export default model<ISuggestion>('Suggestion', Suggestion);
+const name = 'suggestions';
+
+export default model<ISuggestion>(name, Suggestion, name);

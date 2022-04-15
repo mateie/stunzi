@@ -19,4 +19,6 @@ export const Mute: Schema = new Schema({
     }
 });
 
-export default model<IMute>('Mute', Mute);
+const name = 'mutes';
+
+export default model<IMute>(name, Mute, name);
