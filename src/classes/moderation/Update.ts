@@ -54,7 +54,7 @@ export default class Update {
         await interaction.reply({ content: 'Updated Game Roles', ephemeral: true });
     }
 
-    async updateGameVC(interaction: CommandInteraction) {
+    async gameVC(interaction: CommandInteraction) {
         const guild = <Guild>interaction.guild;
         const channel = <TextChannel>guild.channels.cache.get(channels.text.games.createAVC);
         const messages = <Collection<string, Message>>await channel.messages.fetch();

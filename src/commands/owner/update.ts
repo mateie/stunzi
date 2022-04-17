@@ -40,7 +40,7 @@ export default class UpdateCommand extends Command implements ICommand {
             break;
         }
         case 'vc': {
-            this.client.update.updateGameVC(interaction);
+            this.client.update.gameVC(interaction);
             break;
         }
         }
