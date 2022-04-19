@@ -1,7 +1,8 @@
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember, TextChannel } from 'discord.js';
 import Client from '@classes/Client';
 import Command from '@classes/Command';
 import ICommand from '@interfaces/ICommand';
+import channels from '@data/channels';
 
 export default class UnblockCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -27,8 +28,10 @@ export default class UnblockCommand extends Command implements ICommand {
         const isBlocked = await this.client.blocks.isBlocked(member);
         if (!isBlocked) return interaction.reply({ content: `${member} is not blocked`, ephemeral: true });
 
-        await this.client.blocks.unblock(member);
+        const channel = <TextChannel>member.guild.channels.cache.get(channels.text.publicLogs);
 
-        interaction.reply({ content: `${member} was unblocked` });
+        await this.client.blocks.unblock(member, channel);
+
+        interaction.reply({ content: `${member} was unblocked`, ephemeral: true  });
     }
 }

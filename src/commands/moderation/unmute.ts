@@ -1,7 +1,8 @@
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction, GuildMember, TextChannel } from 'discord.js';
 import Client from '@classes/Client';
 import Command from '@classes/Command';
 import ICommand from '@interfaces/ICommand';
+import channels from '@data/channels';
 
 export default class UnmuteCommand extends Command implements ICommand {
     constructor(client: Client) {
@@ -28,7 +29,9 @@ export default class UnmuteCommand extends Command implements ICommand {
         const isMuted = await this.client.mutes.isMuted(member);
         if (!isMuted) return interaction.reply({ content: `${member} is not muted`, ephemeral: true });
 
-        this.client.mutes.unmute(member);
+        const channel = <TextChannel>member.guild.channels.cache.get(channels.text.publicLogs);
+
+        this.client.mutes.unmute(member, channel);
 
         interaction.reply({ content: `${member} is unmuted` });
     }

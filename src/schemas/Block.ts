@@ -2,6 +2,7 @@ import { model, Schema, Document } from 'mongoose';
 
 export interface IBlock extends Document {
     memberId: string;
+    messageId: string;
     time: number;
     by: string;
     reason: string;
@@ -10,6 +11,7 @@ export interface IBlock extends Document {
 
 export const Block: Schema = new Schema({
     memberId: String,
+    messageId: String,
     time: Number,
     by: String,
     reason: String,

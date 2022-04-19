@@ -1,7 +1,8 @@
-import { ButtonInteraction, Guild, GuildMember, Message } from 'discord.js';
+import { ButtonInteraction, Guild, GuildMember, Message, TextChannel } from 'discord.js';
 import Client from '@classes/Client';
 import Event from '@classes/Event';
 import IEvent from '@interfaces/IEvent';
+import channels from '@data/channels';
 
 export default class MemberActionsEvent extends Event implements IEvent {
     name: string;
@@ -33,6 +34,8 @@ export default class MemberActionsEvent extends Event implements IEvent {
         const guild: Guild = <Guild>interaction.guild;
 
         const target = <GuildMember>await guild.members.fetch(<string>message?.embeds[0]?.footer?.text.split(':')[1]);
+
+        const channel = <TextChannel>guild.channels.cache.get(channels.text.publicLogs);
 
         switch (interaction.customId) {
         case 'show_rank': {
@@ -180,7 +183,8 @@ export default class MemberActionsEvent extends Event implements IEvent {
             if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
             const isBlocked = await this.client.blocks.isBlocked(target);
             if (!isBlocked) return interaction.reply({ content: `${target} is already unblocked`, ephemeral: true });
-            this.client.blocks.unblock(target);
+            const channel = <TextChannel>guild.channels.cache.get(channels.text.publicLogs);
+            this.client.blocks.unblock(target, channel);
             interaction.reply({ content: `${target} was unblocked` });
             break;
         }
@@ -188,7 +192,7 @@ export default class MemberActionsEvent extends Event implements IEvent {
             if (!member.permissions.has('MODERATE_MEMBERS')) return interaction.reply({ content: 'Not enough permissions', ephemeral: true });
             const isMuted = await this.client.mutes.isMuted(target);
             if (!isMuted) return interaction.reply({ content: `${target} is already unmuted`, ephemeral: true });
-            this.client.mutes.unmute(target);
+            this.client.mutes.unmute(target, channel);
             interaction.reply({ content: `${target} was unmuted` });
             break;
         }

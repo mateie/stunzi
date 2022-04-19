@@ -2,6 +2,7 @@ import { model, Schema, Document } from 'mongoose';
 
 export interface IMute extends Document {
     memberId: string;
+    messageId: string,
     time: number;
     by: string;
     reason: string;
@@ -10,6 +11,7 @@ export interface IMute extends Document {
 
 export const Mute: Schema = new Schema({
     memberId: String,
+    messageId: String,
     time: Number,
     by: String,
     reason: String,

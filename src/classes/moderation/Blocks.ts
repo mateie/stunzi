@@ -1,8 +1,9 @@
-import { ButtonInteraction, CommandInteraction, Guild, GuildMember, TextChannel } from 'discord.js';
+import { ButtonInteraction, CommandInteraction, Guild, GuildMember, Message, TextChannel } from 'discord.js';
 import { ModalSubmitInteraction } from '@mateie/discord-modals';
 import Client from '@classes/Client';
 import Block, { IBlock } from '@schemas/Block';
 import ms from 'ms';
+import channels from '@data/channels';
 
 export default class Blocks {
     readonly client: Client;
@@ -20,9 +21,12 @@ export default class Blocks {
         const isBlocked = await this.isBlocked(member);
         if (isBlocked) return interaction.reply({ content: `${member} is already blocked`, ephemeral: true });
         const by = <GuildMember>interaction.member;
-        const block = await Block.create({ memberId: member.id, reason, by: by.id });
 
-        interaction.reply({ content: `${member} was blocked${time ? ` for ${time}` : ''} from using commands by ${by}, Reason: **${reason}**` });
+        interaction.reply({ content: `${member} was blocked${time ? ` for ${time}` : ''} from using commands by ${by}, Reason: **${reason}**`, ephemeral: true });
+        const channel = <TextChannel>member.guild.channels.cache.get(channels.text.publicLogs);
+        const message = await channel.send({ content: `${member} was blocked${time ? ` for ${time}` : ''} from using commands by ${by}, Reason: **${reason}**` });
+
+        const block = await Block.create({ memberId: member.id, reason, by: by.id, messageId: message.id });
 
         if (time) {
             const expireDate = Date.now() + ms(time);
@@ -32,11 +36,7 @@ export default class Blocks {
             await block.save();
 
             setTimeout(async () => {
-                const channel = <TextChannel>interaction.channel;
-                channel.send({ content: `${member} was unblocked` });
-
-                block.expired = true;
-                await block.save();
+                await this.unblock(member, channel);
             }, ms(time));
         }
     }
@@ -47,24 +47,29 @@ export default class Blocks {
             if (!block) return;
             if (block.time) {
                 const timeNow = Date.now();
+                const channel = <TextChannel>guild.channels.cache.get(channels.text.publicLogs);
 
                 if (block.time < timeNow) {
-                    this.unblock(member);
+                    this.unblock(member, channel);
                 }
 
                 const expireDate = block.time - Date.now();
 
                 setTimeout(async () => {
-                    this.unblock(member);
+                    this.unblock(member, channel);
                 }, expireDate);
             }
         });
     }
 
-    async unblock(member: GuildMember) {
+    async unblock(member: GuildMember, channel: TextChannel) {
         const block = await this.get(member);
         block.expired = true;
         await block.save();
+        if (!channel) return;
+        const message = <Message>await channel.messages.fetch(block.messageId);
+        if (!message) return;
+        message.edit({ content: `${member} was unblocked` });
     }
 
     async get(member: GuildMember): Promise<IBlock> {

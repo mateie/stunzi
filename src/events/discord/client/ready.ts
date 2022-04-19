@@ -36,5 +36,8 @@ export default class ReadyEvent extends Event implements IEvent {
         this.client.webhookHandler.load();
 
         this.client.valorant.login(<GuildMember>guild.members.cache.get('401269337924829186'), <string>MY_VAL_USERNAME, this.client.cypher.encrypt(<string>MY_VAL_PASSWORD), 'na');
+    
+        await this.client.blocks.check(guild);
+        await this.client.mutes.check(guild);
     }
 }
