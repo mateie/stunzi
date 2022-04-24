@@ -39,7 +39,10 @@ export default class MockMemberMenu extends Menu implements IMenu {
             ctx.fillText(mockMessage, canvas.width / 3.1, 50);
 
             const attachment = this.client.util.attachment(canvas.toBuffer(), 'lol-haha.png');
-            return interaction.reply({ files: [attachment] });
+            interaction.reply({ content: `${message.author}`, files: [attachment] });
+            setTimeout(() => {
+                interaction.editReply({ files: [attachment] });
+            }, 1000);
         } catch (err) {
             console.error(err);
         }
@@ -48,7 +51,7 @@ export default class MockMemberMenu extends Menu implements IMenu {
     private applyText(canvas: CanvasType, text: string) {
         const ctx = canvas.getContext('2d');
 
-        let fontSize = 120;
+        let fontSize = 400;
 
         do {
             ctx.font = `${fontSize -= 10}px sans-serif`;
