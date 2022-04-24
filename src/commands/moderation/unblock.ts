@@ -16,6 +16,7 @@ export default class UnblockCommand extends Command implements ICommand {
                 option
                     .setName('member')
                     .setDescription('Member to unblock')
+                    .setRequired(true)
             );
     }
 
