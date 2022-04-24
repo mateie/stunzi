@@ -40,7 +40,7 @@ export default class Valorant {
         return this.util.skinsEmbed(interaction, store);
     }
 
-    async changeSkin(interaction: CommandInteraction, weapon: string, account: ValClient, timeout = 12000) {
+    async changeSkin(interaction: CommandInteraction, weapon: string, account: ValClient) {
         const member = <GuildMember>interaction.member;
 
         let page = 0;
@@ -121,7 +121,6 @@ export default class Valorant {
 
         const collector = message.createMessageComponentCollector({
             filter,
-            time: timeout,
         })
             .on('collect', async i => {
                 switch (i.customId) {
@@ -289,7 +288,8 @@ export default class Valorant {
                 }
             })
             .on('end', async (i, reason) => {
-                if (reason === 'finished') {
+                switch (reason) {
+                case 'finished': {
                     await account.loadout?.changeGunSkin(dWeapon, <SkinsType<GunsType>>dSkin, dLevel, dColor);
                     const int = <MessageComponentInteraction>i.last();
                     await int.editReply({
@@ -298,6 +298,8 @@ export default class Valorant {
                         attachments: [],
                         components: [],
                     });
+                    break;
+                }
                 }
             });
     }
