@@ -160,6 +160,15 @@
   resolved "https://registry.npmjs.org/@mateie/discord-modals/-/discord-modals-1.3.5.tgz"
   integrity sha512-3JwJDF6412bbaKRtUqsnq7e39SAxqeRn9QvppbbqXQaTL483rJJiILGhqjn/Lxe3YaSkXlSi87KbWfomZ61zPA==
 
+"@mateie/valclient.js@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@mateie/valclient.js/-/valclient.js-2.4.0.tgz#13cff2948207687db3aa5f7ab63096ffb20eca11"
+  integrity sha512-Ocr3p2/gVGWuF2FB4Ick4nXEtHzzR1o5YoZZUNk0RgDIdTstpm6nm26yskYFk9pQRcOzE7LqDZZBrW31bwbrHQ==
+  dependencies:
+    axios "0.21.4"
+    axios-cookiejar-support "1.0.1"
+    tough-cookie "4.0.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
