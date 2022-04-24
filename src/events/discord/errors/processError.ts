@@ -5,7 +5,7 @@ import IEvent from '@interfaces/IEvent';
 import { inspect } from 'util';
 
 
-export default class ErrorEvent extends Event implements IEvent {
+export default class ProcessErrorEvent extends Event implements IEvent {
     name: string;
 
     constructor(client: Client) {
